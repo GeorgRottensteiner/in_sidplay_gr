@@ -12,17 +12,17 @@ CSubSongDlg::~CSubSongDlg()
 
 void CSubSongDlg::NextSubSong()
 {
-	const SidTuneInfo ti = m_player->GetTuneInfo();
-	if((ti.currentSong + 1) > ti.songs) return;
-	m_player->PlaySubtune(ti.currentSong + 1);
+	const SidTuneInfo *ti = m_player->GetTuneInfo();
+	if((ti->currentSong() + 1) > ti->songs()) return;
+	m_player->PlaySubtune(ti->currentSong() + 1);
 	RefreshWindowTitle();
 }
 
 void CSubSongDlg::PrevSubSong()
 {
-	const SidTuneInfo ti = m_player->GetTuneInfo();
-	if((ti.currentSong - 1) < 1) return;
-	m_player->PlaySubtune(ti.currentSong - 1);
+	const SidTuneInfo *ti = m_player->GetTuneInfo();
+	if((ti->currentSong() - 1) < 1) return;
+	m_player->PlaySubtune(ti->currentSong() - 1);
 	RefreshWindowTitle();
 }
 
@@ -75,11 +75,8 @@ void CSubSongDlg::Show()
 void CSubSongDlg::RefreshWindowTitle()
 {
 	char buf[30];
-	SidTuneInfo ti;
-
-	ti = m_player->GetTuneInfo();
-
-	sprintf(buf,"Subtune %d of %d ",ti.currentSong, ti.songs);
+	const SidTuneInfo *ti = m_player->GetTuneInfo();
+	sprintf(buf,"Subtune %d of %d ",ti->currentSong(), ti->songs());
 	SetWindowTextA(m_hWnd,buf);
 }
 

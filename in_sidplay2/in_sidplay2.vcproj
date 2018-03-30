@@ -145,6 +145,7 @@
 				AdditionalDependencies="libsidplay.lib resid_builder.lib libsidutils.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories=""
+				GenerateManifest="false"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
@@ -191,26 +192,8 @@
 				>
 			</File>
 			<File
-				RelativePath=".\dllmain.cpp"
+				RelativePath=".\helpers.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						CompileAsManaged="0"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						CompileAsManaged="0"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\in_sidplay2.cpp"
@@ -241,6 +224,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\StilBlock.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\subSongDlg.cpp"
 				>
 			</File>
@@ -259,11 +246,23 @@
 				>
 			</File>
 			<File
+				RelativePath=".\c64roms.h"
+				>
+			</File>
+			<File
 				RelativePath=".\configDlg.h"
 				>
 			</File>
 			<File
+				RelativePath=".\helpers.h"
+				>
+			</File>
+			<File
 				RelativePath=".\infoDlg.h"
+				>
+			</File>
+			<File
+				RelativePath=".\pstdint.h"
 				>
 			</File>
 			<File
@@ -272,6 +271,10 @@
 			</File>
 			<File
 				RelativePath=".\stdafx.h"
+				>
+			</File>
+			<File
+				RelativePath=".\StilBlock.h"
 				>
 			</File>
 			<File
@@ -301,30 +304,6 @@
 				>
 			</File>
 		</Filter>
-		<Filter
-			Name="WinampSDK"
-			>
-			<File
-				RelativePath=".\IN2.H"
-				>
-			</File>
-			<File
-				RelativePath=".\ipc_pe.h"
-				>
-			</File>
-			<File
-				RelativePath=".\OUT.H"
-				>
-			</File>
-			<File
-				RelativePath=".\wa_ipc.h"
-				>
-			</File>
-		</Filter>
-		<File
-			RelativePath=".\ReadMe.txt"
-			>
-		</File>
 	</Files>
 	<Globals>
 	</Globals>

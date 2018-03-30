@@ -40,6 +40,10 @@
 
 #include "stringutils.h"
 
+#if defined(_WIN32)
+#  define snprintf _snprintf
+#endif
+
 using namespace std;
 
 const ios_base::openmode STILopenFlags = ios::in | ios::binary;

@@ -25,7 +25,13 @@
 
 #include "sidcxx11.h"
 
+#ifdef _MSC_VER
+#if (_MSC_VER >= 1600)
 #include <stdint.h>
+#else
+#include "pstdint.h"
+#endif /* (_MSC_VER >= 1600) */
+#endif
 
 namespace libsidplayfp
 {

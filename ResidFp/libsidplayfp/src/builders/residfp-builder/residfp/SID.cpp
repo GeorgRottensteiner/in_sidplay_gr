@@ -55,8 +55,8 @@ namespace reSIDfp
  * [2]: http://noname.c64.org/csdb/forums/?roomid=11&topicid=29025&showallposts=1
  */
  //@{
-int constexpr BUS_TTL_6581 = 0x01d00;
-int constexpr BUS_TTL_8580 = 0xa2000;
+int const BUS_TTL_6581 = 0x01d00;
+int const BUS_TTL_8580 = 0xa2000;
 //@}
 
 SID::SID() :

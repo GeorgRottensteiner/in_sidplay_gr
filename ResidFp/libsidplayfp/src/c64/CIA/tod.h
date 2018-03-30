@@ -24,7 +24,13 @@
 #ifndef TOD_H
 #define TOD_H
 
+#ifdef _MSC_VER
+#if (_MSC_VER >= 1600)
 #include <stdint.h>
+#else
+#include "pstdint.h"
+#endif /* (_MSC_VER >= 1600) */
+#endif
 
 #include "EventScheduler.h"
 

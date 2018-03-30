@@ -23,7 +23,13 @@
 #ifndef MMU_H
 #define MMU_H
 
+#ifdef _MSC_VER
+#if (_MSC_VER >= 1600)
 #include <stdint.h>
+#else
+#include "pstdint.h"
+#endif /* (_MSC_VER >= 1600) */
+#endif
 
 #include "sidendian.h"
 #include "sidmemory.h"

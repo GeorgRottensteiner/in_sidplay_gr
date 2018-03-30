@@ -123,6 +123,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="StilBlock.cpp" />
+    <ClCompile Include="subSongDlg.cpp" />
     <ClCompile Include="ThreadSidPlayer.cpp" />
   </ItemGroup>
   <ItemGroup>

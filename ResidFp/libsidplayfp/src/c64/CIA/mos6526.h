@@ -26,7 +26,13 @@
 
 #include <memory>
 
+#ifdef _MSC_VER
+#if (_MSC_VER >= 1600)
 #include <stdint.h>
+#else
+#include "pstdint.h"
+#endif /* (_MSC_VER >= 1600) */
+#endif
 
 #include "interrupt.h"
 #include "timer.h"
