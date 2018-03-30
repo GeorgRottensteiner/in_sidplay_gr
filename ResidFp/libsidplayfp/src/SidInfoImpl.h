@@ -46,11 +46,15 @@
 #endif
 
 #ifndef PACKAGE_NAME
-#  define PACKAGE_NAME PACKAGE
+#  define PACKAGE_NAME "PACKAGE"
 #endif
 
 #ifndef PACKAGE_VERSION
-#  define PACKAGE_VERSION VERSION
+#  define PACKAGE_VERSION "VERSION"
+#endif
+
+#ifndef PACKAGE_URL
+#  define PACKAGE_URL "PACKAGE_URL"
 #endif
 
 /**

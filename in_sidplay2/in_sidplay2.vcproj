@@ -97,7 +97,7 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			OutputDirectory="$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="2"
 			UseOfMFC="0"
@@ -121,15 +121,23 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="2"
+				Optimization="3"
+				InlineFunctionExpansion="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="E:\sid\libsidutils\include\sidplay\utils;&quot;E:\sid\builders\resid-builder\include&quot;;E:\sid\libsidplay\include"
+				FavorSizeOrSpeed="2"
+				OmitFramePointers="true"
+				AdditionalIncludeDirectories="&quot;..\ResidFp\libsidplayfp\src\builders\residfp-builder&quot;;..\ResidFp\libsidplayfp\win32;..\ResidFp\libsidplayfp\src;..\.."
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;IN_SIDPLAY2_EXPORTS;HAVE_MSWINDOWS"
-				RuntimeLibrary="0"
+				StringPooling="true"
+				RuntimeLibrary="2"
+				BufferSecurityCheck="false"
 				EnableFunctionLevelLinking="true"
-				UsePrecompiledHeader="2"
+				EnableEnhancedInstructionSet="2"
+				RuntimeTypeInfo="false"
+				BrowseInformation="1"
 				WarningLevel="3"
 				DebugInformationFormat="3"
+				DisableSpecificWarnings="4018;4091;4101;4996;4482;4244;4800;4251;4275"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -142,7 +150,6 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libsidplay.lib resid_builder.lib libsidutils.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories=""
 				GenerateManifest="false"
