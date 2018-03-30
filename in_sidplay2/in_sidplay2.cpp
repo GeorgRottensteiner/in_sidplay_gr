@@ -2,15 +2,15 @@
 //
 
 #include "stdafx.h"
-#include "in2.h"
+#include <sdk/winamp/in2.h>
 #include "ThreadSidplayer.h"
 #include "resource.h"
 #include "aboutdlg.h"
 #include "configdlg.h"
 #include "infodlg.h"
 //#include "subsongdlg.h"
-#include "wa_ipc.h"
-#include "ipc_pe.h"
+#include <sdk/winamp/wa_ipc.h>
+#include <sdk/winamp/ipc_pe.h>
 #include "helpers.h"
 
 #include <fcntl.h>

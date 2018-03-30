@@ -15,7 +15,7 @@
 
 #include "StilBlock.h"
 
-#include "in2.h"
+#include <sdk/winamp/in2.h>
 #include "typesdefs.h"
 //#include <hash_map>
 
