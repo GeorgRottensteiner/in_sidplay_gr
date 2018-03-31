@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="windows-1250"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
-	Name="in_sidplay2"
+	Version="9.00"
+	Name="in_sidious"
 	ProjectGUID="{BF45EEFF-6959-449D-B3D7-98301B609489}"
 	RootNamespace="in_sidplay2"
 	Keyword="Win32Proj"
