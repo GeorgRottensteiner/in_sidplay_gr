@@ -1,7 +1,7 @@
 // in_sidplay2.cpp : Defines the exported functions for the DLL application.
 //
 
-#include "stdafx.h"
+#include <windows.h>
 #include <sdk/winamp/in2.h>
 #include "ThreadSidplayer.h"
 #include "resource.h"

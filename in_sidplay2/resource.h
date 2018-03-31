@@ -2,7 +2,6 @@
 // Microsoft Visual C++ generated include file.
 // Used by in_sidplay2.rc
 //
-#define IDOK2                           2
 #define IDD_CONFIG_DLG                  101
 #define IDD_ABOUTDLG                    102
 #define IDD_FILEINFODLG                 104

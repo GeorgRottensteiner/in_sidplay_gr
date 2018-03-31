@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include <windows.h>
 #include "ThreadSidPlayer.h"
 #include "SidInfoImpl.h"
 #include "c64roms.h"

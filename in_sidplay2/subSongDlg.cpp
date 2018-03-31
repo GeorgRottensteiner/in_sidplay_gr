@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include <windows.h>
 #include "resource.h"
 #include "typesdefs.h"
 #include "subsongdlg.h"

@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include <windows.h>
 #include "helpers.h"
 
 std::vector<std::string> split(const std::string &text, char sep) {

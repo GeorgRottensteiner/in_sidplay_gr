@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include <windows.h>
 #include "infodlg.h"
 #include "resource.h"
 #include "threadsidplayer.h"
