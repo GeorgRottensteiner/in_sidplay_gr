@@ -1,0 +1,465 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid-builder.cpp" />
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid-emu.cpp" />
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\dac.cc">
+      <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\resid\</AssemblerListingLocation>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\resid\</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\resid\</XMLDocumentationFileName>
+      <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\resid\</AssemblerListingLocation>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\resid\</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\resid\</XMLDocumentationFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\envelope.cc">
+      <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\resid\</AssemblerListingLocation>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\resid\</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\resid\</XMLDocumentationFileName>
+      <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\resid\</AssemblerListingLocation>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\resid\</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\resid\</XMLDocumentationFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\extfilt.cc">
+      <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\resid\</AssemblerListingLocation>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\resid\</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\resid\</XMLDocumentationFileName>
+      <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\resid\</AssemblerListingLocation>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\resid\</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\resid\</XMLDocumentationFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\filter.cc">
+      <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\resid\</AssemblerListingLocation>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\resid\</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\resid\</XMLDocumentationFileName>
+      <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\resid\</AssemblerListingLocation>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\resid\</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\resid\</XMLDocumentationFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\pot.cc">
+      <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\resid\</AssemblerListingLocation>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\resid\</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\resid\</XMLDocumentationFileName>
+      <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\resid\</AssemblerListingLocation>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\resid\</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\resid\</XMLDocumentationFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\sid.cc">
+      <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\resid\</AssemblerListingLocation>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\resid\</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\resid\</XMLDocumentationFileName>
+      <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\resid\</AssemblerListingLocation>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\resid\</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\resid\</XMLDocumentationFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\version.cc">
+      <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\resid\</AssemblerListingLocation>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\resid\</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\resid\</XMLDocumentationFileName>
+      <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\resid\</AssemblerListingLocation>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\resid\</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\resid\</XMLDocumentationFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\voice.cc">
+      <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\resid\</AssemblerListingLocation>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\resid\</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\resid\</XMLDocumentationFileName>
+      <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\resid\</AssemblerListingLocation>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\resid\</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\resid\</XMLDocumentationFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\wave.cc">
+      <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\resid\</AssemblerListingLocation>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\resid\</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\resid\</XMLDocumentationFileName>
+      <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\resid\</AssemblerListingLocation>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\resid\</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\resid\</XMLDocumentationFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\builders\residfp-builder\residfp-builder.cpp" />
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\builders\residfp-builder\residfp-emu.cpp" />
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\builders\residfp-builder\residfp\Dac.cpp">
+      <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\residfp\</AssemblerListingLocation>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\residfp\</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\residfp\</XMLDocumentationFileName>
+      <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\residfp\</AssemblerListingLocation>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\residfp\</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\residfp\</XMLDocumentationFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\builders\residfp-builder\residfp\EnvelopeGenerator.cpp">
+      <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\residfp\</AssemblerListingLocation>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\residfp\</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\residfp\</XMLDocumentationFileName>
+      <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\residfp\</AssemblerListingLocation>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\residfp\</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\residfp\</XMLDocumentationFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\builders\residfp-builder\residfp\ExternalFilter.cpp">
+      <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\residfp\</AssemblerListingLocation>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\residfp\</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\residfp\</XMLDocumentationFileName>
+      <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\residfp\</AssemblerListingLocation>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\residfp\</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\residfp\</XMLDocumentationFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\builders\residfp-builder\residfp\Filter.cpp">
+      <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\residfp\</AssemblerListingLocation>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\residfp\</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\residfp\</XMLDocumentationFileName>
+      <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\residfp\</AssemblerListingLocation>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\residfp\</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\residfp\</XMLDocumentationFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\builders\residfp-builder\residfp\Filter6581.cpp">
+      <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\residfp\</AssemblerListingLocation>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\residfp\</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\residfp\</XMLDocumentationFileName>
+      <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\residfp\</AssemblerListingLocation>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\residfp\</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\residfp\</XMLDocumentationFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\builders\residfp-builder\residfp\Filter8580.cpp">
+      <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\residfp\</AssemblerListingLocation>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\residfp\</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\residfp\</XMLDocumentationFileName>
+      <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\residfp\</AssemblerListingLocation>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\residfp\</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\residfp\</XMLDocumentationFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\builders\residfp-builder\residfp\FilterModelConfig.cpp">
+      <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\residfp\</AssemblerListingLocation>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\residfp\</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\residfp\</XMLDocumentationFileName>
+      <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\residfp\</AssemblerListingLocation>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\residfp\</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\residfp\</XMLDocumentationFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\builders\residfp-builder\residfp\Integrator.cpp">
+      <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\residfp\</AssemblerListingLocation>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\residfp\</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\residfp\</XMLDocumentationFileName>
+      <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\residfp\</AssemblerListingLocation>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\residfp\</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\residfp\</XMLDocumentationFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\builders\residfp-builder\residfp\OpAmp.cpp">
+      <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\residfp\</AssemblerListingLocation>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\residfp\</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\residfp\</XMLDocumentationFileName>
+      <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\residfp\</AssemblerListingLocation>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\residfp\</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\residfp\</XMLDocumentationFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\builders\residfp-builder\residfp\resample\SincResampler.cpp" />
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\builders\residfp-builder\residfp\resample\test.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\builders\residfp-builder\residfp\SID.cpp">
+      <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\residfp\</AssemblerListingLocation>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\residfp\</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\residfp\</XMLDocumentationFileName>
+      <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\residfp\</AssemblerListingLocation>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\residfp\</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\residfp\</XMLDocumentationFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\builders\residfp-builder\residfp\Spline.cpp">
+      <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\residfp\</AssemblerListingLocation>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\residfp\</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\residfp\</XMLDocumentationFileName>
+      <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\residfp\</AssemblerListingLocation>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\residfp\</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\residfp\</XMLDocumentationFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\builders\residfp-builder\residfp\version.cc">
+      <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\residfp\</AssemblerListingLocation>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\residfp\</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\residfp\</XMLDocumentationFileName>
+      <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\residfp\</AssemblerListingLocation>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\residfp\</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\residfp\</XMLDocumentationFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\builders\residfp-builder\residfp\WaveformCalculator.cpp">
+      <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\residfp\</AssemblerListingLocation>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\residfp\</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\residfp\</XMLDocumentationFileName>
+      <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\residfp\</AssemblerListingLocation>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\residfp\</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\residfp\</XMLDocumentationFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\builders\residfp-builder\residfp\WaveformGenerator.cpp">
+      <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\residfp\</AssemblerListingLocation>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\residfp\</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\residfp\</XMLDocumentationFileName>
+      <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\residfp\</AssemblerListingLocation>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\residfp\</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\residfp\</XMLDocumentationFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\c64\c64.cpp" />
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\c64\CIA\mos6526.cpp" />
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\c64\CIA\timer.cpp" />
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\c64\CIA\tod.cpp" />
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\c64\CPU\mos6510.cpp" />
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\c64\CPU\mos6510debug.cpp" />
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\c64\mmu.cpp" />
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\c64\VIC_II\mos656x.cpp" />
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\EventScheduler.cpp" />
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\mixer.cpp" />
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\player.cpp" />
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\psiddrv.cpp" />
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\reloc65.cpp" />
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\sidemu.cpp" />
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\sidplayfp\sidbuilder.cpp" />
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\sidplayfp\SidConfig.cpp" />
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\sidplayfp\SidInfo.cpp" />
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\sidplayfp\sidplayfp.cpp" />
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\sidplayfp\SidTune.cpp" />
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\sidplayfp\SidTuneInfo.cpp" />
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\sidtune\MUS.cpp" />
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\sidtune\p00.cpp" />
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\sidtune\prg.cpp" />
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\sidtune\PSID.cpp" />
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\sidtune\SidTuneBase.cpp" />
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\sidtune\SidTuneTools.cpp" />
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\utils\iniParser.cpp" />
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\utils\md5Factory.cpp" />
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\utils\MD5\MD5.cpp" />
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\utils\SidDatabase.cpp" />
+    <ClCompile Include="..\..\..\..\libsidplayfp\src\utils\STILview\stil.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid-emu.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\dac.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\envelope.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\extfilt.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\filter.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\pot.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\resid-config.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\sid.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\spline.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\voice.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\wave.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\wave6581_PST.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\wave6581_PS_.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\wave6581_P_T.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\wave6581__ST.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\wave8580_PST.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\wave8580_PS_.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\wave8580_P_T.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\wave8580__ST.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\builders\residfp-builder\residfp-emu.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\builders\residfp-builder\residfp.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\builders\residfp-builder\residfp\array.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\builders\residfp-builder\residfp\Dac.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\builders\residfp-builder\residfp\EnvelopeGenerator.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\builders\residfp-builder\residfp\ExternalFilter.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\builders\residfp-builder\residfp\Filter.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\builders\residfp-builder\residfp\Filter6581.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\builders\residfp-builder\residfp\Filter8580.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\builders\residfp-builder\residfp\FilterModelConfig.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\builders\residfp-builder\residfp\Integrator.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\builders\residfp-builder\residfp\OpAmp.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\builders\residfp-builder\residfp\Potentiometer.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\builders\residfp-builder\residfp\resample\Resampler.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\builders\residfp-builder\residfp\resample\SincResampler.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\builders\residfp-builder\residfp\resample\TwoPassSincResampler.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\builders\residfp-builder\residfp\resample\ZeroOrderResampler.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\builders\residfp-builder\residfp\SID.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\builders\residfp-builder\residfp\Spline.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\builders\residfp-builder\residfp\Voice.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\builders\residfp-builder\residfp\WaveformCalculator.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\builders\residfp-builder\residfp\WaveformGenerator.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\c64\Banks\Bank.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\c64\Banks\ColorRAMBank.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\c64\Banks\DisconnectedBusBank.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\c64\Banks\ExtraSidBank.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\c64\Banks\IOBank.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\c64\Banks\NullSid.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\c64\Banks\SidBank.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\c64\Banks\SystemRAMBank.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\c64\Banks\SystemROMBanks.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\c64\Banks\ZeroRAMBank.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\c64\c64.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\c64\c64cia.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\c64\c64cpu.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\c64\c64env.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\c64\c64sid.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\c64\c64vic.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\c64\CIA\mos6526.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\c64\CIA\timer.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\c64\CIA\tod.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\c64\component.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\c64\CPU\flags.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\c64\CPU\mos6510.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\c64\CPU\mos6510debug.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\c64\CPU\opcodes.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\c64\mmu.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\c64\VIC_II\lightpen.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\c64\VIC_II\mos656x.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\c64\VIC_II\sprites.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\EventScheduler.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\mixer.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\player.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\psiddrv.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\reloc65.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\romCheck.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\sidcxx11.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\sidemu.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\sidendian.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\SidInfoImpl.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\sidmd5.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\sidmemory.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\sidplayfp\event.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\sidplayfp\sidbuilder.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\sidplayfp\SidConfig.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\sidplayfp\siddefs.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\sidplayfp\SidInfo.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\sidplayfp\sidplayfp.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\sidplayfp\SidTune.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\sidplayfp\SidTuneInfo.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\sidtune\MUS.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\sidtune\p00.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\sidtune\prg.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\sidtune\PSID.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\sidtune\SidTuneBase.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\sidtune\SidTuneCfg.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\sidtune\SidTuneInfoImpl.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\sidtune\SidTuneTools.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\sidtune\SmartPtr.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\stringutils.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\utils\iMd5.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\utils\iniParser.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\utils\md5Factory.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\utils\md5Gcrypt.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\utils\md5Internal.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\utils\MD5\MD5.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\utils\MD5\MD5_Defs.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\utils\SidDatabase.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\utils\STILview\stil.h" />
+    <ClInclude Include="..\..\..\..\libsidplayfp\src\utils\STILview\stildefs.h" />
+    <ClInclude Include="config.h" />
+    <ClInclude Include="residfp\siddefs-fp.h" />
+    <ClInclude Include="resid\siddefs.h" />
+    <ClInclude Include="sidplayfp\sidversion.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\AUTHORS" />
+    <None Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\ChangeLog" />
+    <None Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\configure.in" />
+    <None Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\COPYING" />
+    <None Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\INSTALL" />
+    <None Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\Makefile.am" />
+    <None Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\NEWS" />
+    <None Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\README" />
+    <None Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\README.VICE" />
+    <None Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\samp2src.pl" />
+    <None Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\siddefs.h.in" />
+    <None Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\THANKS" />
+    <None Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\TODO" />
+    <None Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\wave6581_PST.dat" />
+    <None Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\wave6581_PS_.dat" />
+    <None Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\wave6581_P_T.dat" />
+    <None Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\wave6581__ST.dat" />
+    <None Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\wave8580_PST.dat" />
+    <None Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\wave8580_PS_.dat" />
+    <None Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\wave8580_P_T.dat" />
+    <None Include="..\..\..\..\libsidplayfp\src\builders\resid-builder\resid\wave8580__ST.dat" />
+    <None Include="..\..\..\..\libsidplayfp\src\builders\residfp-builder\residfp\AUTHORS" />
+    <None Include="..\..\..\..\libsidplayfp\src\builders\residfp-builder\residfp\COPYING" />
+    <None Include="..\..\..\..\libsidplayfp\src\builders\residfp-builder\residfp\README" />
+    <None Include="..\..\..\..\libsidplayfp\src\builders\residfp-builder\residfp\siddefs-fp.h.in" />
+    <None Include="..\..\..\..\libsidplayfp\src\poweron.bin" />
+    <None Include="..\..\..\..\libsidplayfp\src\psiddrv.a65" />
+    <None Include="..\..\..\..\libsidplayfp\src\psiddrv.bin" />
+    <None Include="..\..\..\..\libsidplayfp\src\sidplayfp\sidversion.h.in" />
+    <None Include="..\..\..\..\libsidplayfp\src\sidtune\sidplayer.bin" />
+    <None Include="..\..\..\..\libsidplayfp\src\sidtune\sidplayer1.a65" />
+    <None Include="..\..\..\..\libsidplayfp\src\sidtune\sidplayer2.a65" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\..\..\libsidplayfp\src\utils\STILview\README.txt" />
+    <Text Include="..\..\..\..\libsidplayfp\src\utils\STILview\TODO.txt" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{62EB3E65-1E51-44EB-B407-FE1C7B3AFB5C}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>libsidplayfp</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140_xp</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140_xp</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;HAVE_CONFIG_H;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>p:\common;$(ProjectDir);$(ProjectDir)/resid;$(ProjectDir)/residfp;$(ProjectDir)/../../../../libsidplayfp/src</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <EnableEnhancedInstructionSet>NoExtensions</EnableEnhancedInstructionSet>
+      <AdditionalOptions>/Zc:threadSafeInit- %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>_WIN32_WINNT=0x501;WIN32;HAVE_CONFIG_H;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>p:\common;$(ProjectDir);$(ProjectDir)/resid;$(ProjectDir)/residfp;$(ProjectDir)/../../../../libsidplayfp/src</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <AdditionalOptions>/Zc:threadSafeInit- %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
