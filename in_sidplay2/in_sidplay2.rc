@@ -120,7 +120,7 @@ END
 
 IDD_ABOUTDLG DIALOGEX 0, 0, 195, 145
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "in_sidplay2 2.1.5.0"
+CAPTION "in_sidplay2 1.0.0.0gr"
 FONT 8, "Microsoft Sans Serif", 700, 0, 0xEE
 BEGIN
     CTEXT           "in_sidplay2 Winamp Module v1.0.0.0gr",IDC_STATIC,14,7,164,8
