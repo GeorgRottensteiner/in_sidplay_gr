@@ -215,8 +215,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,1,5,0
- PRODUCTVERSION 2,1,5,0
+ FILEVERSION 1,0,0,0
+ PRODUCTVERSION 1,0,0,0
  FILEFLAGSMASK 0x17L
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -231,14 +231,14 @@ BEGIN
     BEGIN
         BLOCK "080004b0"
         BEGIN
-            VALUE "CompanyName", "WACUP (WinAmp Community Update Pack)"
+            VALUE "CompanyName", "GR Games"
             VALUE "FileDescription", "Winamp Input Plug-in"
-            VALUE "FileVersion", "2.1.5.0"
+            VALUE "FileVersion", "1.0.0.0"
             VALUE "InternalName", "in_sidplay2.dll"
-            VALUE "LegalCopyright", "Copyright © 2017-2018 Zbigniew Ross (Licensed under GNU GPL), WACUP modifications by Darren Owen aka DrO © 2018"
+            VALUE "LegalCopyright", "Copyright © 2019 Georg Rottensteiner, based on libsidplayfp and in_sidplay by Zbigniew Ross (Licensed under GNU GPL), WACUP modifications by Darren Owen aka DrO © 2018"
             VALUE "OriginalFilename", "in_sidplay2.dll"
             VALUE "ProductName", "SID (Commodore 64 Music) Decoder"
-            VALUE "ProductVersion", "2.1.5.0"
+            VALUE "ProductVersion", "1.0.0.0"
         END
     END
     BLOCK "VarFileInfo"
