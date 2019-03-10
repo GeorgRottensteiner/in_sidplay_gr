@@ -1,0 +1,41 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mlExplorer", "mlExplorer.vcproj", "{FE1820D0-161C-4FE3-80F7-76454454FF1E}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "nde", "..\nde\nde.vcproj", "{4D25C321-7F8B-424E-9899-D80A364BAF1A}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Profiling = Profiling
+		Release = Release
+		Release 64 = Release 64
+	EndGlobalSection
+	GlobalSection(ProjectDependencies) = postSolution
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{FE1820D0-161C-4FE3-80F7-76454454FF1E}.Debug.ActiveCfg = Debug|Win32
+		{FE1820D0-161C-4FE3-80F7-76454454FF1E}.Debug.Build.0 = Debug|Win32
+		{FE1820D0-161C-4FE3-80F7-76454454FF1E}.Profiling.ActiveCfg = Release|Win32
+		{FE1820D0-161C-4FE3-80F7-76454454FF1E}.Profiling.Build.0 = Release|Win32
+		{FE1820D0-161C-4FE3-80F7-76454454FF1E}.Release.ActiveCfg = Release|Win32
+		{FE1820D0-161C-4FE3-80F7-76454454FF1E}.Release.Build.0 = Release|Win32
+		{FE1820D0-161C-4FE3-80F7-76454454FF1E}.Release 64.ActiveCfg = Release|Win32
+		{FE1820D0-161C-4FE3-80F7-76454454FF1E}.Release 64.Build.0 = Release|Win32
+		{4D25C321-7F8B-424E-9899-D80A364BAF1A}.Debug.ActiveCfg = Debug|Win32
+		{4D25C321-7F8B-424E-9899-D80A364BAF1A}.Debug.Build.0 = Debug|Win32
+		{4D25C321-7F8B-424E-9899-D80A364BAF1A}.Profiling.ActiveCfg = Profiling|Win32
+		{4D25C321-7F8B-424E-9899-D80A364BAF1A}.Profiling.Build.0 = Profiling|Win32
+		{4D25C321-7F8B-424E-9899-D80A364BAF1A}.Release.ActiveCfg = Release|Win32
+		{4D25C321-7F8B-424E-9899-D80A364BAF1A}.Release.Build.0 = Release|Win32
+		{4D25C321-7F8B-424E-9899-D80A364BAF1A}.Release 64.ActiveCfg = Release 64|Win32
+		{4D25C321-7F8B-424E-9899-D80A364BAF1A}.Release 64.Build.0 = Release 64|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

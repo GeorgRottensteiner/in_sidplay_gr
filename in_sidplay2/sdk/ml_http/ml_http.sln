@@ -1,0 +1,23 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ml_http", "ml_http.vcproj", "{ED5B987C-9AD5-43E8-8C0A-91489D473C7A}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectDependencies) = postSolution
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{ED5B987C-9AD5-43E8-8C0A-91489D473C7A}.Debug.ActiveCfg = Debug|Win32
+		{ED5B987C-9AD5-43E8-8C0A-91489D473C7A}.Debug.Build.0 = Debug|Win32
+		{ED5B987C-9AD5-43E8-8C0A-91489D473C7A}.Release.ActiveCfg = Release|Win32
+		{ED5B987C-9AD5-43E8-8C0A-91489D473C7A}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

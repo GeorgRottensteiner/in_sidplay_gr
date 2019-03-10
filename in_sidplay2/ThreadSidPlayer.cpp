@@ -3,6 +3,8 @@
 #include "SidInfoImpl.h"
 #include "c64roms.h"
 
+#include <debug/debugclient.h>
+
 
 CThreadSidPlayer::CThreadSidPlayer(In_Module& inWAmod): m_tune(0), m_threadHandle(0)
 {
@@ -28,7 +30,7 @@ CThreadSidPlayer::CThreadSidPlayer(In_Module& inWAmod): m_tune(0), m_threadHandl
 	m_playerConfig.playlistFormat = new char[32];
 	strcpy(m_playerConfig.playlistFormat, "%t %x %sn / %a / %r %st");
 	m_playerConfig.subsongFormat = new char[32];
-	strcpy(m_playerConfig.subsongFormat, "(Tune %n)");
+	strcpy(m_playerConfig.subsongFormat, "(Tune %n/%ns)");
 
 	m_playerConfig.pseudoStereo = false;
 	m_playerConfig.sid2Model = SidConfig::sid_model_t::MOS6581;	
@@ -38,7 +40,7 @@ CThreadSidPlayer::CThreadSidPlayer(In_Module& inWAmod): m_tune(0), m_threadHandl
 	m_engine = new sidplayfp;
 }
 
-CThreadSidPlayer::~CThreadSidPlayer(void)
+CThreadSidPlayer::~CThreadSidPlayer()
 {
 	if(m_decodeBufLen > 0) delete[] m_decodeBuf;
 	ClearSTILData();
@@ -55,10 +57,10 @@ CThreadSidPlayer::~CThreadSidPlayer(void)
 //	m_sidDatabase.close();
 }
 
-void CThreadSidPlayer::Init(void)
-{ 
-	int numChann;
 
+
+void CThreadSidPlayer::Init()
+{ 
 	if(m_playerStatus != SP_STOPPED) Stop();
 
 	m_playerConfig.sidConfig = m_engine->config();
@@ -221,7 +223,7 @@ DWORD CThreadSidPlayer::Run(void* thisparam)
 
 		//timeElapsed = playerObj->GetPlayTime();
 		//timeElapsed = playerObj->m_inmod->outMod->GetOutputTime();
-		timeElapsed = playerObj->m_playTimems;
+		timeElapsed = (int)playerObj->m_playTimems;
 		//if we konw the song length and timer just reached it then go to next song
 		
 		if(playerObj->GetSongLength() >= 1)
@@ -258,10 +260,23 @@ int CThreadSidPlayer::CurrentSubtune(void)
 	return 0;
 }
 
+
+
+int CThreadSidPlayer::GetNumSubtunes()
+{
+  if ( m_tune.getStatus() )
+  {
+    return m_tune.getInfo()->songs();
+  }
+  return 0;
+}
+
+
+
 void CThreadSidPlayer::PlaySubtune(int subTune)
 {	
 	Stop();
-	m_tune.selectSong(subTune);	
+  m_tune.selectSong( subTune );
 	m_currentTuneLength = m_sidDatabase.length(m_tune);
 	if ((m_playerConfig.playLimitEnabled) && (m_currentTuneLength <= 0))
 	{
@@ -272,16 +287,21 @@ void CThreadSidPlayer::PlaySubtune(int subTune)
 	Play();
 }
 
-const SidTuneInfo* CThreadSidPlayer::GetTuneInfo(void)
+
+
+const SidTuneInfo* CThreadSidPlayer::GetTuneInfo()
 {
 	return (m_tune.getStatus()) ? m_tune.getInfo() : NULL; //SidTuneInfo();
 }
 
-int CThreadSidPlayer::GetPlayTime(void)
+
+
+int CThreadSidPlayer::GetPlayTime()
 {
-	return m_playTimems+(m_inmod->outMod->GetOutputTime()-m_inmod->outMod->GetWrittenTime()); 
-	//return ((m_timer->time()*1000)/m_timer->timebase()) + (m_inmod->outMod->GetOutputTime()-m_inmod->outMod->GetWrittenTime()); 
+  return (int)( m_playTimems + ( m_inmod->outMod->GetOutputTime() - m_inmod->outMod->GetWrittenTime() ) );
 }
+
+
 
 bool CThreadSidPlayer::LoadConfigFromFile(PlayerConfig *conf)
 {
@@ -375,7 +395,7 @@ void CThreadSidPlayer::SaveConfigToFile(PlayerConfig *plconf, wchar_t* fileName)
 	outFile << "C64ModelForced=" << conf->forceC64Model << endl;
 	outFile << "SidModel=" << conf->defaultSidModel << endl;
 	outFile << "SidModelForced=" << conf->forceSidModel << endl;
-	outFile << "Sid2ModelForced=" << conf->forceSecondSidModel << endl;
+	//outFile << "Sid2ModelForced=" << conf->forceSecondSidModel << endl;
 	
 	outFile<<"PlayLimitEnabled="<<plconf->playLimitEnabled<<endl;
 	outFile<<"PlayLimitTime="<<plconf->playLimitSec<<endl;
@@ -469,11 +489,12 @@ void CThreadSidPlayer::AssignConfigValue(PlayerConfig* plconf,string token, stri
 		return;
 	}
 
+  /*
 	if (token.compare("Sid2ModelForced") == 0)
 	{
 		conf->forceSecondSidModel = (bool)atoi(value.c_str());
 		return;
-	}
+	}*/
 
 	if(token.compare("PlayLimitEnabled") == 0) 
 	{
@@ -579,8 +600,8 @@ void CThreadSidPlayer::SetConfig(PlayerConfig* newConfig)
 	m_playerConfig.sidConfig.forceC64Model = newConfig->sidConfig.forceC64Model;
 	m_playerConfig.sidConfig.defaultSidModel = newConfig->sidConfig.defaultSidModel;
 	m_playerConfig.sidConfig.forceSidModel = newConfig->sidConfig.forceSidModel;
-	m_playerConfig.sidConfig.forceSecondSidModel = newConfig->sidConfig.forceSecondSidModel;
-	m_playerConfig.sidConfig.secondSidModel = newConfig->sidConfig.secondSidModel;
+	//m_playerConfig.sidConfig.forceSecondSidModel = newConfig->sidConfig.forceSecondSidModel;
+  //m_playerConfig.sidConfig.secondSidModel = newConfig->sidConfig.secondSidModel;
 	
 
 
@@ -680,12 +701,12 @@ void CThreadSidPlayer::SetConfig(PlayerConfig* newConfig)
 	if (m_playerConfig.pseudoStereo)
 	{
 		m_playerConfig.sidConfig.secondSidAddress = 0xD400;
-		m_playerConfig.sidConfig.secondSidModel = m_playerConfig.sid2Model;
+		//m_playerConfig.sidConfig.secondSidModel = m_playerConfig.sid2Model;
 	}
 	else
 	{
 		m_playerConfig.sidConfig.secondSidAddress = 0;
-		m_playerConfig.sidConfig.secondSidModel = -1;
+    //m_playerConfig.sidConfig.secondSidModel = -1;
 	}
 	//m_playerConfig.sidConfig.
 	m_engine->config(m_playerConfig.sidConfig);
@@ -742,6 +763,8 @@ int CThreadSidPlayer::GetSongLength()
 	return m_currentTuneLength;
 }
 
+
+
 void CThreadSidPlayer::DoSeek()
 {
 	int bits;
@@ -757,11 +780,9 @@ void CThreadSidPlayer::DoSeek()
 	{
 		timesek = m_seekNeedMs / 1000;
 		if (timesek == 0) return;
-		//seek time is less than current time - we have to rewind song
-		SidTuneInfo *si;
 
 		m_tune.selectSong(m_tune.getInfo()->currentSong());
-		//m_currentTuneLength = m_sidDatabase.length(m_tune);//we know length of tune already
+		//we know length of tune already
 		m_engine->stop();
 		m_engine->load(&m_tune);//timers are now 0
 	}

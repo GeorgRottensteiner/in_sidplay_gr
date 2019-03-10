@@ -13,13 +13,11 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// Polish resources
+// Polish (Poland) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_PLK)
-#ifdef _WIN32
 LANGUAGE LANG_POLISH, SUBLANG_DEFAULT
 #pragma code_page(1250)
-#endif //_WIN32
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -46,18 +44,16 @@ END
 
 #endif    // APSTUDIO_INVOKED
 
-#endif    // Polish resources
+#endif    // Polish (Poland) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
 /////////////////////////////////////////////////////////////////////////////
-// English (U.K.) resources
+// English (United Kingdom) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENG)
-#ifdef _WIN32
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_UK
 #pragma code_page(1252)
-#endif //_WIN32
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -127,13 +123,13 @@ STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "in_sidplay2 2.1.5.0"
 FONT 8, "Microsoft Sans Serif", 700, 0, 0xEE
 BEGIN
-    LTEXT           "in_sidplay2 Winamp Module v2.1.5.0",IDC_STATIC,38,7,117,8
-    LTEXT           "© 2017-2018 Zbigniew Ross",IDC_STATIC,55,19,97,10
-    LTEXT           "zbigniew.ross@gmail.com",IDC_STATIC,56,30,83,8
+    CTEXT           "in_sidplay2 Winamp Module v1.0.0.0gr",IDC_STATIC,14,7,164,8
+    CTEXT           "Based on https://github.com/WACUP/in_sidplay2",IDC_STATIC,7,33,181,10
     LTEXT           "Licensed under the GNU General Public License (GPL)",IDC_STATIC,16,43,162,8
     LTEXT           "Linked with libsidplayfp 2.0.0a and reSID-fp",IDC_STATIC,23,54,140,8
     EDITTEXT        IDC_ABOUTED,18,67,157,52,ES_MULTILINE | ES_AUTOHSCROLL | ES_READONLY
     DEFPUSHBUTTON   "OK",IDOK,72,124,50,14
+    CTEXT           "Modified to support sub songs",IDC_STATIC,7,20,181,10
 END
 
 IDD_FILEINFODLG DIALOGEX 0, 0, 353, 267
@@ -184,7 +180,7 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO 
+GUIDELINES DESIGNINFO
 BEGIN
     IDD_CONFIG_DLG, DIALOG
     BEGIN
@@ -251,7 +247,18 @@ BEGIN
     END
 END
 
-#endif    // English (U.K.) resources
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// AFX_DIALOG_LAYOUT
+//
+
+IDD_ABOUTDLG AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+#endif    // English (United Kingdom) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

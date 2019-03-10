@@ -1,0 +1,23 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ReplayGainAnalysis", "ReplayGainAnalysis.vcproj", "{8155E1C4-B6F8-4A1D-96A3-E4FF0FE9192D}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectDependencies) = postSolution
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{8155E1C4-B6F8-4A1D-96A3-E4FF0FE9192D}.Debug.ActiveCfg = Debug|Win32
+		{8155E1C4-B6F8-4A1D-96A3-E4FF0FE9192D}.Debug.Build.0 = Debug|Win32
+		{8155E1C4-B6F8-4A1D-96A3-E4FF0FE9192D}.Release.ActiveCfg = Release|Win32
+		{8155E1C4-B6F8-4A1D-96A3-E4FF0FE9192D}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

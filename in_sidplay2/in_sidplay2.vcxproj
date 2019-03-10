@@ -58,17 +58,17 @@
     </CustomBuildStep>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\ResidFp\libsidplayfp\src\builders\residfp-builder;..\ResidFp\libsidplayfp\win32;..\ResidFp\libsidplayfp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>p:\common;..\sidplay-residfp\projects\win\VC\libsidplayfp;..\sidplay-residfp\libsidplayfp\src\builders\residfp-builder;..\sidplay-residfp\libsidplayfp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;IN_SIDPLAY2_EXPORTS;HAVE_MSWINDOWS;HAVE_CONFIG_H;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libsidplayfp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(ProjectDir)\$(ConfigurationName)\libsidplayfp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\ResidFp\libsidplayfp\win32\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>libcmt.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
@@ -85,16 +85,16 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\ResidFp\libsidplayfp\src\builders\residfp-builder;..\ResidFp\libsidplayfp\win32;..\ResidFp\libsidplayfp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>p:\common;..\sidplay-residfp\projects\win\VC\libsidplayfp;..\sidplay-residfp\libsidplayfp\src\builders\residfp-builder;..\sidplay-residfp\libsidplayfp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;IN_SIDPLAY2_EXPORTS;HAVE_MSWINDOWS;HAVE_CONFIG_H;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libsidplayfp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(ProjectDir)\$(ConfigurationName)\libsidplayfp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\ResidFp\libsidplayfp\win32\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -107,21 +107,11 @@
   <ItemGroup>
     <ClCompile Include="aboutDlg.cpp" />
     <ClCompile Include="configDlg.cpp" />
-    <ClCompile Include="dllmain.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-      </PrecompiledHeader>
-      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      </PrecompiledHeader>
-      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsManaged>
-    </ClCompile>
+    <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="helpers.cpp" />
     <ClCompile Include="in_sidplay2.cpp" />
     <ClCompile Include="infoDlg.cpp" />
-    <ClCompile Include="stdafx.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-    </ClCompile>
+    <ClCompile Include="P:\Common\String\Convert.cpp" />
     <ClCompile Include="StilBlock.cpp" />
     <ClCompile Include="subSongDlg.cpp" />
     <ClCompile Include="ThreadSidPlayer.cpp" />
@@ -132,16 +122,11 @@
     <ClInclude Include="configDlg.h" />
     <ClInclude Include="helpers.h" />
     <ClInclude Include="infoDlg.h" />
+    <ClInclude Include="P:\Common\String\Convert.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="stdafx.h" />
     <ClInclude Include="StilBlock.h" />
-    <ClInclude Include="targetver.h" />
     <ClInclude Include="ThreadSidPlayer.h" />
     <ClInclude Include="typesdefs.h" />
-    <ClInclude Include="IN2.H" />
-    <ClInclude Include="ipc_pe.h" />
-    <ClInclude Include="OUT.H" />
-    <ClInclude Include="wa_ipc.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="in_sidplay2.rc" />
