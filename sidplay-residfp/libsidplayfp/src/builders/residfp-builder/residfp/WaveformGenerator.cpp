@@ -130,7 +130,7 @@ void WaveformGenerator::setChipModel(ChipModel chipModel)
     Dac dacBuilder(DAC_BITS);
     dacBuilder.kinkedDac(chipModel);
 
-    const float offset = dacBuilder.getOutput(chipModel == MOS6581 ? 0x380 : 0x800);
+    const float offset = (float)dacBuilder.getOutput(chipModel == MOS6581 ? 0x380 : 0x800);
 
     for (unsigned int i = 0; i < (1 << DAC_BITS); i++)
     {

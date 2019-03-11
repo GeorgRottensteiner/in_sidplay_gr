@@ -12,9 +12,6 @@
     <Filter Include="WinampSDK">
       <UniqueIdentifier>{2810f3a2-6ba4-4dc8-8a7b-4d271cc52431}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Common">
-      <UniqueIdentifier>{d84c37b7-5b66-4fa0-b93a-41a437f77fee}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="aboutDlg.cpp">
@@ -41,17 +38,11 @@
     <ClCompile Include="subSongDlg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="P:\Common\String\Convert.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
     <ClCompile Include="dllmain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="P:\Common\String\Convert.h">
-      <Filter>Common</Filter>
-    </ClInclude>
     <ClInclude Include="aboutDlg.h">
       <Filter>Source Files</Filter>
     </ClInclude>

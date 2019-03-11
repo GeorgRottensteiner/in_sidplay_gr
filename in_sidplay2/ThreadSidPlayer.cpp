@@ -3,7 +3,6 @@
 #include "SidInfoImpl.h"
 #include "c64roms.h"
 
-#include <debug/debugclient.h>
 
 
 CThreadSidPlayer::CThreadSidPlayer(In_Module& inWAmod): m_tune(0), m_threadHandle(0)

@@ -191,7 +191,7 @@ void SidTuneBase::loadFile(const char* fileName, buffer_t& bufferRef)
     }
 
     inFile.seekg(0, inFile.end);
-    const int fileLen = inFile.tellg();
+    const std::streampos fileLen = inFile.tellg();
 
     if (fileLen <= 0)
     {
@@ -201,7 +201,7 @@ void SidTuneBase::loadFile(const char* fileName, buffer_t& bufferRef)
     inFile.seekg(0, inFile.beg);
 
     buffer_t fileBuf;
-    fileBuf.reserve(fileLen);
+    fileBuf.reserve( (size_t)fileLen );
 
     try
     {

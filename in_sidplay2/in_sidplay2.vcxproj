@@ -111,7 +111,6 @@
     <ClCompile Include="helpers.cpp" />
     <ClCompile Include="in_sidplay2.cpp" />
     <ClCompile Include="infoDlg.cpp" />
-    <ClCompile Include="P:\Common\String\Convert.cpp" />
     <ClCompile Include="StilBlock.cpp" />
     <ClCompile Include="subSongDlg.cpp" />
     <ClCompile Include="ThreadSidPlayer.cpp" />
@@ -122,7 +121,6 @@
     <ClInclude Include="configDlg.h" />
     <ClInclude Include="helpers.h" />
     <ClInclude Include="infoDlg.h" />
-    <ClInclude Include="P:\Common\String\Convert.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="StilBlock.h" />
     <ClInclude Include="ThreadSidPlayer.h" />

@@ -32,7 +32,7 @@
 
 #include "sidcxx11.h"
 
-#include <debug/debugclient.h>
+
 
 namespace libsidplayfp
 {
@@ -213,7 +213,7 @@ uint_least32_t Player::play(short *buffer, uint_least32_t count)
             else
             {
                 // Clock chips and discard buffers
-                int size = m_c64.getMainCpuSpeed() / m_cfg.frequency;
+                int size = (int)( m_c64.getMainCpuSpeed() / m_cfg.frequency );
                 while (m_isPlaying && --size)
                 {
                     run(sidemu::OUTPUTBUFFERSIZE);
@@ -226,7 +226,7 @@ uint_least32_t Player::play(short *buffer, uint_least32_t count)
         else
         {
             // Clock the machine
-            int size = m_c64.getMainCpuSpeed() / m_cfg.frequency;
+            int size = (int)( m_c64.getMainCpuSpeed() / m_cfg.frequency );
             while (m_isPlaying && --size)
             {
                 run(sidemu::OUTPUTBUFFERSIZE);

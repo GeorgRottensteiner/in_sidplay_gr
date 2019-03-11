@@ -34,7 +34,7 @@
 #include "reloc65.h"
 #include "c64/CPU/mos6510.h"
 
-#include <Debug/DebugClient.h>
+
 
 namespace libsidplayfp
 {

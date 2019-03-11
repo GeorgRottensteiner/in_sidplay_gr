@@ -209,7 +209,7 @@ void MUS::tryLoad(buffer_t& musBuf,
         }
     }
 
-    musDataLen = musBuf.size();
+    musDataLen = (uint_least16_t)musBuf.size();
     info->m_loadAddr = SIDTUNE_MUS_DATA_ADDR;
 
     // Voice3Index now is offset to text lines (uppercase Pet-strings).

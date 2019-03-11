@@ -19,7 +19,7 @@
 #include <string>
 #include <vector>
 
-#include <debug/debugclient.h>
+
 
 In_Module inmod;
 CThreadSidPlayer *sidPlayer = NULL;
@@ -343,7 +343,6 @@ void getfileinfo( const char *filename, char *title, int *length_in_ms )
   char buf[20];
   int plLength;
   char *plfilename;
-  HWND h;
   char* foundChar;
   bool firstSong = true;
 
