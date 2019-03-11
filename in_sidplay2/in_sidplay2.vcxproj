@@ -58,7 +58,7 @@
     </CustomBuildStep>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>p:\common;..\sidplay-residfp\projects\win\VC\libsidplayfp;..\sidplay-residfp\libsidplayfp\src\builders\residfp-builder;..\sidplay-residfp\libsidplayfp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\sidplay-residfp\projects\win\VC\libsidplayfp;..\sidplay-residfp\libsidplayfp\src\builders\residfp-builder;..\sidplay-residfp\libsidplayfp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;IN_SIDPLAY2_EXPORTS;HAVE_MSWINDOWS;HAVE_CONFIG_H;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -85,7 +85,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>p:\common;..\sidplay-residfp\projects\win\VC\libsidplayfp;..\sidplay-residfp\libsidplayfp\src\builders\residfp-builder;..\sidplay-residfp\libsidplayfp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\sidplay-residfp\projects\win\VC\libsidplayfp;..\sidplay-residfp\libsidplayfp\src\builders\residfp-builder;..\sidplay-residfp\libsidplayfp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;IN_SIDPLAY2_EXPORTS;HAVE_MSWINDOWS;HAVE_CONFIG_H;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
