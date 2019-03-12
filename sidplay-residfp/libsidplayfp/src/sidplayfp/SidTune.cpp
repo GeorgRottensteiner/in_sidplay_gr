@@ -128,10 +128,15 @@ bool SidTune::placeSidTuneInC64mem(sidmemory& mem)
     return true;
 }
 
-const char* SidTune::createMD5(char *md5)
+
+
+std::string SidTune::createMD5( std::string& md5 )
 {
-    return tune.get() != nullptr ? tune->createMD5(md5) : nullptr;
+  return tune.get() != nullptr ? tune->createMD5( md5 ) : "";
 }
+
+
+
 const uint_least8_t* SidTune::c64Data() const
 {
     return tune.get() != nullptr ? tune->c64Data() : nullptr;

@@ -102,12 +102,12 @@ int_least32_t SidDatabase::length(SidTune &tune)
         return -1;
     }
 
-    char md5[SidTune::MD5_LENGTH + 1];
-    tune.createMD5(md5);
+    std::string  md5;
+    tune.createMD5( md5 );
     return length(md5, song);
 }
 
-int_least32_t SidDatabase::length(const char *md5, unsigned int song)
+int_least32_t SidDatabase::length(const std::string& md5, unsigned int song)
 {
     if (m_parser.get() == nullptr)
     {
@@ -122,7 +122,7 @@ int_least32_t SidDatabase::length(const char *md5, unsigned int song)
         return -1;
     }
 
-    const char *timeStamp = m_parser->getValue(md5);
+    const char *timeStamp = m_parser->getValue(md5.c_str());
 
     // If return is null then no entry found in database
     if (!timeStamp)

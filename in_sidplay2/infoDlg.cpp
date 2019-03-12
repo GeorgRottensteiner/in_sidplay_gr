@@ -3,6 +3,10 @@
 #include "resource.h"
 #include "threadsidplayer.h"
 
+#include "helpers.h"
+
+
+
 extern CThreadSidPlayer *sidPlayer;
 
 int CALLBACK InfoDlgWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam )
@@ -51,7 +55,7 @@ void InfoDlgInitDialog( HWND hWnd, SidTuneInfo *tuneInfo )
   SetDlgItemTextA( hWnd, IDC_INITADDR_STC, buf );
   sprintf_s( buf, sizeof( buf ), "$%x", tuneInfo->playAddr() );
   SetDlgItemTextA( hWnd, IDC_PLAYADDR_STC, buf );
-  SetDlgItemTextA( hWnd, IDC_SUBSONGS_STC, _itoa( tuneInfo->songs(), buf, 10 ) );
+  SetDlgItemTextA( hWnd, IDC_SUBSONGS_STC, NumberToString( tuneInfo->songs() ).c_str() );
 
   sprintf_s( buf, sizeof( buf ), "$%x", tuneInfo->sidChipBase( 1 ) );
   SetDlgItemTextA( hWnd, IDC_SID2_ADDR, buf );
@@ -83,7 +87,7 @@ void InfoDlgInitDialog( HWND hWnd, SidTuneInfo *tuneInfo )
       SetDlgItemTextA( hWnd, IDC_CLOCKSPEED_STC, "ANY" );
       break;
   }
-  SetDlgItemTextA( hWnd, IDC_FILELENGTH_STC, _itoa( tuneInfo->dataFileLen(), buf, 10 ) );
+  SetDlgItemTextA( hWnd, IDC_FILELENGTH_STC, NumberToString( tuneInfo->dataFileLen() ).c_str() );
 
   infoStr.clear();
   for ( unsigned int i = 0; i < tuneInfo->numberOfInfoStrings(); ++i )

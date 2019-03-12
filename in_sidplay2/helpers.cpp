@@ -29,3 +29,14 @@ void replaceAll(std::string& stringToReplace, const char* stringToFind, const ch
 		index += replacementLen;
 	}
 }
+
+
+
+std::string NumberToString( int Value )
+{
+  static char    dummy[1024];
+
+  _itoa_s( Value, dummy, 10 );
+
+  return dummy;
+}

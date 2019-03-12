@@ -37,7 +37,7 @@ struct psidHeader;
 class PSID final : public SidTuneBase
 {
 private:
-    char m_md5[SidTune::MD5_LENGTH+1];
+    std::string m_md5;
 
 private:
     /**
@@ -66,7 +66,7 @@ public:
      */
     static SidTuneBase* load(buffer_t& dataBuf);
 
-    virtual const char *createMD5(char *md5) override;
+    virtual std::string createMD5( std::string& md5 ) override;
 
 private:
     // prevent copying
