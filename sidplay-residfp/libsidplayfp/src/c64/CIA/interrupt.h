@@ -67,7 +67,7 @@ private:
     uint8_t idr;
 
 protected:
-    bool interruptMasked() const { return icr & idr; }
+    bool interruptMasked() const { return !!( icr & idr ); }
 
     bool interruptTriggered() const { return (idr & INTERRUPT_REQUEST) == 0; }
 

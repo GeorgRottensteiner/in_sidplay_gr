@@ -57,7 +57,7 @@ protected:
 
     void portB() override
     {
-        m_env.lightpen((prb | ~ddrb) & 0x10);
+        m_env.lightpen( !!( (prb | ~ddrb) & 0x10 ) );
     }
 
 public:
@@ -117,12 +117,12 @@ public:
 
     void poke(uint_least16_t address, uint8_t value) override
     {
-        write(address, value);
+        write(( uint_least8_t)address, value);
     }
 
     uint8_t peek(uint_least16_t address) override
     {
-        return read(address);
+        return read((uint_least8_t)address);
     }
 };
 

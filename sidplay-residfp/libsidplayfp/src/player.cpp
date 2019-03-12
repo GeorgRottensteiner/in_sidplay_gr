@@ -524,7 +524,7 @@ void Player::sidParams(double cpuFreq, int frequency,
         if (s == nullptr)
             break;
 
-        s->sampling((float)cpuFreq, frequency, sampling, fastSampling);
+        s->sampling((float)cpuFreq, (float)frequency, sampling, fastSampling);
     }
 }
 

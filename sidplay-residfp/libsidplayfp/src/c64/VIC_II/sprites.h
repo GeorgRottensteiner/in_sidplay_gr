@@ -167,7 +167,7 @@ public:
      */
     bool isDma(unsigned int val) const
     {
-        return dma & val;
+        return !!( dma & val );
     }
 };
 

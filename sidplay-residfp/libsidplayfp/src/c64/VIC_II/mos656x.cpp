@@ -266,7 +266,7 @@ void MOS656X::event()
     {
         // Update x raster
         rasterClk += cycles;
-        lineCycle += cycles;
+        lineCycle += (unsigned int)cycles;
         lineCycle %= cyclesPerLine;
 
         delay = (this->*clock)();
@@ -274,7 +274,7 @@ void MOS656X::event()
     else
         delay = 1;
 
-    eventScheduler.schedule(*this, delay - eventScheduler.phase(), EVENT_CLOCK_PHI1);
+    eventScheduler.schedule(*this, (unsigned int)( delay - eventScheduler.phase() ), EVENT_CLOCK_PHI1);
 }
 
 event_clock_t MOS656X::clockPAL()

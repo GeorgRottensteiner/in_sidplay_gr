@@ -197,8 +197,8 @@ DWORD CThreadSidPlayer::Run(void* thisparam)
 			decodedLen = 2 * playerObj->m_engine->play(reinterpret_cast<short*>(playerObj->m_decodeBuf),desiredLen / 2);
 			//playerObj->m_decodedSampleCount += decodedLen / numChn / (bps>>3);
 			//write it to vis subsystem
-			playerObj->m_inmod->SAAddPCMData(playerObj->m_decodeBuf,numChn,bps,playerObj->m_playTimems);
-			playerObj->m_inmod->VSAAddPCMData(playerObj->m_decodeBuf,numChn,bps,playerObj->m_playTimems);
+			playerObj->m_inmod->SAAddPCMData(playerObj->m_decodeBuf,numChn,bps,(int)playerObj->m_playTimems);
+			playerObj->m_inmod->VSAAddPCMData(playerObj->m_decodeBuf,numChn,bps, (int)playerObj->m_playTimems);
 
 			playerObj->m_decodedSampleCount += decodedLen / numChn / (bps>>3);
 			playerObj->m_playTimems =(playerObj->m_decodedSampleCount * 1000) / playerObj->m_playerConfig.sidConfig.frequency;
@@ -447,7 +447,7 @@ void CThreadSidPlayer::AssignConfigValue(PlayerConfig* plconf,string token, stri
 	}
 	if (token.compare("C64ModelForced") == 0)
 	{
-		conf->forceC64Model = (bool)atoi(value.c_str());
+		conf->forceC64Model = (bool)!!atoi(value.c_str());
 		return;
 	}
 
@@ -478,13 +478,13 @@ void CThreadSidPlayer::AssignConfigValue(PlayerConfig* plconf,string token, stri
 
 	if (token.compare("PseudoStereo") == 0)
 	{
-		plconf->pseudoStereo = (bool)atoi(value.c_str());
+		plconf->pseudoStereo = (bool)!!atoi(value.c_str());
 		return;
 	}
 
 	if (token.compare("SidModelForced") == 0)
 	{
-		conf->forceSidModel = (bool)atoi(value.c_str());
+		conf->forceSidModel = (bool)!!atoi(value.c_str());
 		return;
 	}
 
@@ -497,7 +497,7 @@ void CThreadSidPlayer::AssignConfigValue(PlayerConfig* plconf,string token, stri
 
 	if(token.compare("PlayLimitEnabled") == 0) 
 	{
-		plconf->playLimitEnabled = (bool)atoi(value.c_str());
+		plconf->playLimitEnabled = (bool)!!atoi(value.c_str());
 		return;
 	}
 	if(token.compare("PlayLimitTime") == 0) 
@@ -508,7 +508,7 @@ void CThreadSidPlayer::AssignConfigValue(PlayerConfig* plconf,string token, stri
 
 	if(token.compare("UseSongLengthFile") == 0)
 	{
-		plconf->useSongLengthFile =(bool)atoi(value.c_str());
+		plconf->useSongLengthFile =(bool)!!atoi(value.c_str());
 		return;
 	}
 	if(token.compare("SongLengthsFile") == 0)
@@ -527,7 +527,7 @@ void CThreadSidPlayer::AssignConfigValue(PlayerConfig* plconf,string token, stri
 	}
 	if(token.compare("UseSTILFile") == 0)
 	{
-		plconf->useSTILfile =(bool)atoi(value.c_str());
+		plconf->useSTILfile =(bool)!!atoi(value.c_str());
 		return;
 	}
 
@@ -535,7 +535,7 @@ void CThreadSidPlayer::AssignConfigValue(PlayerConfig* plconf,string token, stri
 	{
 		//plconf->playlistFormat = new char[value.length() + 1];
 		//strcpy(plconf->playlistFormat, value.c_str());
-		plconf->playlistFormat = strdup(value.c_str());
+		plconf->playlistFormat = _strdup(value.c_str());
 		return;
 	}
 
@@ -543,7 +543,7 @@ void CThreadSidPlayer::AssignConfigValue(PlayerConfig* plconf,string token, stri
 	{
 		//plconf->playlistFormat = new char[value.length() + 1];
 		//strcpy(plconf->subsongFormat, value.c_str());
-		plconf->subsongFormat = strdup(value.c_str());
+		plconf->subsongFormat = _strdup(value.c_str());
 		return;
 	}
 }
@@ -661,7 +661,7 @@ void CThreadSidPlayer::SetConfig(PlayerConfig* newConfig)
 			delete[] m_playerConfig.playlistFormat;
 			m_playerConfig.playlistFormat = NULL;
 		}
-		m_playerConfig.playlistFormat = strdup(newConfig->playlistFormat);//new char[strlen(newConfig->playlistFormat) + 1];
+		m_playerConfig.playlistFormat = _strdup(newConfig->playlistFormat);//new char[strlen(newConfig->playlistFormat) + 1];
 		//strcpy(m_playerConfig.playlistFormat, newConfig->playlistFormat);
 	}
 
@@ -672,7 +672,7 @@ void CThreadSidPlayer::SetConfig(PlayerConfig* newConfig)
 			delete[] m_playerConfig.subsongFormat;
 			m_playerConfig.subsongFormat = NULL;
 		}
-		m_playerConfig.subsongFormat = strdup(newConfig->subsongFormat);//new char[strlen(newConfig->subsongFormat) + 1];
+		m_playerConfig.subsongFormat = _strdup(newConfig->subsongFormat);//new char[strlen(newConfig->subsongFormat) + 1];
 		//strcpy(m_playerConfig.subsongFormat, newConfig->subsongFormat);
 	}
 
@@ -787,7 +787,7 @@ void CThreadSidPlayer::DoSeek()
 	}
 	else
 	{
-		timesek = (m_seekNeedMs - m_playTimems) / 1000;
+		timesek = (int)( (m_seekNeedMs - m_playTimems) / 1000 );
 		if (timesek <= 0) return;
 	}
 

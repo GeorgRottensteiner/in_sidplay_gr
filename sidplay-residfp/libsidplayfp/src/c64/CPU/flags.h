@@ -57,7 +57,7 @@ public:
     inline void setNZ(uint8_t value)
     {
         Z = value == 0;
-        N = value & 0x80;
+        N = !!( value & 0x80 );
     }
 
     /**
@@ -84,12 +84,12 @@ public:
     inline void set(uint8_t sr)
     {
         C = sr & 0x01;
-        Z = sr & 0x02;
-        I = sr & 0x04;
-        D = sr & 0x08;
-        B = sr & 0x10;
-        V = sr & 0x40;
-        N = sr & 0x80;
+        Z = !!( sr & 0x02 );
+        I = !!( sr & 0x04 );
+        D = !!( sr & 0x08 );
+        B = !!( sr & 0x10 );
+        V = !!( sr & 0x40 );
+        N = !!( sr & 0x80 );
     }
 
     inline bool getN() const { return N; }

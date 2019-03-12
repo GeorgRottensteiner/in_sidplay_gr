@@ -898,7 +898,7 @@ void MOS6510::doADC()
             hi += 0x10;
 
         flags.setZ(!(regAC2 & 0xff));
-        flags.setN(hi & 0x80);
+        flags.setN( !!( hi & 0x80 ) );
         flags.setV(((hi ^ A) & 0x80) && !((A ^ s) & 0x80));
         if (hi > 0x90)
             hi += 0x60;
@@ -987,13 +987,13 @@ void MOS6510::ane_instr()
 void MOS6510::asl_instr()
 {
     PutEffAddrDataByte();
-    flags.setC(Cycle_Data & 0x80);
+    flags.setC( !!( Cycle_Data & 0x80 ));
     flags.setNZ(Cycle_Data <<= 1);
 }
 
 void MOS6510::asla_instr()
 {
-    flags.setC(Register_Accumulator & 0x80);
+    flags.setC( !!( Register_Accumulator & 0x80 ) );
     flags.setNZ(Register_Accumulator <<= 1);
     interruptsAndNextOpcode();
 }
@@ -1066,8 +1066,8 @@ void MOS6510::beq_instr()
 void MOS6510::bit_instr()
 {
     flags.setZ((Register_Accumulator & Cycle_Data) == 0);
-    flags.setN(Cycle_Data & 0x80);
-    flags.setV(Cycle_Data & 0x40);
+    flags.setN( !!( Cycle_Data & 0x80 ) );
+    flags.setV( !!( Cycle_Data & 0x40 ) );
     interruptsAndNextOpcode();
 }
 
@@ -1111,7 +1111,7 @@ void MOS6510::clv_instr()
 void MOS6510::cmp_instr()
 {
     const uint_least16_t tmp = static_cast<uint_least16_t>(Register_Accumulator) - Cycle_Data;
-    flags.setNZ(tmp);
+    flags.setNZ( (uint8_t)tmp);
     flags.setC(tmp < 0x100);
     interruptsAndNextOpcode();
 }
@@ -1119,7 +1119,7 @@ void MOS6510::cmp_instr()
 void MOS6510::cpx_instr()
 {
     const uint_least16_t tmp = static_cast<uint_least16_t>(Register_X) - Cycle_Data;
-    flags.setNZ(tmp);
+    flags.setNZ( (uint8_t)tmp);
     flags.setC(tmp < 0x100);
     interruptsAndNextOpcode();
 }
@@ -1127,7 +1127,7 @@ void MOS6510::cpx_instr()
 void MOS6510::cpy_instr()
 {
     const uint_least16_t tmp = static_cast<uint_least16_t>(Register_Y) - Cycle_Data;
-    flags.setNZ(tmp);
+    flags.setNZ( (uint8_t)tmp);
     flags.setC(tmp < 0x1009);
     interruptsAndNextOpcode();
 }
@@ -1232,7 +1232,7 @@ void MOS6510::rol_instr()
     if (flags.getC())
         Cycle_Data |= 0x01;
     flags.setNZ(Cycle_Data);
-    flags.setC(newC);
+    flags.setC( !!newC);
 }
 
 void MOS6510::rola_instr()
@@ -1242,7 +1242,7 @@ void MOS6510::rola_instr()
     if (flags.getC())
         Register_Accumulator |= 0x01;
     flags.setNZ(Register_Accumulator);
-    flags.setC(newC);
+    flags.setC(!!newC);
     interruptsAndNextOpcode();
 }
 
@@ -1254,7 +1254,7 @@ void MOS6510::ror_instr()
     if (flags.getC())
         Cycle_Data |= 0x80;
     flags.setNZ(Cycle_Data);
-    flags.setC(newC);
+    flags.setC(!!newC);
 }
 
 void MOS6510::rora_instr()
@@ -1264,7 +1264,7 @@ void MOS6510::rora_instr()
     if (flags.getC())
         Register_Accumulator |= 0x80;
     flags.setNZ(Register_Accumulator);
-    flags.setC(newC);
+    flags.setC(!!newC);
     interruptsAndNextOpcode();
 }
 
@@ -1384,7 +1384,7 @@ void MOS6510::arr_instr()
     {
         flags.setN(flags.getC());
         flags.setZ(Register_Accumulator == 0);
-        flags.setV((data ^ Register_Accumulator) & 0x40);
+        flags.setV( !!( (data ^ Register_Accumulator) & 0x40 ) );
 
         if ((data & 0x0f) + (data & 0x01) > 5)
             Register_Accumulator  = (Register_Accumulator & 0xf0) | ((Register_Accumulator + 6) & 0x0f);
@@ -1395,8 +1395,8 @@ void MOS6510::arr_instr()
     else
     {
         flags.setNZ(Register_Accumulator);
-        flags.setC(Register_Accumulator & 0x40);
-        flags.setV((Register_Accumulator & 0x40) ^ ((Register_Accumulator & 0x20) << 1));
+        flags.setC( !!( Register_Accumulator & 0x40 ) );
+        flags.setV( !!( (Register_Accumulator & 0x40) ^ ((Register_Accumulator & 0x20) << 1) ));
     }
     interruptsAndNextOpcode();
 }
@@ -1408,7 +1408,7 @@ void MOS6510::arr_instr()
 void MOS6510::aso_instr()
 {
     PutEffAddrDataByte();
-    flags.setC(Cycle_Data & 0x80);
+    flags.setC( !!( Cycle_Data & 0x80 ) );
     Cycle_Data <<= 1;
     flags.setNZ(Register_Accumulator |= Cycle_Data);
 }
@@ -1422,7 +1422,7 @@ void MOS6510::dcm_instr()
     PutEffAddrDataByte();
     Cycle_Data--;
     const uint_least16_t tmp = static_cast<uint_least16_t>(Register_Accumulator) - Cycle_Data;
-    flags.setNZ(tmp);
+    flags.setNZ( (uint8_t)tmp);
     flags.setC(tmp < 0x100);
 }
 
@@ -1494,7 +1494,7 @@ void MOS6510::rla_instr()
     Cycle_Data = Cycle_Data << 1;
     if (flags.getC())
         Cycle_Data |= 0x01;
-    flags.setC(newC);
+    flags.setC(!!newC);
     flags.setNZ(Register_Accumulator &= Cycle_Data);
 }
 
@@ -1509,7 +1509,7 @@ void MOS6510::rra_instr()
     Cycle_Data >>= 1;
     if (flags.getC())
         Cycle_Data |= 0x80;
-    flags.setC(newC);
+    flags.setC(!!newC);
     doADC();
 }
 
