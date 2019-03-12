@@ -18,7 +18,7 @@ void ConfigDlgInitDialog( HWND hWnd )
   //initialize config with current values
   *playerConfig = sidPlayer->GetCurrentConfig();
   //we dont need current value coz we will load it from file
-  playerConfig->songLengthsFile = NULL;
+  playerConfig->songLengthsFile = "";
   //now load "real" settings from file (they may differ from those above)
   sidPlayer->LoadConfigFromFile( playerConfig );
 
@@ -86,36 +86,36 @@ void ConfigDlgInitDialog( HWND hWnd )
 
   if ( playerConfig->playLimitEnabled ) CheckDlgButton( hWnd, IDC_PLAYLIMIT_CHK, BST_CHECKED );
   else CheckDlgButton( hWnd, IDC_PLAYLIMIT_CHK, BST_UNCHECKED );
-  SetDlgItemTextA( hWnd, IDC_PLAYLIMITTIME, itoa( playerConfig->playLimitSec, buf, 10 ) );
+  SetDlgItemTextA( hWnd, IDC_PLAYLIMITTIME, _itoa( playerConfig->playLimitSec, buf, 10 ) );
 
   if ( playerConfig->useSongLengthFile )
     CheckDlgButton( hWnd, IDC_ENABLESONGLENDB, BST_CHECKED );
   else
     CheckDlgButton( hWnd, IDC_ENABLESONGLENDB, BST_UNCHECKED );
-  if ( playerConfig->songLengthsFile != NULL )
+  if ( !playerConfig->songLengthsFile.empty() )
   {
-    SetDlgItemTextA( hWnd, IDC_SONGLENGTHFILE, playerConfig->songLengthsFile );
+    SetDlgItemTextA( hWnd, IDC_SONGLENGTHFILE, playerConfig->songLengthsFile.c_str() );
   }
   CheckDlgButton( hWnd, IDC_ENABLESTIL, ( ( playerConfig->useSTILfile ) ? BST_CHECKED : BST_UNCHECKED ) );
-  SetDlgItemTextA( hWnd, IDC_HVSCDIR, playerConfig->hvscDirectory );
+  SetDlgItemTextA( hWnd, IDC_HVSCDIR, playerConfig->hvscDirectory.c_str() );
 
   //pseudo stereo
   CheckDlgButton( hWnd, IDC_PSEUDOSTEREO, ( ( playerConfig->pseudoStereo ) ? BST_CHECKED : BST_UNCHECKED ) );
   //second sid model (pseudo stereo)
   SendDlgItemMessage( hWnd, IDC_SID2MODEL, CB_SETCURSEL, (WPARAM)playerConfig->sid2Model, 0 );
 
-  if ( playerConfig->playlistFormat != NULL )
+  if ( !playerConfig->playlistFormat.empty() )
   {
-    SetDlgItemTextA( hWnd, IDC_PLAYLIST_FORMAT, playerConfig->playlistFormat );
+    SetDlgItemTextA( hWnd, IDC_PLAYLIST_FORMAT, playerConfig->playlistFormat.c_str() );
   }
   else
   {
     SetDlgItemTextA( hWnd, IDC_PLAYLIST_FORMAT, "%t %x / %a / %r / %sn" );
   }
 
-  if ( playerConfig->subsongFormat != NULL )
+  if ( !playerConfig->subsongFormat.empty() )
   {
-    SetDlgItemTextA( hWnd, IDC_SUBSONG_FORMAT, playerConfig->subsongFormat );
+    SetDlgItemTextA( hWnd, IDC_SUBSONG_FORMAT, playerConfig->subsongFormat.c_str() );
   }
   else
   {
@@ -236,26 +236,10 @@ void UpdateConfig( HWND hWnd )
 
   //playlist format
   GetDlgItemTextA( hWnd, IDC_PLAYLIST_FORMAT, buf, MAX_BUFFER_SIZE );
-  if ( strlen( buf ) == 0 )
-  {
-    playerConfig->playlistFormat = "";
-  }
-  else
-  {
-    playerConfig->playlistFormat = new char[strlen( buf ) + 1];
-    strcpy( playerConfig->playlistFormat, buf );
-  }
+  playerConfig->playlistFormat = buf;
   //subsong format
   GetDlgItemTextA( hWnd, IDC_SUBSONG_FORMAT, buf, MAX_BUFFER_SIZE );
-  if ( strlen( buf ) == 0 )
-  {
-    playerConfig->subsongFormat = "";
-  }
-  else
-  {
-    playerConfig->subsongFormat = new char[strlen( buf ) + 1];
-    strcpy( playerConfig->subsongFormat, buf );
-  }
+  playerConfig->subsongFormat = buf;
 }
 
 void SelectHvscFile( HWND hWnd )
@@ -266,11 +250,16 @@ void SelectHvscFile( HWND hWnd )
 
   if ( GetFileNameFromBrowse( hWnd, path, MAX_PATH, L"c:\\", L"txt", L"Text files (*.txt)\0*.txt\0All files (*.*)\0*.*\0\0",
     L"Select song length db file" ) != TRUE ) return;
-  if ( playerConfig->songLengthsFile != NULL ) delete[] playerConfig->songLengthsFile;
   pathLen = wcslen( path ) + 1;
-  playerConfig->songLengthsFile = new char[pathLen];
-  wcstombs( playerConfig->songLengthsFile, path, pathLen );
-  SetDlgItemTextA( hWnd, IDC_SONGLENGTHFILE, playerConfig->songLengthsFile );
+
+  char*     pDummy = new char[pathLen];
+  
+  wcstombs( pDummy, path, pathLen );
+
+  playerConfig->songLengthsFile = pDummy;
+  delete[] pDummy;
+
+  SetDlgItemTextA( hWnd, IDC_SONGLENGTHFILE, playerConfig->songLengthsFile.c_str() );
 
 }
 
@@ -296,11 +285,16 @@ void SelectHvscDirectory( HWND hWnd )
       imalloc->Release();
     }
 
-    if ( playerConfig->hvscDirectory != NULL ) delete[] playerConfig->hvscDirectory;
     pathLen = wcslen( path ) + 1;
-    playerConfig->hvscDirectory = new char[pathLen];
-    wcstombs( playerConfig->hvscDirectory, path, pathLen );
-    SetDlgItemTextA( hWnd, IDC_HVSCDIR, playerConfig->hvscDirectory );
+
+    char*     pDummy = new char[pathLen];
+
+    wcstombs( pDummy, path, pathLen );
+
+    playerConfig->hvscDirectory = pDummy;
+    delete[] pDummy;
+
+    SetDlgItemTextA( hWnd, IDC_HVSCDIR, playerConfig->hvscDirectory.c_str() );
   }
 }
 
