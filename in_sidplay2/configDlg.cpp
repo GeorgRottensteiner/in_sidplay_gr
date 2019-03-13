@@ -4,6 +4,9 @@
 #include "typesdefs.h"
 #include <shlobj.h>
 
+#include "helpers.h"
+
+
 
 PlayerConfig *playerConfig;
 
@@ -11,7 +14,6 @@ PlayerConfig *playerConfig;
 void ConfigDlgInitDialog( HWND hWnd )
 {
   int val;
-  char buf[20];
 
   playerConfig = new PlayerConfig;
   //PlayerConfig cfg;
@@ -86,7 +88,7 @@ void ConfigDlgInitDialog( HWND hWnd )
 
   if ( playerConfig->playLimitEnabled ) CheckDlgButton( hWnd, IDC_PLAYLIMIT_CHK, BST_CHECKED );
   else CheckDlgButton( hWnd, IDC_PLAYLIMIT_CHK, BST_UNCHECKED );
-  SetDlgItemTextA( hWnd, IDC_PLAYLIMITTIME, _itoa( playerConfig->playLimitSec, buf, 10 ) );
+  SetDlgItemTextA( hWnd, IDC_PLAYLIMITTIME, NumberToString( playerConfig->playLimitSec ).c_str() );
 
   if ( playerConfig->useSongLengthFile )
     CheckDlgButton( hWnd, IDC_ENABLESONGLENDB, BST_CHECKED );

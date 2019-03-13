@@ -360,9 +360,9 @@ void PSID::tryLoad(const psidHeader &pHeader)
 
 
 
-std::string PSID::createMD5(char *md5Arg )
+std::string PSID::createMD5( std::string& md5 )
 {
-  std::string  md5;
+  md5 = "";
 
     try
     {
