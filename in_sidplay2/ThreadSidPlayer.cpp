@@ -378,7 +378,7 @@ void CThreadSidPlayer::SaveConfigToFile(PlayerConfig *conf)
 		0,
 		appDataPath)))
 	{
-		wcscat(appDataPath, L"\\in_sidplay2.ini");
+		wcscat_s(appDataPath, L"\\in_sidplay2.ini");
 		SaveConfigToFile(conf, appDataPath);
 	}
 
@@ -786,8 +786,8 @@ void CThreadSidPlayer::FillSTILData()
 
 	m.clear();
 	FILE *f;
-	strcpy(buf, m_playerConfig.hvscDirectory.c_str() );
-	strcat(buf, "\\documents\\stil.txt");
+	strcpy_s(buf, m_playerConfig.hvscDirectory.c_str() );
+	strcat_s(buf, "\\documents\\stil.txt");
 	f = fopen(buf, "rb+");
 	if (f == NULL)
 	{
@@ -834,8 +834,8 @@ void CThreadSidPlayer::FillSTILData2()
 
 	m_stillMap2.clear();
 	FILE *f;
-	strcpy(buf, m_playerConfig.hvscDirectory.c_str() );
-	strcat(buf, "\\documents\\stil.txt");
+	strcpy_s(buf, m_playerConfig.hvscDirectory.c_str() );
+	strcat_s(buf, "\\documents\\stil.txt");
 	f = fopen(buf, "rb+");
 	if (f == NULL)
 	{
@@ -933,7 +933,7 @@ const char* CThreadSidPlayer::GetSTILData(const char* filePath)
 	if((filePath == NULL)||(m_playerConfig.hvscDirectory.empty())) return NULL;
 	if(strlen(filePath) < m_playerConfig.hvscDirectory.length()) return NULL;
 	stilFileName = new char[strlen(filePath) - m_playerConfig.hvscDirectory.length() +1];
-	strcpy(stilFileName,&filePath[m_playerConfig.hvscDirectory.length()]);
+	strcpy_s(stilFileName, strlen( filePath ) - m_playerConfig.hvscDirectory.length(), &filePath[m_playerConfig.hvscDirectory.length()]);
 	//i = m.find("aa\\DEMOS\\A-F\\Afterburner.sid");
 	i = m.find(stilFileName);
 	delete[] stilFileName;
