@@ -256,7 +256,7 @@ void conditionsReplace( std::string& formatString, const StilBlock* stilBlock, c
       break;
     }
     conditionToken = formatString.substr( tokenBeginPos + 2, tokenEndPos - tokenBeginPos - 2 );
-    sprintf( toReplaceToken, "%%{%s}", conditionToken.c_str() );
+    sprintf_s( toReplaceToken, BUF_SIZE, "%%{%s}", conditionToken.c_str() );
 
     if ( !conditionToken.empty() )
     {
@@ -470,10 +470,10 @@ void getfileinfo( const char *filename, char *title, int *length_in_ms )
   replaceAll( titleTemplate, "%r", info->infoString( 2 ) );
   if ( info->songs() > 1 )
   {
-    sprintf( buf, "%2d", info->songs() );
+    sprintf_s( buf, sizeof( buf ), "%2d", info->songs() );
     replaceAll( subsongTemplate, "%ns", buf );
 
-    sprintf( buf, "%2d", subsongIndex );
+    sprintf_s( buf, sizeof( buf ), "%2d", subsongIndex );
     //itoa(subsongIndex, buf, 10);
     //replaceAll(subsongTemplate, "%n", _itoa(subsongIndex, buf, 10));
     replaceAll( subsongTemplate, "%n", buf );
@@ -503,7 +503,9 @@ void getfileinfo( const char *filename, char *title, int *length_in_ms )
   }
 
   if ( title != NULL )
-    strcpy( title, titleTemplate.c_str() );
+  {
+    strcpy_s( title, GETFILEINFO_TITLE_LENGTH, titleTemplate.c_str() );
+  }
 
   if ( ( info->songs() == 1 ) || ( firstSong == false ) || ( filename == NULL ) || ( strlen( filename ) == 0 ) )
   {
@@ -545,7 +547,7 @@ void getfileinfo( const char *filename, char *title, int *length_in_ms )
   threadParams->foundIndex = foundindex;
   threadParams->numSubsongs = info->songs();
   threadParams->startSong = info->startSong();
-  strcpy( threadParams->fileName, filename );
+  strcpy_s( threadParams->fileName, sizeof( threadParams->fileName ), filename );
   gUpdaterThreadHandle = CreateThread( NULL, 0, (LPTHREAD_START_ROUTINE)AddSubsongsThreadProc, (void*)threadParams, 0, NULL );
   ReleaseMutex( gMutex );
   return;
@@ -573,11 +575,11 @@ DWORD AddSubsongsThreadProc( void* params )
       continue;
     }
     ++foundindex;
-    sprintf( buf, "{%d}", i );
+    sprintf_s( buf, sizeof( buf ), "{%d}", i );
     strFilename.assign( buf );
     strFilename.append( threadParams->fileName );
     ZeroMemory( fi, sizeof( fileinfo ) );
-    strcpy( fi->file, strFilename.c_str() );
+    strcpy_s( fi->file, sizeof( fi->file ), strFilename.c_str() );
     fi->index = foundindex;
     ZeroMemory( cds, sizeof( COPYDATASTRUCT ) );
     cds->dwData = IPC_PE_INSERTFILENAME;

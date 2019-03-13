@@ -308,7 +308,7 @@ bool CThreadSidPlayer::LoadConfigFromFile(PlayerConfig *conf)
 	if(conf == NULL) return false;
 	//try to load config from common file
 	SHGetSpecialFolderPath(NULL,appDataPath,CSIDL_COMMON_APPDATA,0);
-	wcscat(appDataPath,L"\\in_sidplay2.ini");
+	wcscat_s(appDataPath, L"\\in_sidplay2.ini");
 	return LoadConfigFromFile(conf, appDataPath);
 }
 

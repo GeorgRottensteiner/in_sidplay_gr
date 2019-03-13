@@ -76,7 +76,7 @@ void CSubSongDlg::RefreshWindowTitle()
 {
 	char buf[30];
 	const SidTuneInfo *ti = m_player->GetTuneInfo();
-	sprintf(buf,"Subtune %d of %d ",ti->currentSong(), ti->songs());
+	sprintf_s(buf, sizeof( buf ), "Subtune %d of %d ",ti->currentSong(), ti->songs());
 	SetWindowTextA(m_hWnd,buf);
 }
 
