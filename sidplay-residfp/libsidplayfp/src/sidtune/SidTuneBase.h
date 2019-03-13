@@ -139,7 +139,7 @@ public:  // ----------------------------------------------------------------
      *
      * @return a pointer to the buffer containing the md5 string.
      */
-    virtual const char *createMD5(char *) { return nullptr; }
+    virtual std::string createMD5(char *) { return ""; }
 
     /**
      * Get the pointer to the tune data.

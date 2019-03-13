@@ -358,12 +358,11 @@ void PSID::tryLoad(const psidHeader &pHeader)
         throw loadError("Compute!'s Sidplayer MUS data is not supported yet"); // TODO
 }
 
-const char *PSID::createMD5(char *md5)
-{
-    if (md5 == nullptr)
-        md5 = m_md5;
 
-    *md5 = '\0';
+
+std::string PSID::createMD5(char *md5Arg )
+{
+  std::string  md5;
 
     try
     {
@@ -417,12 +416,11 @@ const char *PSID::createMD5(char *md5)
         myMD5.finish();
 
         // Get fingerprint.
-        myMD5.getDigest().copy(md5, SidTune::MD5_LENGTH);
-        md5[SidTune::MD5_LENGTH] = '\0';
+        md5 = myMD5.getDigest();
     }
     catch (md5Error const &)
     {
-        return nullptr;
+        return "";
     }
 
     return md5;

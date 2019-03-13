@@ -164,7 +164,7 @@ public:  // ----------------------------------------------------------------
      *
      * @return a pointer to the buffer containing the md5 string, 0 if no tune is loaded.
      */
-    const char *createMD5(char *md5 = 0);
+    const std::string createMD5(char *md5 = 0);
 
     const uint_least8_t* c64Data() const;
 
