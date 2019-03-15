@@ -322,8 +322,10 @@ bool CThreadSidPlayer::LoadConfigFromFile(PlayerConfig *conf, wchar_t* fileName)
 	int pos;
 	FILE *cfgFile = NULL;
 
-	cfgFile = _wfopen(fileName,L"rb");
-
+  if ( _wfopen_s( &cfgFile, fileName, L"rb" ) )
+  {
+    return false;
+  }
 	if(cfgFile == NULL) return false;
 	while(feof(cfgFile) == 0)
 	{
@@ -785,12 +787,13 @@ void CThreadSidPlayer::FillSTILData()
 	char buf[BUFLEN];
 
 	m.clear();
-	FILE *f;
+  FILE *f = NULL;
 	strcpy_s(buf, m_playerConfig.hvscDirectory.c_str() );
 	strcat_s(buf, "\\documents\\stil.txt");
-	f = fopen(buf, "rb+");
-	if (f == NULL)
-	{
+
+  if ( ( fopen_s( &f, buf, "rb+" ) )
+  ||   ( f == NULL ) )
+  {
 		MessageBoxA(NULL, "Error opening STIL file.\r\nDisable STIL info or choose appropriate HVSC directory", "in_sidplay2", MB_OK);
 		return;
 	}
@@ -833,11 +836,12 @@ void CThreadSidPlayer::FillSTILData2()
 	vector<StilBlock*> subsongsInfo;
 
 	m_stillMap2.clear();
-	FILE *f;
+	FILE* f = NULL;
 	strcpy_s(buf, m_playerConfig.hvscDirectory.c_str() );
 	strcat_s(buf, "\\documents\\stil.txt");
-	f = fopen(buf, "rb+");
-	if (f == NULL)
+
+  if ( ( fopen_s( &f, buf, "rb+" ) )
+  ||   ( f == NULL ) )
 	{
 		MessageBoxA(NULL, "Error opening STIL file.\r\nDisable STIL info or choose appropriate HVSC directory", "in_sidplay2", MB_OK);
 		return;
@@ -953,7 +957,7 @@ const StilBlock* CThreadSidPlayer::GetSTILData2(const char* filePath, int subson
 	if ((filePath == NULL) || (m_playerConfig.hvscDirectory.empty())) return NULL;
 	if (strlen(filePath) < m_playerConfig.hvscDirectory.length()) return NULL;
 	stilFileName = new char[strlen(filePath) - m_playerConfig.hvscDirectory.length() + 1];
-	strcpy(stilFileName, &filePath[m_playerConfig.hvscDirectory.length()]);
+	strcpy_s(stilFileName, strlen( filePath ) - m_playerConfig.hvscDirectory.length(), &filePath[m_playerConfig.hvscDirectory.length()]);
 	//i = m.find("aa\\DEMOS\\A-F\\Afterburner.sid");
 	i = m_stillMap2.find(stilFileName);
 	delete[] stilFileName;

@@ -255,8 +255,15 @@ void SelectHvscFile( HWND hWnd )
   pathLen = wcslen( path ) + 1;
 
   char*     pDummy = new char[pathLen];
+
+  size_t    numBytesConverted = 0;
   
-  wcstombs( pDummy, path, pathLen );
+  if ( wcstombs_s( &numBytesConverted, pDummy, pathLen, path, pathLen ) )
+  {
+    // do what?
+    delete[] pDummy;
+    return;
+  }
 
   playerConfig->songLengthsFile = pDummy;
   delete[] pDummy;
@@ -291,7 +298,14 @@ void SelectHvscDirectory( HWND hWnd )
 
     char*     pDummy = new char[pathLen];
 
-    wcstombs( pDummy, path, pathLen );
+    size_t    numBytesConverted = 0;
+
+    if ( wcstombs_s( &numBytesConverted, pDummy, pathLen, path, pathLen ) )
+    {
+      // do what?
+      delete[] pDummy;
+      return;
+    }
 
     playerConfig->hvscDirectory = pDummy;
     delete[] pDummy;
