@@ -35,10 +35,10 @@ unsigned int SidTuneInfo::startSong() const { return getStartSong(); }
 unsigned int SidTuneInfo::currentSong() const { return getCurrentSong(); }
 
 // deprecated
-uint_least16_t SidTuneInfo::sidChipBase1() const { return getSidChipBase(0); }
-uint_least16_t SidTuneInfo::sidChipBase2() const { return getSidChipBase(1); }
+uint_least16_t SidTuneInfo::sidChipBase1() const { return getSidChipBase( 0 ); }
+uint_least16_t SidTuneInfo::sidChipBase2() const { return getSidChipBase( 1 ); }
 
-uint_least16_t SidTuneInfo::sidChipBase(unsigned int i) const { return getSidChipBase(i); }
+uint_least16_t SidTuneInfo::sidChipBase( unsigned int i ) const { return getSidChipBase( i ); }
 
 // deprecated
 bool SidTuneInfo::isStereo() const { return getSidChips() > 1; }
@@ -52,19 +52,19 @@ uint_least8_t SidTuneInfo::relocStartPage() const { return getRelocStartPage(); 
 uint_least8_t SidTuneInfo::relocPages() const { return getRelocPages(); }
 
 // deprecated
-SidTuneInfo::model_t SidTuneInfo::sidModel1() const { return getSidModel(0); }
-SidTuneInfo::model_t SidTuneInfo::sidModel2() const { return getSidModel(1); }
+SidTuneInfo::model_t SidTuneInfo::sidModel1() const { return getSidModel( 0 ); }
+SidTuneInfo::model_t SidTuneInfo::sidModel2() const { return getSidModel( 1 ); }
 
-SidTuneInfo::model_t SidTuneInfo::sidModel(unsigned int i) const { return getSidModel(i); }
+SidTuneInfo::model_t SidTuneInfo::sidModel( unsigned int i ) const { return getSidModel( i ); }
 
 SidTuneInfo::compatibility_t SidTuneInfo::compatibility() const { return getCompatibility(); }
 
 unsigned int SidTuneInfo::numberOfInfoStrings() const { return getNumberOfInfoStrings(); }
-const char* SidTuneInfo::infoString(unsigned int i) const { return getInfoString(i); }
+std::string SidTuneInfo::infoString( unsigned int i ) const { return getInfoString( i ); }
 
 
-unsigned int SidTuneInfo::numberOfCommentStrings() const{ return getNumberOfCommentStrings(); }
-const char* SidTuneInfo::commentString(unsigned int i) const{ return getCommentString(i); }
+unsigned int SidTuneInfo::numberOfCommentStrings() const { return getNumberOfCommentStrings(); }
+std::string SidTuneInfo::commentString( unsigned int i ) const { return getCommentString( i ); }
 
 uint_least32_t SidTuneInfo::dataFileLen() const { return getDataFileLen(); }
 
@@ -72,12 +72,12 @@ uint_least32_t SidTuneInfo::c64dataLen() const { return getC64dataLen(); }
 
 SidTuneInfo::clock_t SidTuneInfo::clockSpeed() const { return getClockSpeed(); }
 
-const char* SidTuneInfo::formatString() const { return getFormatString(); }
+std::string SidTuneInfo::formatString() const { return getFormatString(); }
 
 bool SidTuneInfo::fixLoad() const { return getFixLoad(); }
 
-const char* SidTuneInfo::path() const { return getPath(); }
+std::string SidTuneInfo::path() const { return getPath(); }
 
-const char* SidTuneInfo::dataFileName() const { return getDataFileName(); }
+std::string SidTuneInfo::dataFileName() const { return getDataFileName(); }
 
-const char* SidTuneInfo::infoFileName() const { return getInfoFileName(); }
+std::string SidTuneInfo::infoFileName() const { return getInfoFileName(); }

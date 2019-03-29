@@ -103,6 +103,10 @@
       <TargetMachine>MachineX86</TargetMachine>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
+    <PostBuildEvent>
+      <Command>copy $(OutDir)$(ProjectName).dll "D:\Tools\WinAMP\Plugins\"</Command>
+      <Message>Copy to winamp directory</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="aboutDlg.cpp" />

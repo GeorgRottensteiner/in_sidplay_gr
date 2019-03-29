@@ -23,7 +23,7 @@
 
 #define PLAYBACK_BIT_PRECISION 16
 
-using namespace std;
+
 
 struct ltstr
 {
@@ -33,11 +33,13 @@ struct ltstr
   }
 };
 
+
+
 class CThreadSidPlayer
 {
   private:
   //stdext::hash_map<const char*,char*> m;//,hash<const char*>,eqstr> m;
-  map<const char*, char*, ltstr> m;//,hash<const char*>,eqstr> m;
+  std::map<const char*, char*, ltstr> m;//,hash<const char*>,eqstr> m;
   /**! Map - maps file path to vector of subsongs (usually 1) vector contains stuctures with STILL info:
   TITLE:
   NAME:
@@ -45,7 +47,7 @@ class CThreadSidPlayer
   AUTHOR:
   COMMENT:
   */
-  map<const char*, vector<StilBlock*>, ltstr> m_stillMap2;//,hash<const char*>,eqstr> m;
+  std::map<const char*, std::vector<StilBlock*>, ltstr> m_stillMap2;//,hash<const char*>,eqstr> m;
 
   sidplayfp *m_engine;
   SidTune m_tune;
@@ -59,7 +61,7 @@ class CThreadSidPlayer
   int m_currentTuneLength;
   private:
   static DWORD __stdcall Run( void* thisparam );
-  void AssignConfigValue( PlayerConfig *conf, string token, string value );
+  void AssignConfigValue( PlayerConfig *conf, std::string token, std::string value );
   SidDatabase m_sidDatabase;
   void ReadLine( char* buf, FILE *file, const int maxBuf );
   protected:
@@ -67,12 +69,16 @@ class CThreadSidPlayer
   int m_seekNeedMs;
   protected:
   void DoSeek();
-  void FixPath( string& path );
+  void FixPath( std::string& path );
   void FillSTILData();
   void FillSTILData2();
   void ClearSTILData( void );
   public:
-  int maxLantency;
+
+    int m_MaxLatency;
+
+
+
   CThreadSidPlayer( In_Module& inWAmod );
   ~CThreadSidPlayer( void );
   void Init( void );

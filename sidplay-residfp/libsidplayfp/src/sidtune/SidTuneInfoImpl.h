@@ -34,12 +34,12 @@
 namespace libsidplayfp
 {
 
-/**
- * The implementation of the SidTuneInfo interface.
- */
-class SidTuneInfoImpl final : public SidTuneInfo
-{
-public:
+  /**
+   * The implementation of the SidTuneInfo interface.
+   */
+  class SidTuneInfoImpl final : public SidTuneInfo
+  {
+    public:
     const char* m_formatString;
 
     unsigned int m_songs;
@@ -80,30 +80,30 @@ public:
 
     bool m_fixLoad;
 
-private:    // prevent copying
-    SidTuneInfoImpl(const SidTuneInfoImpl&);
-    SidTuneInfoImpl& operator=(SidTuneInfoImpl&);
+    private:    // prevent copying
+    SidTuneInfoImpl( const SidTuneInfoImpl& );
+    SidTuneInfoImpl& operator=( SidTuneInfoImpl& );
 
-public:
+    public:
     SidTuneInfoImpl() :
-        m_formatString("N/A"),
-        m_songs(0),
-        m_startSong(0),
-        m_currentSong(0),
-        m_songSpeed(SPEED_VBI),
-        m_clockSpeed(CLOCK_UNKNOWN),
-        m_compatibility(COMPATIBILITY_C64),
-        m_dataFileLen(0),
-        m_c64dataLen(0),
-        m_loadAddr(0),
-        m_initAddr(0),
-        m_playAddr(0),
-        m_relocStartPage(0),
-        m_relocPages(0),
-        m_fixLoad(false)
+      m_formatString( "N/A" ),
+      m_songs( 0 ),
+      m_startSong( 0 ),
+      m_currentSong( 0 ),
+      m_songSpeed( SPEED_VBI ),
+      m_clockSpeed( CLOCK_UNKNOWN ),
+      m_compatibility( COMPATIBILITY_C64 ),
+      m_dataFileLen( 0 ),
+      m_c64dataLen( 0 ),
+      m_loadAddr( 0 ),
+      m_initAddr( 0 ),
+      m_playAddr( 0 ),
+      m_relocStartPage( 0 ),
+      m_relocPages( 0 ),
+      m_fixLoad( false )
     {
-        m_sidModels.push_back(SIDMODEL_UNKNOWN);
-        m_sidChipAddresses.push_back(0xd400);
+      m_sidModels.push_back( SIDMODEL_UNKNOWN );
+      m_sidChipAddresses.push_back( 0xd400 );
     }
 
     uint_least16_t getLoadAddr() const override { return m_loadAddr; }
@@ -118,9 +118,9 @@ public:
 
     unsigned int getCurrentSong() const override { return m_currentSong; }
 
-    uint_least16_t getSidChipBase(unsigned int i) const override
+    uint_least16_t getSidChipBase( unsigned int i ) const override
     {
-        return i < m_sidChipAddresses.size() ? m_sidChipAddresses[i] : 0;
+      return i < m_sidChipAddresses.size() ? m_sidChipAddresses[i] : 0;
     }
 
     int getSidChips() const override { return m_sidChipAddresses.size(); }
@@ -131,18 +131,18 @@ public:
 
     uint_least8_t getRelocPages() const override { return m_relocPages; }
 
-    model_t getSidModel(unsigned int i) const override
+    model_t getSidModel( unsigned int i ) const override
     {
-        return i < m_sidModels.size() ? m_sidModels[i] : SIDMODEL_UNKNOWN;
+      return i < m_sidModels.size() ? m_sidModels[i] : SIDMODEL_UNKNOWN;
     }
 
     compatibility_t getCompatibility() const override { return m_compatibility; }
 
     unsigned int getNumberOfInfoStrings() const override { return m_infoString.size(); }
-    const char* getInfoString(unsigned int i) const override { return i<getNumberOfInfoStrings() ? m_infoString[i].c_str() : ""; }
+    std::string getInfoString( unsigned int i ) const override { return i < getNumberOfInfoStrings() ? m_infoString[i] : ""; }
 
     unsigned int getNumberOfCommentStrings() const override { return m_commentString.size(); }
-    const char* getCommentString(unsigned int i) const override { return i<getNumberOfCommentStrings() ? m_commentString[i].c_str() : ""; }
+    std::string getCommentString( unsigned int i ) const override { return i < getNumberOfCommentStrings() ? m_commentString[i] : ""; }
 
     uint_least32_t getDataFileLen() const override { return m_dataFileLen; }
 
@@ -150,16 +150,16 @@ public:
 
     clock_t getClockSpeed() const override { return m_clockSpeed; }
 
-    const char* getFormatString() const override { return m_formatString; }
+    std::string getFormatString() const override { return m_formatString; }
 
     bool getFixLoad() const override { return m_fixLoad; }
 
-    const char* getPath() const override { return m_path.c_str(); }
+    std::string getPath() const override { return m_path.c_str(); }
 
-    const char* getDataFileName() const override { return m_dataFileName.c_str(); }
+    std::string getDataFileName() const override { return m_dataFileName; }
 
-    const char* getInfoFileName() const override { return !m_infoFileName.empty() ? m_infoFileName.c_str() : nullptr; }
-};
+    std::string getInfoFileName() const override { return m_infoFileName; }
+  };
 
 }
 

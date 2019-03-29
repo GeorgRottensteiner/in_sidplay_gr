@@ -3,7 +3,9 @@
 //#include <sidplay/sidplay2.h>
 #include "threadsidplayer.h"
 
-extern CThreadSidPlayer *sidPlayer;
+extern CThreadSidPlayer* g_pSIDPlayer;
+
+
 
 int CALLBACK ConfigDlgWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 

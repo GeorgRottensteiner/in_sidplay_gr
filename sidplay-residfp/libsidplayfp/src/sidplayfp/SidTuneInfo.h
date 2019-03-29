@@ -23,6 +23,8 @@
 #ifndef SIDTUNEINFO_H
 #define SIDTUNEINFO_H
 
+#include <string>
+
 #include <stdint.h>
 
 #include "sidplayfp/siddefs.h"
@@ -37,117 +39,95 @@
  */
 class SID_EXTERN SidTuneInfo
 {
-public:
-    typedef enum {
-        CLOCK_UNKNOWN,
-        CLOCK_PAL,
-        CLOCK_NTSC,
-        CLOCK_ANY
-    } clock_t;
+  public:
 
-    typedef enum {
-        SIDMODEL_UNKNOWN,
-        SIDMODEL_6581,
-        SIDMODEL_8580,
-        SIDMODEL_ANY
-    } model_t;
+    enum clock_t
+    {
+      CLOCK_UNKNOWN,
+      CLOCK_PAL,
+      CLOCK_NTSC,
+      CLOCK_ANY
+    };
 
-    typedef enum {
-        COMPATIBILITY_C64,   ///< File is C64 compatible
-        COMPATIBILITY_PSID,  ///< File is PSID specific
-        COMPATIBILITY_R64,   ///< File is Real C64 only
-        COMPATIBILITY_BASIC  ///< File requires C64 Basic
-    } compatibility_t;
+    enum model_t
+    {
+      SIDMODEL_UNKNOWN,
+      SIDMODEL_6581,
+      SIDMODEL_8580,
+      SIDMODEL_ANY
+    };
 
-public:
+    enum compatibility_t 
+    {
+      COMPATIBILITY_C64,   ///< File is C64 compatible
+      COMPATIBILITY_PSID,  ///< File is PSID specific
+      COMPATIBILITY_R64,   ///< File is Real C64 only
+      COMPATIBILITY_BASIC  ///< File requires C64 Basic
+    };
+
+  public:
+
     /// Vertical-Blanking-Interrupt
     static const int SPEED_VBI = 0;
 
     /// CIA 1 Timer A
     static const int SPEED_CIA_1A = 60;
 
-public:
-    /**
-     * Load Address.
-     */
+  public:
+
+    // Load Address
     uint_least16_t loadAddr() const;
 
-    /**
-     * Init Address.
-     */
+    // Init Address
     uint_least16_t initAddr() const;
 
-    /**
-     * Play Address.
-     */
+    // Play Address
     uint_least16_t playAddr() const;
 
-    /**
-     * The number of songs.
-     */
+    // The number of songs
     unsigned int songs() const;
 
-    /**
-     * The default starting song.
-     */
+    // The default starting song
     unsigned int startSong() const;
 
-    /**
-     * The tune that has been initialized.
-     */
+    // The tune that has been initialized.
     unsigned int currentSong() const;
 
-    /**
-     * @name Base addresses
-     * The SID chip base address(es) used by the sidtune.
-     * - 0xD400 for the 1st SID
-     * - 0 if the nth SID is not required
-     */
+    // @name Base addresses
+    // The SID chip base address(es) used by the sidtune.
+    // - 0xD400 for the 1st SID
+    // - 0 if the nth SID is not required
     //@{
     SID_DEPRECATED uint_least16_t sidChipBase1() const;
     SID_DEPRECATED uint_least16_t sidChipBase2() const;
     uint_least16_t sidChipBase(unsigned int i) const;
     //@}
 
-    /**
-     * \deprecated
-     * Whether sidtune uses two SID chips.
-     */
+    // deprecated
+    // Whether sidtune uses two SID chips.
     SID_DEPRECATED bool isStereo() const;
 
-    /**
-     * The number of SID chips required by the tune.
-     */
+    // The number of SID chips required by the tune
     int sidChips() const;
 
-    /**
-     * Intended speed.
-     */
+    // Intended speed
     int songSpeed() const;
 
-    /**
-     * First available page for relocation.
-     */
+    // First available page for relocation
     uint_least8_t relocStartPage() const;
 
-    /**
-     * Number of pages available for relocation.
-     */
+    // Number of pages available for relocation
     uint_least8_t relocPages() const;
 
-    /**
-     * @name SID model
-     * The SID chip model(s) requested by the sidtune.
-     */
+    // @name SID model
+    // The SID chip model(s) requested by the sidtune.
     //@{
     SID_DEPRECATED model_t sidModel1() const;
     SID_DEPRECATED model_t sidModel2() const;
     model_t sidModel(unsigned int i) const;
     //@}
 
-    /**
-     * Compatibility requirements.
-     */
+    // Compatibility requirements
     compatibility_t compatibility() const;
 
     /**
@@ -159,7 +139,7 @@ public:
      */
     //@{
     unsigned int numberOfInfoStrings() const;     ///< The number of available text info lines
-    const char* infoString(unsigned int i) const; ///< Text info from the format headers etc.
+    std::string infoString(unsigned int i) const; ///< Text info from the format headers etc.
     //@}
 
     /**
@@ -168,7 +148,7 @@ public:
      */
     //@{
     unsigned int numberOfCommentStrings() const;     ///< Number of comments
-    const char* commentString(unsigned int i) const; ///< Used to stash the MUS comment somewhere
+    std::string commentString(unsigned int i) const; ///< Used to stash the MUS comment somewhere
     //@}
 
     /**
@@ -186,31 +166,23 @@ public:
      */
     clock_t clockSpeed() const;
 
-    /**
-     * The name of the identified file format.
-     */
-    const char* formatString() const;
+    // The name of the identified file format
+    std::string formatString() const;
 
-    /**
-     * Whether load address might be duplicate.
-     */
+    // Whether load address might be duplicate
     bool fixLoad() const;
 
-    /**
-     * Path to sidtune files.
-     */
-    const char* path() const;
+    // Path to sidtune files.
+    std::string path() const;
 
-    /**
-     * A first file: e.g. "foo.sid" or "foo.mus".
-     */
-    const char* dataFileName() const;
+    // A first file: e.g. "foo.sid" or "foo.mus"
+    std::string dataFileName() const;
 
     /**
      * A second file: e.g. "foo.str".
      * Returns 0 if none.
      */
-    const char* infoFileName() const;
+    std::string infoFileName() const;
 
 private:
     virtual uint_least16_t getLoadAddr() const =0;
@@ -240,10 +212,10 @@ private:
     virtual compatibility_t getCompatibility() const =0;
 
     virtual unsigned int getNumberOfInfoStrings() const =0;
-    virtual const char* getInfoString(unsigned int i) const =0;
+    virtual std::string getInfoString(unsigned int i) const =0;
 
     virtual unsigned int getNumberOfCommentStrings() const =0;
-    virtual const char* getCommentString(unsigned int i) const =0;
+    virtual std::string getCommentString(unsigned int i) const =0;
 
     virtual uint_least32_t getDataFileLen() const =0;
 
@@ -251,15 +223,15 @@ private:
 
     virtual clock_t getClockSpeed() const =0;
 
-    virtual const char* getFormatString() const =0;
+    virtual std::string getFormatString() const =0;
 
     virtual bool getFixLoad() const =0;
 
-    virtual const char* getPath() const =0;
+    virtual std::string getPath() const =0;
 
-    virtual const char* getDataFileName() const =0;
+    virtual std::string getDataFileName() const =0;
 
-    virtual const char* getInfoFileName() const =0;
+    virtual std::string getInfoFileName() const =0;
 
 protected:
     ~SidTuneInfo() {}

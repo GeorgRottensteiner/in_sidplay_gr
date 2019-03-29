@@ -7,7 +7,9 @@
 
 
 
-extern CThreadSidPlayer *sidPlayer;
+extern CThreadSidPlayer*  g_pSIDPlayer;
+
+
 
 int CALLBACK InfoDlgWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam )
 {
@@ -16,23 +18,23 @@ int CALLBACK InfoDlgWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam 
     case WM_COMMAND:
       {
         int wmId = LOWORD( wParam );
-        if ( ( wmId == IDOK ) || ( wmId == IDCANCEL ) )
+        if ( ( wmId == IDOK )
+          || ( wmId == IDCANCEL ) )
+        {
           EndDialog( hWnd, wmId );
+        }
       }
-      break;
+      return TRUE;
     case WM_INITDIALOG:
-      {
-        InfoDlgInitDialog( hWnd, reinterpret_cast<SidTuneInfo*>( lParam ) );
-      }
-      break;
-    default:
-      return FALSE;
+      InfoDlgInitDialog( hWnd, reinterpret_cast<SidTuneInfo*>( lParam ) );
+      return TRUE;
   }
-
-  return TRUE;
+  return FALSE;
 }
 
-void InfoDlgInitDialog( HWND hWnd, SidTuneInfo *tuneInfo )
+
+
+void InfoDlgInitDialog( HWND hWnd, SidTuneInfo* tuneInfo )
 {
   char buf[20];
   std::string infoStr;
@@ -42,13 +44,13 @@ void InfoDlgInitDialog( HWND hWnd, SidTuneInfo *tuneInfo )
   infoStr.append( tuneInfo->dataFileName() );
   SetDlgItemTextA( hWnd, IDC_FILEPATHNAME, infoStr.c_str() );
 
-  SetDlgItemTextA( hWnd, IDC_STIL_ED, sidPlayer->GetSTILData( infoStr.c_str() ) );
+  SetDlgItemTextA( hWnd, IDC_STIL_ED, g_pSIDPlayer->GetSTILData( infoStr.c_str() ) );
 
 
-  SetDlgItemTextA( hWnd, IDC_TITLE_STC, tuneInfo->infoString( 0 ) );
-  SetDlgItemTextA( hWnd, IDC_AUTHOR_STC, tuneInfo->infoString( 1 ) );
-  SetDlgItemTextA( hWnd, IDC_PUBLISHER_STC, tuneInfo->infoString( 2 ) );
-  SetDlgItemTextA( hWnd, IDC_FORMATSTC, tuneInfo->formatString() );
+  SetDlgItemTextA( hWnd, IDC_TITLE_STC, tuneInfo->infoString( 0 ).c_str() );
+  SetDlgItemTextA( hWnd, IDC_AUTHOR_STC, tuneInfo->infoString( 1 ).c_str() );
+  SetDlgItemTextA( hWnd, IDC_PUBLISHER_STC, tuneInfo->infoString( 2 ).c_str() );
+  SetDlgItemTextA( hWnd, IDC_FORMATSTC, tuneInfo->formatString().c_str() );
   sprintf_s( buf, sizeof( buf ), "$%x", tuneInfo->loadAddr() );
   SetDlgItemTextA( hWnd, IDC_LOADADDR_STC, buf );
   sprintf_s( buf, sizeof( buf ), "$%x", tuneInfo->initAddr() );
@@ -92,13 +94,19 @@ void InfoDlgInitDialog( HWND hWnd, SidTuneInfo *tuneInfo )
   infoStr.clear();
   for ( unsigned int i = 0; i < tuneInfo->numberOfInfoStrings(); ++i )
   {
-    if ( ( tuneInfo->infoString( i ) == NULL ) || ( strlen( tuneInfo->infoString( i ) ) == 0 ) ) continue;
+    if ( tuneInfo->infoString( i ).empty() )
+    {
+      continue;
+    }
     infoStr.append( tuneInfo->infoString( i ) );
     infoStr.append( "\r\n" );
   }
   for ( unsigned int i = 0; i < tuneInfo->numberOfCommentStrings(); ++i )
   {
-    if ( tuneInfo->commentString( i ) == NULL ) continue;
+    if ( tuneInfo->commentString( i ).empty() )
+    {
+      continue;
+    }
     infoStr.append( tuneInfo->commentString( i ) );
     infoStr.append( "\r\n" );
   }
