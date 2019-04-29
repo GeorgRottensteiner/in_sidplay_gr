@@ -11,29 +11,6 @@ extern CThreadSidPlayer*  g_pSIDPlayer;
 
 
 
-int CALLBACK InfoDlgWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam )
-{
-  switch ( uMsg )
-  {
-    case WM_COMMAND:
-      {
-        int wmId = LOWORD( wParam );
-        if ( ( wmId == IDOK )
-          || ( wmId == IDCANCEL ) )
-        {
-          EndDialog( hWnd, wmId );
-        }
-      }
-      return TRUE;
-    case WM_INITDIALOG:
-      InfoDlgInitDialog( hWnd, reinterpret_cast<SidTuneInfo*>( lParam ) );
-      return TRUE;
-  }
-  return FALSE;
-}
-
-
-
 void InfoDlgInitDialog( HWND hWnd, SidTuneInfo* tuneInfo )
 {
   char buf[20];
@@ -44,7 +21,7 @@ void InfoDlgInitDialog( HWND hWnd, SidTuneInfo* tuneInfo )
   infoStr.append( tuneInfo->dataFileName() );
   SetDlgItemTextA( hWnd, IDC_FILEPATHNAME, infoStr.c_str() );
 
-  SetDlgItemTextA( hWnd, IDC_STIL_ED, g_pSIDPlayer->GetSTILData( infoStr.c_str() ) );
+  SetDlgItemTextA( hWnd, IDC_STIL_ED, g_pSIDPlayer->GetSTILData( infoStr.c_str() ).c_str() );
 
 
   SetDlgItemTextA( hWnd, IDC_TITLE_STC, tuneInfo->infoString( 0 ).c_str() );
@@ -117,3 +94,29 @@ void InfoDlgInitDialog( HWND hWnd, SidTuneInfo* tuneInfo )
   //tuneInfo->dataFileLen
   //tuneInfo->numberOfInfoStrings
 }
+
+
+
+int CALLBACK InfoDlgWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam )
+{
+  switch ( uMsg )
+  {
+    case WM_COMMAND:
+      {
+        int wmId = LOWORD( wParam );
+        if ( ( wmId == IDOK )
+        ||   ( wmId == IDCANCEL ) )
+        {
+          EndDialog( hWnd, wmId );
+        }
+      }
+      return TRUE;
+    case WM_INITDIALOG:
+      InfoDlgInitDialog( hWnd, reinterpret_cast<SidTuneInfo*>( lParam ) );
+      return TRUE;
+  }
+  return FALSE;
+}
+
+
+

@@ -1,4 +1,3 @@
-#include <windows.h>
 #include "configDlg.h"
 #include "resource.h"
 #include "typesdefs.h"
@@ -6,9 +5,16 @@
 
 #include "helpers.h"
 
+#include "threadsidplayer.h"
+
+
+
+extern CThreadSidPlayer* g_pSIDPlayer;
+
 
 
 PlayerConfig* g_pPlayerConfig = NULL;
+
 
 
 void ConfigDlgInitDialog( HWND hWnd )
@@ -279,7 +285,10 @@ void SelectHvscFile( HWND hWnd )
 
 
   if ( GetFileNameFromBrowse( hWnd, path, MAX_PATH, L"c:\\", L"txt", L"Text files (*.txt)\0*.txt\0All files (*.*)\0*.*\0\0",
-    L"Select song length db file" ) != TRUE ) return;
+                              L"Select song length db file" ) != TRUE ) 
+  {
+    return;
+  }
   pathLen = wcslen( path ) + 1;
 
   char*     pDummy = new char[pathLen];
@@ -303,20 +312,21 @@ void SelectHvscFile( HWND hWnd )
 
 void SelectHvscDirectory( HWND hWnd )
 {
-  wchar_t path[MAX_PATH];
-  size_t pathLen;
-  LPITEMIDLIST idlRoot = NULL;
+  wchar_t       path[MAX_PATH];
+  size_t        pathLen;
+  LPITEMIDLIST  idlRoot = NULL;
 
   BROWSEINFO bi = { 0 };
 
   bi.lpszTitle = L"Select HVSC directory";
+
   LPITEMIDLIST pidl = SHBrowseForFolder( &bi );
 
-  if ( pidl != 0 )
+  if ( pidl != NULL )
   {
     // get the name of the folder and put it in path
     SHGetPathFromIDList( pidl, path );
-    IMalloc * imalloc = 0;
+    IMalloc* imalloc = 0;
     if ( SUCCEEDED( SHGetMalloc( &imalloc ) ) )
     {
       imalloc->Free( pidl );
@@ -371,9 +381,9 @@ int CALLBACK ConfigDlgWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPara
             break;
         }
         if ( wmId == IDCANCEL )
+        {
           EndDialog( hWnd, wmId );
-        //else
-        //	return FALSE;
+        }
       }
       break;
 

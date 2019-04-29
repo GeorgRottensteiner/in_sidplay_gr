@@ -1,18 +1,18 @@
 #pragma once
 
-#include <stdlib.h>
-#include <fstream>
+#include <string>
+
+
 
 struct StilBlock
 {
-public:
-	StilBlock();
-	~StilBlock();
 
-	std::string TITLE;
-	std::string NAME;
-	std::string ARTIST;
-	std::string AUTHOR;
-	std::string COMMENT;
+  public:
+
+	  std::string TITLE;
+	  std::string NAME;
+	  std::string ARTIST;
+	  std::string AUTHOR;
+	  std::string COMMENT;
 };
 

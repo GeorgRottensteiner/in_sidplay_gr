@@ -2,11 +2,4 @@
 #include "StilBlock.h"
 
 
-StilBlock::StilBlock()
-{
-}
 
-
-StilBlock::~StilBlock()
-{
-}

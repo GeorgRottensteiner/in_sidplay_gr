@@ -82,7 +82,7 @@ BEGIN
     CONTROL         "Voice1",IDC_VOICE20,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,228,24,37,10
     CONTROL         "Vocie2",IDC_VOICE21,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,228,36,37,10
     CONTROL         "Voice3",IDC_VOICE22,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,228,48,37,10
-    CTEXT           "|_ Affect pseudo streo_|",IDC_STATIC,140,59,85,8
+    CTEXT           "|_ Affect pseudo stereo_|",IDC_STATIC,140,59,85,8
     GROUPBOX        "Emulation",IDC_STATIC,7,74,277,90
     LTEXT           "C64 model:",IDC_STATIC,18,84,54,8
     COMBOBOX        IDC_C64MODEL,72,84,72,42,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
@@ -105,7 +105,7 @@ BEGIN
                     "Static",SS_LEFTNOWORDWRAP | WS_GROUP,204,198,80,37
     EDITTEXT        IDC_SUBSONG_FORMAT,10,241,56,12,ES_AUTOHSCROLL
     LTEXT           "Subsong string format, %n - subsong number",IDC_STATIC,93,244,151,8
-    LTEXT           "!!! You have to reload playlist after change the playlist format !!!",IDC_STATIC,42,254,210,8
+    CTEXT           "!!! You have to reload playlist after changing the playlist format !!!",IDC_STATIC,18,254,259,8
     CONTROL         "Use song length database",IDC_ENABLESONGLENDB,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,273,96,8
     EDITTEXT        IDC_SONGLENGTHFILE,103,273,132,12,ES_AUTOHSCROLL | ES_READONLY
     PUSHBUTTON      "Browse",IDC_BROWSE_BTN,241,271,30,18
@@ -114,8 +114,8 @@ BEGIN
     EDITTEXT        IDC_HVSCDIR,103,301,132,12,ES_AUTOHSCROLL | ES_READONLY
     PUSHBUTTON      "Browse",IDC_BROWSE_HVSC,241,297,30,18
     LTEXT           "(e.g. c:\\HVSC\\c64Music). Works independently of songlength !!!!",IDC_STATIC,19,316,216,8
-    DEFPUSHBUTTON   "OK",IDOK,90,335,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,144,335,50,14
+    DEFPUSHBUTTON   "OK",IDOK,187,332,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,243,332,50,14
 END
 
 IDD_ABOUTDLG DIALOGEX 0, 0, 195, 145
@@ -254,6 +254,11 @@ END
 //
 
 IDD_ABOUTDLG AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_CONFIG_DLG AFX_DIALOG_LAYOUT
 BEGIN
     0
 END

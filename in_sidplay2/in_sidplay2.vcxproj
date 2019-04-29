@@ -111,7 +111,6 @@
   <ItemGroup>
     <ClCompile Include="aboutDlg.cpp" />
     <ClCompile Include="configDlg.cpp" />
-    <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="helpers.cpp" />
     <ClCompile Include="in_sidplay2.cpp" />
     <ClCompile Include="infoDlg.cpp" />
@@ -127,6 +126,7 @@
     <ClInclude Include="infoDlg.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="StilBlock.h" />
+    <ClInclude Include="subSongDlg.h" />
     <ClInclude Include="ThreadSidPlayer.h" />
     <ClInclude Include="typesdefs.h" />
   </ItemGroup>

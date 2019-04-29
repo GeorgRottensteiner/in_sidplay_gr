@@ -188,20 +188,20 @@ void setpan( int pan )
 // this gets called when the use hits Alt+3 to get the file info.
 // if you need more info, ask me :)
 
-int infoDlg( const char *fn, HWND hwnd )
+int infoDlg( const char* Filename, HWND hwnd )
 {
   const SidTuneInfo* info;
   SidTune tune( 0 );
   int i;
-  std::string strfilename;
 
-  strfilename.assign( fn );
-  i = strfilename.find( '}' );
+  std::string filename = Filename;
+
+  i = filename.find( '}' );
   if ( i > 0 )
   {
-    strfilename = strfilename.substr( i + 1 );
+    filename = filename.substr( i + 1 );
   }
-  tune.load( strfilename.c_str() );
+  tune.load( filename.c_str() );
   info = tune.getInfo();
   DialogBoxParam( g_InModuleDefinition.hDllInstance, MAKEINTRESOURCE( IDD_FILEINFODLG ), hwnd, InfoDlgWndProc, (LPARAM)info );
   //ShowWindow(wnd,SW_SHOW);
@@ -210,19 +210,19 @@ int infoDlg( const char *fn, HWND hwnd )
 
 
 
-/**
-  Replaces occurences of string %{...} containing tokens separated by | by checking which
-  token is empty. Example: %{sr|a} it means if %sr is empty then use %a (if artist from stil is empty use
-  artist from SID file
-*/
+// Replaces occurences of string %{...} containing tokens separated by | by checking which
+//   token is empty. Example: %{sr|a} it means if %sr is empty then use %a (if artist from stil is empty use
+//   artist from SID file
+
 void conditionsReplace( std::string& formatString, const StilBlock* stilBlock, const SidTuneInfo* tuneInfo )
 {
-  const int BUF_SIZE = 30;
-  std::string conditionToken;
-  int tokenBeginPos = 0;
-  int tokenEndPos = 0;
+  const int     BUF_SIZE = 30;
+  std::string   conditionToken;
+  int           tokenBeginPos = 0;
+  int           tokenEndPos = 0;
+  char          toReplaceToken[BUF_SIZE];
   std::vector<std::string> tokens;
-  char toReplaceToken[BUF_SIZE];
+  
 
   while ( ( tokenBeginPos = formatString.find( "%{", tokenBeginPos ) ) >= 0 )
   {
@@ -240,48 +240,59 @@ void conditionsReplace( std::string& formatString, const StilBlock* stilBlock, c
       for ( std::vector<std::string>::iterator it = tokens.begin(); it != tokens.end(); ++it )
       {
 
-        if ( ( *it ).compare( "f" ) == 0 )
+        if ( *it == "f" )
         {
           replaceAll( formatString, toReplaceToken, "%f" );
           break;
         }
-        if ( ( ( *it ).compare( "t" ) == 0 ) && ( tuneInfo->infoString( 0 ).length() > 0 ) )
+        if ( ( *it == "t" ) 
+        &&   ( tuneInfo->infoString( 0 ).length() > 0 ) )
         {
           replaceAll( formatString, toReplaceToken, "%t" );
           break;
         }
-        if ( ( ( *it ).compare( "a" ) == 0 ) && ( tuneInfo->infoString( 1 ).length() > 0 ) )
+        if ( ( *it == "a" ) 
+        &&   ( tuneInfo->infoString( 1 ).length() > 0 ) )
         {
           replaceAll( formatString, toReplaceToken, "%a" );
           break;
         }
-        if ( ( ( *it ).compare( "r" ) == 0 ) && ( tuneInfo->infoString( 2 ).length() > 0 ) )
+        if ( ( *it == "r" ) 
+        &&   ( tuneInfo->infoString( 2 ).length() > 0 ) )
         {
           replaceAll( formatString, toReplaceToken, "%r" );
           break;
         }
-        if ( ( *it ).compare( "x" ) == 0 )
+        if ( *it == "x" )
         {
           replaceAll( formatString, toReplaceToken, "%x" );
           break;
         }
 
-        if ( ( ( *it ).compare( "sr" ) == 0 ) && ( stilBlock != NULL ) && ( !stilBlock->ARTIST.empty() ) )
+        if ( ( *it == "sr" ) 
+        &&   ( stilBlock != NULL ) 
+        &&   ( !stilBlock->ARTIST.empty() ) )
         {
           replaceAll( formatString, toReplaceToken, "%sr" );
           break;
         }
-        if ( ( ( *it ).compare( "st" ) == 0 ) && ( stilBlock != NULL ) && ( !stilBlock->TITLE.empty() ) )
+        if ( ( *it == "st" ) 
+        &&   ( stilBlock != NULL ) 
+        &&   ( !stilBlock->TITLE.empty() ) )
         {
           replaceAll( formatString, toReplaceToken, "%st" );
           break;
         }
-        if ( ( ( *it ).compare( "sa" ) == 0 ) && ( stilBlock != NULL ) && ( !stilBlock->AUTHOR.empty() ) )
+        if ( ( *it == "sa" ) 
+        &&   ( stilBlock != NULL ) 
+        &&   ( !stilBlock->AUTHOR.empty() ) )
         {
           replaceAll( formatString, toReplaceToken, "%sa" );
           break;
         }
-        if ( ( ( *it ).compare( "sn" ) == 0 ) && ( stilBlock != NULL ) && ( !stilBlock->NAME.empty() ) )
+        if ( ( *it == "sn" ) 
+        &&   ( stilBlock != NULL ) 
+        &&   ( !stilBlock->NAME.empty() ) )
         {
           replaceAll( formatString, toReplaceToken, "%sn" );
           break;
@@ -306,15 +317,16 @@ void conditionsReplace( std::string& formatString, const StilBlock* stilBlock, c
 // for the file in filename.
 // if title is NULL, no title is copied into it.
 // if length_in_ms is NULL, no length is copied into it.
-void getfileinfo( const char* filename, char* title, int* length_in_ms )
+void getfileinfo( const char* Filename, char* title, int* length_in_ms )
 {
-  const SidTuneInfo* info;
-  std::string str;
-  std::string strFilename;
-  int length;
-  SidTune tune( 0 );
-  int subsongIndex = 1;
-  char buf[20];
+  const SidTuneInfo*  info = NULL;
+  std::string         str;
+  std::string         strFilename;
+  int                 length = 0;
+  SidTune             tune( 0 );
+  int                 subsongIndex = 1;
+  char                buf[20];
+
 
   WaitForSingleObject( gMutex, INFINITE );
   if ( gUpdaterThreadHandle != 0 )
@@ -323,8 +335,8 @@ void getfileinfo( const char* filename, char* title, int* length_in_ms )
     gUpdaterThreadHandle = 0;
   }
 
-  if ( ( filename == NULL ) 
-  ||   ( strlen( filename ) == 0 ) )
+  if ( ( Filename == NULL )
+  ||   ( strlen( Filename ) == 0 ) )
   {
     // get current song info
     info = g_pSIDPlayer->GetTuneInfo();
@@ -349,7 +361,7 @@ void getfileinfo( const char* filename, char* title, int* length_in_ms )
   else
   {
     subsongIndex = 1;
-    strFilename.assign( filename );
+    strFilename = Filename;
     tune.load( strFilename.c_str() );
     info = tune.getInfo();
     if ( info == NULL )
@@ -357,8 +369,8 @@ void getfileinfo( const char* filename, char* title, int* length_in_ms )
       ReleaseMutex( gMutex );
       return;
     }
-    subsongIndex = tune.getInfo()->startSong();
-    info = tune.getInfo();
+    subsongIndex  = tune.getInfo()->startSong();
+    info          = tune.getInfo();
     tune.selectSong( subsongIndex );
     // GR
     //length = g_pSIDPlayer->GetSongLength(tune);
@@ -415,16 +427,12 @@ void getfileinfo( const char* filename, char* title, int* length_in_ms )
 
 
   // fill STIL data if necessary
-  const StilBlock* sb = NULL;
+  StilBlock       sb;
   if ( g_pSIDPlayer->GetCurrentConfig().useSTILfile == true )
   {
     sb = g_pSIDPlayer->GetSTILData2( strFilename.c_str(), subsongIndex - 1 );
   }
-  else
-  {
-    sb = NULL;
-  }
-  conditionsReplace( titleTemplate, sb, info );
+  conditionsReplace( titleTemplate, &sb, info );
 
   replaceAll( titleTemplate, "%f", fileNameOnly.c_str() );
   replaceAll( titleTemplate, "%t", info->infoString( 0 ).c_str() );
@@ -449,20 +457,10 @@ void getfileinfo( const char* filename, char* title, int* length_in_ms )
   }
 
   // fill STIL data if necessary
-  if ( sb == NULL )
-  {
-    replaceAll( titleTemplate, "%sr", "" );
-    replaceAll( titleTemplate, "%sa", "" );
-    replaceAll( titleTemplate, "%st", "" );
-    replaceAll( titleTemplate, "%sn", "" );
-  }
-  else
-  {
-    replaceAll( titleTemplate, "%sr", sb->ARTIST.c_str() );
-    replaceAll( titleTemplate, "%st", sb->TITLE.c_str() );
-    replaceAll( titleTemplate, "%sa", sb->AUTHOR.c_str() );
-    replaceAll( titleTemplate, "%sn", sb->NAME.c_str() );
-  }
+  replaceAll( titleTemplate, "%sr", sb.ARTIST.c_str() );
+  replaceAll( titleTemplate, "%st", sb.TITLE.c_str() );
+  replaceAll( titleTemplate, "%sa", sb.AUTHOR.c_str() );
+  replaceAll( titleTemplate, "%sn", sb.NAME.c_str() );
 
   if ( title != NULL )
   {
@@ -533,13 +531,11 @@ extern In_Module g_InModuleDefinition =
   NULL,		// setinfo call filled in by winamp
 
   0 // out_mod filled in by winamp
-
 };
 
 
 
-extern "C" __declspec( dllexport )
-In_Module* winampGetInModule2()
+extern "C" __declspec( dllexport ) In_Module* winampGetInModule2()
 {
   return &g_InModuleDefinition;
 }
