@@ -19,8 +19,6 @@
 #include "typesdefs.h"
 //#include <hash_map>
 
-#define WM_WA_MPEG_EOF WM_USER+2
-
 #define PLAYBACK_BIT_PRECISION 16
 
 
@@ -41,68 +39,71 @@ class CThreadSidPlayer
     std::map<std::string, std::vector<StilBlock> >    m_stillMap2;
 
     sidplayfp*              m_pEngine;
-    SidTune m_tune;
-    PlayerConfig m_playerConfig;
-    HANDLE m_threadHandle;
-    PlayerStatus_t m_playerStatus;
-    unsigned __int64 m_decodedSampleCount;
-    unsigned __int64 m_playTimems; //int 
-    char* m_decodeBuf;
-    int m_decodeBufLen;
-    int m_currentTuneLength;
+    SidTune                 m_tune;
+    PlayerConfig            m_playerConfig;
+    HANDLE                  m_threadHandle;
+    PlayerStatus_t          m_playerStatus;
+    unsigned __int64        m_decodedSampleCount;
+    unsigned __int64        m_playTimems; //int 
+    char*                   m_decodeBuf;
+    int                     m_decodeBufLen;
+    int                     m_currentTuneLength;
 
 
-  private:
 
-    static DWORD __stdcall Run( void* thisparam );
-    void AssignConfigValue( PlayerConfig *conf, std::string token, std::string value );
-    SidDatabase m_sidDatabase;
-    void ReadLine( char* buf, FILE *file, const int maxBuf );
+    static DWORD __stdcall  Run( void* thisparam );
+    void                    AssignConfigValue( PlayerConfig& Config, const std::string& token, const std::string& value );
+    SidDatabase             m_sidDatabase;
+    void                    ReadLine( char* buf, FILE *file, const int maxBuf );
 
 
   protected:
 
-    In_Module* m_inmod;
-    int m_seekNeedMs;
+    In_Module*              m_inmod;
+    int                     m_seekNeedMs;
 
 
 
-    void DoSeek();
-    void FixPath( std::string& path );
-    void FillSTILData();
-    void FillSTILData2();
-    void ClearSTILData( void );
+    void                    DoSeek();
+    void                    FixPath( std::string& path );
+    void                    FillSTILData();
+    void                    FillSTILData2();
+    void                    ClearSTILData();
 
 
   public:
 
-    int m_MaxLatency;
+    int                     m_MaxLatency;
 
 
 
     CThreadSidPlayer( In_Module& inWAmod );
-    ~CThreadSidPlayer( void );
-    void Init( void );
-    void Play( void );
-    void Pause( void );
-    void Stop( void );
-    void LoadTune( const char* name );
-    PlayerStatus_t GetPlayerStatus() { return m_playerStatus; }
-    int CurrentSubtune( void );
-    int GetNumSubtunes();
-    void PlaySubtune( int subTune );
-    const SidTuneInfo* GetTuneInfo( void );
-    int GetPlayTime( void );
-    bool LoadConfigFromFile( PlayerConfig *conf );
-    bool LoadConfigFromFile( PlayerConfig *conf, wchar_t* fileName );
-    void SaveConfigToFile( PlayerConfig *conf );
-    void SaveConfigToFile( PlayerConfig *conf, wchar_t* fileName );
-    const PlayerConfig& GetCurrentConfig();
-    void SetConfig( PlayerConfig* newConfig );
-    int GetSongLength( SidTune &tune );
-    int GetSongLength();
+    ~CThreadSidPlayer();
+
+    void                    Init();
+    void                    Play();
+    void                    Pause();
+    void                    Stop();
+    void                    LoadTune( const char* name );
+    PlayerStatus_t          GetPlayerStatus();
+    int                     CurrentSubtune();
+    int                     GetNumSubtunes();
+    void                    PlaySubtune( int subTune );
+    const SidTuneInfo*      GetTuneInfo();
+    int                     GetPlayTime();
+
+    bool                    LoadConfigFromFile( PlayerConfig& Config );
+    bool                    LoadConfigFromFile( PlayerConfig& Config, wchar_t* fileName );
+    void                    SaveConfigToFile( PlayerConfig& Config );
+    void                    SaveConfigToFile( PlayerConfig& Config, wchar_t* fileName );
+    const PlayerConfig&     GetCurrentConfig();
+    void                    SetConfig( PlayerConfig& Config );
+
+    int                     GetSongLength( SidTune &tune );
+    int                     GetSongLength();
+
     //! Moves emulation time pointer to given time
-    void SeekTo( int timeMs );
-    std::string GetSTILData( const char* filePath );
-    StilBlock GetSTILData2( const char* filePath, int subsong );
+    void                    SeekTo( int timeMs );
+    std::string             GetSTILData( const char* filePath );
+    StilBlock               GetSTILData2( const char* filePath, int subsong );
 };

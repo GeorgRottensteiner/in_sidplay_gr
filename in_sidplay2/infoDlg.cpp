@@ -4,10 +4,11 @@
 #include "threadsidplayer.h"
 
 #include "helpers.h"
+#include "SIDPlugin.h"
 
 
 
-extern CThreadSidPlayer*  g_pSIDPlayer;
+extern SIDPlugin      s_Plugin;
 
 
 
@@ -21,7 +22,7 @@ void InfoDlgInitDialog( HWND hWnd, SidTuneInfo* tuneInfo )
   infoStr.append( tuneInfo->dataFileName() );
   SetDlgItemTextA( hWnd, IDC_FILEPATHNAME, infoStr.c_str() );
 
-  SetDlgItemTextA( hWnd, IDC_STIL_ED, g_pSIDPlayer->GetSTILData( infoStr.c_str() ).c_str() );
+  SetDlgItemTextA( hWnd, IDC_STIL_ED, s_Plugin.m_SIDPlayer.GetSTILData( infoStr.c_str() ).c_str() );
 
 
   SetDlgItemTextA( hWnd, IDC_TITLE_STC, tuneInfo->infoString( 0 ).c_str() );

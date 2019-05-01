@@ -23,8 +23,6 @@ int CALLBACK AboutDlgWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam
 		  break;
 	  case WM_INITDIALOG:
 		  {
-			  //char* sidplayInfo = "libsidplay2 info:\r\nSimon White\tlibsidplay2 engine\r\nDag Lem\t\treSID library\r\n";
-
 			  SetDlgItemTextA( hWnd, IDC_ABOUTED, "Thanks to:\r\nSimon White\tlibsidplay2 engine\r\nDag Lem\t\treSID library\r\n"
 				                                    "Antti Lankila\treSID-fp\r\nLeandro Nini\tlibsidplayfp" );
 		  }

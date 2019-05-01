@@ -58,7 +58,7 @@
     </CustomBuildStep>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\sidplay-residfp\projects\win\VC\libsidplayfp;..\sidplay-residfp\libsidplayfp\src\builders\residfp-builder;..\sidplay-residfp\libsidplayfp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>p:\common;..\sidplay-residfp\projects\win\VC\libsidplayfp;..\sidplay-residfp\libsidplayfp\src\builders\residfp-builder;..\sidplay-residfp\libsidplayfp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;IN_SIDPLAY2_EXPORTS;HAVE_MSWINDOWS;HAVE_CONFIG_H;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -85,7 +85,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\sidplay-residfp\projects\win\VC\libsidplayfp;..\sidplay-residfp\libsidplayfp\src\builders\residfp-builder;..\sidplay-residfp\libsidplayfp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>p:\common;..\sidplay-residfp\projects\win\VC\libsidplayfp;..\sidplay-residfp\libsidplayfp\src\builders\residfp-builder;..\sidplay-residfp\libsidplayfp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;IN_SIDPLAY2_EXPORTS;HAVE_MSWINDOWS;HAVE_CONFIG_H;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -114,7 +114,7 @@
     <ClCompile Include="helpers.cpp" />
     <ClCompile Include="in_sidplay2.cpp" />
     <ClCompile Include="infoDlg.cpp" />
-    <ClCompile Include="StilBlock.cpp" />
+    <ClCompile Include="SIDPlugin.cpp" />
     <ClCompile Include="subSongDlg.cpp" />
     <ClCompile Include="ThreadSidPlayer.cpp" />
   </ItemGroup>
@@ -125,6 +125,7 @@
     <ClInclude Include="helpers.h" />
     <ClInclude Include="infoDlg.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="SIDPlugin.h" />
     <ClInclude Include="StilBlock.h" />
     <ClInclude Include="subSongDlg.h" />
     <ClInclude Include="ThreadSidPlayer.h" />
@@ -132,9 +133,6 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="in_sidplay2.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ReadMe.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

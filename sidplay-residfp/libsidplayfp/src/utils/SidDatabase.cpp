@@ -64,7 +64,8 @@ const char *parseTime(const char *str, long &result)
     const long seconds = strtol(end, &end, 10);
     result = (minutes * 60) + seconds;
 
-    while (!isspace(*end))
+    while ( ( *end )
+    &&      (!isspace(*end)) )
     {
         end++;
     }

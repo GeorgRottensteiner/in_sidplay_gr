@@ -4,10 +4,17 @@
 #include "subsongdlg.h"
 
 #include "threadsidplayer.h"
+#include "SIDPlugin.h"
 
 
 
 CSubSongDlg* subSongDlg;
+
+extern SIDPlugin      s_Plugin;
+
+
+WNDPROC CSubSongDlg::s_OriginalMainWindowProc;
+HWND    CSubSongDlg::s_HwndDlg;
 
 
 
@@ -15,6 +22,7 @@ CSubSongDlg::CSubSongDlg( CThreadSidPlayer* pPlayer, HWND hWnd ) :
   m_hWnd( hWnd ),
   m_pPlayer( pPlayer )
 { 
+  s_HwndDlg = m_hWnd;
 }
 
 
@@ -56,12 +64,13 @@ void CSubSongDlg::PrevSubSong()
 
 
 
-int CSubSongDlg::SubSongDlgWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+int CSubSongDlg::SubSongDlgWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam )
 {
 	switch ( uMsg )
 	{
-	  //case WM_REFRESH_TUNE_INFO:		
-	  //	break;
+    case WM_NCHITTEST:
+      SetWindowLong( hWnd, DWL_MSGRESULT, HTCAPTION );
+      return TRUE;
 	  case WM_COMMAND:
 		  {
 			  int wmId = LOWORD( wParam );			
@@ -78,15 +87,54 @@ int CSubSongDlg::SubSongDlgWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM l
 				    break;
 			  }
 		  }
-		  break;
+      return TRUE;
 	  case WM_DESTROY:
-		  break;
+      return TRUE;
 	  case WM_INITDIALOG:
-		  break;
-	  default:
-		  return FALSE;
+      {
+        HWND    hwndParent = SIDPlugin::g_InModuleDefinition.hMainWindow;
+        RECT    rc;
+
+        GetWindowRect( hwndParent, &rc );
+        rc.top = rc.bottom;
+        rc.bottom = rc.top + 100;
+
+        SetWindowPos( hWnd, NULL, rc.left, rc.top, rc.right - rc.left, rc.bottom - rc.top, SWP_NOZORDER );
+
+        s_OriginalMainWindowProc = (WNDPROC)SetWindowLongPtr( hwndParent, GWLP_WNDPROC, (LONG_PTR)MainWndProc );
+      }
+      return TRUE;
 	}
-	return TRUE;
+  return FALSE;
+}
+
+
+
+LRESULT CALLBACK CSubSongDlg::MainWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam )
+{
+  switch ( uMsg )
+  {
+    case WM_MOVE:
+      {
+        LRESULT res = CallWindowProc( s_OriginalMainWindowProc, hWnd, uMsg, wParam, lParam );
+        /*
+        xPos = (int)(short)LOWORD( lParam );   // horizontal position 
+        yPos = (int)(short)HIWORD( lParam );   // vertical position
+        */
+        RECT    rc;
+
+        GetWindowRect( hWnd, &rc );
+        rc.top = rc.bottom;
+        rc.bottom = rc.top + 100;
+
+        SetWindowPos( s_HwndDlg, NULL, rc.left, rc.top, rc.right - rc.left, rc.bottom - rc.top, SWP_NOZORDER );
+
+        return res;
+      }
+      break;
+  }
+
+  return CallWindowProc( s_OriginalMainWindowProc, hWnd, uMsg, wParam, lParam );
 }
 
 

@@ -4,16 +4,15 @@
 #include <shlobj.h>
 
 #include "helpers.h"
+#include "SIDPlugin.h"
 
 #include "threadsidplayer.h"
 
 
 
-extern CThreadSidPlayer* g_pSIDPlayer;
+extern SIDPlugin             s_Plugin;
 
-
-
-PlayerConfig* g_pPlayerConfig = NULL;
+PlayerConfig                  currentConfig;
 
 
 
@@ -21,14 +20,13 @@ void ConfigDlgInitDialog( HWND hWnd )
 {
   int val;
 
-  g_pPlayerConfig = new PlayerConfig;
-  //PlayerConfig cfg;
-  //initialize config with current values
-  *g_pPlayerConfig = g_pSIDPlayer->GetCurrentConfig();
+  currentConfig = s_Plugin.m_SIDPlayer.GetCurrentConfig();
+
   //we dont need current value coz we will load it from file
-  g_pPlayerConfig->songLengthsFile = "";
+  currentConfig.songLengthsFile = "";
+
   //now load "real" settings from file (they may differ from those above)
-  g_pSIDPlayer->LoadConfigFromFile( g_pPlayerConfig );
+  s_Plugin.m_SIDPlayer.LoadConfigFromFile( currentConfig );
 
 
   //FREQ
@@ -55,7 +53,7 @@ void ConfigDlgInitDialog( HWND hWnd )
 
   //set values:
   //freq
-  switch ( g_pPlayerConfig->sidConfig.frequency )
+  switch ( currentConfig.sidConfig.frequency )
   {
     case 48000:
       val = 0;
@@ -73,12 +71,12 @@ void ConfigDlgInitDialog( HWND hWnd )
   SendDlgItemMessage( hWnd, IDC_FREQUENCY, CB_SETCURSEL, (WPARAM)val, 0 );
 
   //channel
-  val = ( g_pPlayerConfig->sidConfig.playback == SidConfig::MONO ) ? val = 0 : val = 1;
+  val = ( currentConfig.sidConfig.playback == SidConfig::MONO ) ? val = 0 : val = 1;
   SendDlgItemMessage( hWnd, IDC_CHANNELS, CB_SETCURSEL, (WPARAM)val, 0 );
   //C64 model
-  SendDlgItemMessage( hWnd, IDC_C64MODEL, CB_SETCURSEL, (WPARAM)g_pPlayerConfig->sidConfig.defaultC64Model, 0 );
+  SendDlgItemMessage( hWnd, IDC_C64MODEL, CB_SETCURSEL, (WPARAM)currentConfig.sidConfig.defaultC64Model, 0 );
   //force c64 model
-  if ( g_pPlayerConfig->sidConfig.forceC64Model )
+  if ( currentConfig.sidConfig.forceC64Model )
   {
     CheckDlgButton( hWnd, IDC_FORCE_C64MODEL, BST_CHECKED );
   }
@@ -88,9 +86,9 @@ void ConfigDlgInitDialog( HWND hWnd )
   }
 
   //sid model
-  SendDlgItemMessage( hWnd, IDC_SIDMODEL, CB_SETCURSEL, (WPARAM)g_pPlayerConfig->sidConfig.defaultSidModel, 0 );
+  SendDlgItemMessage( hWnd, IDC_SIDMODEL, CB_SETCURSEL, (WPARAM)currentConfig.sidConfig.defaultSidModel, 0 );
   //force SID model
-  if ( g_pPlayerConfig->sidConfig.forceSidModel )
+  if ( currentConfig.sidConfig.forceSidModel )
   {
     CheckDlgButton( hWnd, IDC_FORCE_SID_MODEL, BST_CHECKED );
   }
@@ -104,7 +102,7 @@ void ConfigDlgInitDialog( HWND hWnd )
   else */
   CheckDlgButton( hWnd, IDC_FORCE_SID2_MODEL, BST_UNCHECKED );
 
-  if ( g_pPlayerConfig->playLimitEnabled )
+  if ( currentConfig.playLimitEnabled )
   {
     CheckDlgButton( hWnd, IDC_PLAYLIMIT_CHK, BST_CHECKED );
   }
@@ -112,9 +110,9 @@ void ConfigDlgInitDialog( HWND hWnd )
   {
     CheckDlgButton( hWnd, IDC_PLAYLIMIT_CHK, BST_UNCHECKED );
   }
-  SetDlgItemTextA( hWnd, IDC_PLAYLIMITTIME, NumberToString( g_pPlayerConfig->playLimitSec ).c_str() );
+  SetDlgItemTextA( hWnd, IDC_PLAYLIMITTIME, NumberToString( currentConfig.playLimitSec ).c_str() );
 
-  if ( g_pPlayerConfig->useSongLengthFile )
+  if ( currentConfig.useSongLengthFile )
   {
     CheckDlgButton( hWnd, IDC_ENABLESONGLENDB, BST_CHECKED );
   }
@@ -122,30 +120,30 @@ void ConfigDlgInitDialog( HWND hWnd )
   {
     CheckDlgButton( hWnd, IDC_ENABLESONGLENDB, BST_UNCHECKED );
   }
-  if ( !g_pPlayerConfig->songLengthsFile.empty() )
+  if ( !currentConfig.songLengthsFile.empty() )
   {
-    SetDlgItemTextA( hWnd, IDC_SONGLENGTHFILE, g_pPlayerConfig->songLengthsFile.c_str() );
+    SetDlgItemTextA( hWnd, IDC_SONGLENGTHFILE, currentConfig.songLengthsFile.c_str() );
   }
-  CheckDlgButton( hWnd, IDC_ENABLESTIL, ( ( g_pPlayerConfig->useSTILfile ) ? BST_CHECKED : BST_UNCHECKED ) );
-  SetDlgItemTextA( hWnd, IDC_HVSCDIR, g_pPlayerConfig->hvscDirectory.c_str() );
+  CheckDlgButton( hWnd, IDC_ENABLESTIL, ( ( currentConfig.useSTILfile ) ? BST_CHECKED : BST_UNCHECKED ) );
+  SetDlgItemTextA( hWnd, IDC_HVSCDIR, currentConfig.hvscDirectory.c_str() );
 
   //pseudo stereo
-  CheckDlgButton( hWnd, IDC_PSEUDOSTEREO, ( ( g_pPlayerConfig->pseudoStereo ) ? BST_CHECKED : BST_UNCHECKED ) );
+  CheckDlgButton( hWnd, IDC_PSEUDOSTEREO, ( ( currentConfig.pseudoStereo ) ? BST_CHECKED : BST_UNCHECKED ) );
   //second sid model (pseudo stereo)
-  SendDlgItemMessage( hWnd, IDC_SID2MODEL, CB_SETCURSEL, (WPARAM)g_pPlayerConfig->sid2Model, 0 );
+  SendDlgItemMessage( hWnd, IDC_SID2MODEL, CB_SETCURSEL, (WPARAM)currentConfig.sid2Model, 0 );
 
-  if ( !g_pPlayerConfig->playlistFormat.empty() )
+  if ( !currentConfig.playlistFormat.empty() )
   {
-    SetDlgItemTextA( hWnd, IDC_PLAYLIST_FORMAT, g_pPlayerConfig->playlistFormat.c_str() );
+    SetDlgItemTextA( hWnd, IDC_PLAYLIST_FORMAT, currentConfig.playlistFormat.c_str() );
   }
   else
   {
     SetDlgItemTextA( hWnd, IDC_PLAYLIST_FORMAT, "%t %x / %a / %r / %sn" );
   }
 
-  if ( !g_pPlayerConfig->subsongFormat.empty() )
+  if ( !currentConfig.subsongFormat.empty() )
   {
-    SetDlgItemTextA( hWnd, IDC_SUBSONG_FORMAT, g_pPlayerConfig->subsongFormat.c_str() );
+    SetDlgItemTextA( hWnd, IDC_SUBSONG_FORMAT, currentConfig.subsongFormat.c_str() );
   }
   else
   {
@@ -163,17 +161,19 @@ void ConfigDlgInitDialog( HWND hWnd )
   CheckDlgButton(hWnd, IDC_VOICE21, playerConfig->voiceConfig[2][1] ? BST_UNCHECKED : BST_CHECKED);
   CheckDlgButton(hWnd, IDC_VOICE22, playerConfig->voiceConfig[2][2] ? BST_UNCHECKED : BST_CHECKED);
   */
-  CheckDlgButton( hWnd, IDC_VOICE00, ( g_pPlayerConfig->voiceConfig[0][0] == false ) ? BST_UNCHECKED : BST_CHECKED );
-  CheckDlgButton( hWnd, IDC_VOICE01, ( g_pPlayerConfig->voiceConfig[0][1] == false ) ? BST_UNCHECKED : BST_CHECKED );
-  CheckDlgButton( hWnd, IDC_VOICE02, ( g_pPlayerConfig->voiceConfig[0][2] == false ) ? BST_UNCHECKED : BST_CHECKED );
-  CheckDlgButton( hWnd, IDC_VOICE10, ( g_pPlayerConfig->voiceConfig[1][0] == false ) ? BST_UNCHECKED : BST_CHECKED );
-  CheckDlgButton( hWnd, IDC_VOICE11, ( g_pPlayerConfig->voiceConfig[1][1] == false ) ? BST_UNCHECKED : BST_CHECKED );
-  CheckDlgButton( hWnd, IDC_VOICE12, ( g_pPlayerConfig->voiceConfig[1][2] == false ) ? BST_UNCHECKED : BST_CHECKED );
-  CheckDlgButton( hWnd, IDC_VOICE20, ( g_pPlayerConfig->voiceConfig[2][0] == false ) ? BST_UNCHECKED : BST_CHECKED );
-  CheckDlgButton( hWnd, IDC_VOICE21, ( g_pPlayerConfig->voiceConfig[2][1] == false ) ? BST_UNCHECKED : BST_CHECKED );
-  CheckDlgButton( hWnd, IDC_VOICE22, ( g_pPlayerConfig->voiceConfig[2][2] == false ) ? BST_UNCHECKED : BST_CHECKED );
+  CheckDlgButton( hWnd, IDC_VOICE00, ( currentConfig.voiceConfig[0][0] == false ) ? BST_UNCHECKED : BST_CHECKED );
+  CheckDlgButton( hWnd, IDC_VOICE01, ( currentConfig.voiceConfig[0][1] == false ) ? BST_UNCHECKED : BST_CHECKED );
+  CheckDlgButton( hWnd, IDC_VOICE02, ( currentConfig.voiceConfig[0][2] == false ) ? BST_UNCHECKED : BST_CHECKED );
+  CheckDlgButton( hWnd, IDC_VOICE10, ( currentConfig.voiceConfig[1][0] == false ) ? BST_UNCHECKED : BST_CHECKED );
+  CheckDlgButton( hWnd, IDC_VOICE11, ( currentConfig.voiceConfig[1][1] == false ) ? BST_UNCHECKED : BST_CHECKED );
+  CheckDlgButton( hWnd, IDC_VOICE12, ( currentConfig.voiceConfig[1][2] == false ) ? BST_UNCHECKED : BST_CHECKED );
+  CheckDlgButton( hWnd, IDC_VOICE20, ( currentConfig.voiceConfig[2][0] == false ) ? BST_UNCHECKED : BST_CHECKED );
+  CheckDlgButton( hWnd, IDC_VOICE21, ( currentConfig.voiceConfig[2][1] == false ) ? BST_UNCHECKED : BST_CHECKED );
+  CheckDlgButton( hWnd, IDC_VOICE22, ( currentConfig.voiceConfig[2][2] == false ) ? BST_UNCHECKED : BST_CHECKED );
 
 }
+
+
 
 void UpdateConfig( HWND hWnd )
 {
@@ -181,99 +181,100 @@ void UpdateConfig( HWND hWnd )
   int val;
   char buf[MAX_BUFFER_SIZE];
 
+
   val = SendDlgItemMessage( hWnd, IDC_FREQUENCY, CB_GETCURSEL, 0, 0 );
   switch ( val )
   {
     case 0:
-      g_pPlayerConfig->sidConfig.frequency = 48000;
+      currentConfig.sidConfig.frequency = 48000;
       break;
     case 1:
-      g_pPlayerConfig->sidConfig.frequency = 44100;
+      currentConfig.sidConfig.frequency = 44100;
       break;
     case 2:
-      g_pPlayerConfig->sidConfig.frequency = 22050;
+      currentConfig.sidConfig.frequency = 22050;
       break;
     case 3:
-      g_pPlayerConfig->sidConfig.frequency = 11025;
+      currentConfig.sidConfig.frequency = 11025;
       break;
   }
 
   //playback channels
   val = SendDlgItemMessage( hWnd, IDC_CHANNELS, CB_GETCURSEL, 0, 0 );
-  g_pPlayerConfig->sidConfig.playback = ( val == 0 ) ? SidConfig::MONO : SidConfig::STEREO;
+  currentConfig.sidConfig.playback = ( val == 0 ) ? SidConfig::MONO : SidConfig::STEREO;
 
   //C64 model
   val = SendDlgItemMessage( hWnd, IDC_C64MODEL, CB_GETCURSEL, 0, 0 );
-  g_pPlayerConfig->sidConfig.defaultC64Model = ( SidConfig::c64_model_t )val;
+  currentConfig.sidConfig.defaultC64Model = ( SidConfig::c64_model_t )val;
   if ( IsDlgButtonChecked( hWnd, IDC_FORCE_C64MODEL ) == BST_CHECKED )
   {
-    g_pPlayerConfig->sidConfig.forceC64Model = true;
+    currentConfig.sidConfig.forceC64Model = true;
   }
   else
   {
-    g_pPlayerConfig->sidConfig.forceC64Model = false;
+    currentConfig.sidConfig.forceC64Model = false;
   }
 
   //SID model
   val = SendDlgItemMessage( hWnd, IDC_SIDMODEL, CB_GETCURSEL, 0, 0 );
-  g_pPlayerConfig->sidConfig.defaultSidModel = ( SidConfig::sid_model_t ) val;
+  currentConfig.sidConfig.defaultSidModel = ( SidConfig::sid_model_t ) val;
   if ( IsDlgButtonChecked( hWnd, IDC_FORCE_SID_MODEL ) == BST_CHECKED )
   {
-    g_pPlayerConfig->sidConfig.forceSidModel = true;
+    currentConfig.sidConfig.forceSidModel = true;
   }
   else
   {
-    g_pPlayerConfig->sidConfig.forceSidModel = false;
+    currentConfig.sidConfig.forceSidModel = false;
   }
 
-  //g_pPlayerConfig->sidConfig.forceSecondSidModel = (IsDlgButtonChecked(hWnd, IDC_FORCE_SID2_MODEL) == BST_CHECKED) ? true : false;
+  //currentConfig.sidConfig.forceSecondSidModel = (IsDlgButtonChecked(hWnd, IDC_FORCE_SID2_MODEL) == BST_CHECKED) ? true : false;
 
   if ( IsDlgButtonChecked( hWnd, IDC_PLAYLIMIT_CHK ) == BST_CHECKED )
   {
     GetDlgItemTextA( hWnd, IDC_PLAYLIMITTIME, buf, 20 );
-    g_pPlayerConfig->playLimitEnabled = true;
-    g_pPlayerConfig->playLimitSec = atoi( buf );
+    currentConfig.playLimitEnabled = true;
+    currentConfig.playLimitSec = atoi( buf );
   }
   else
   {
-    g_pPlayerConfig->playLimitEnabled = false;
+    currentConfig.playLimitEnabled = false;
   }
 
   if ( IsDlgButtonChecked( hWnd, IDC_ENABLESONGLENDB ) == BST_CHECKED )
   {
-    g_pPlayerConfig->useSongLengthFile = true;
+    currentConfig.useSongLengthFile = true;
   }
   else
   {
-    g_pPlayerConfig->useSongLengthFile = false;
+    currentConfig.useSongLengthFile = false;
   }
 
-  g_pPlayerConfig->useSTILfile = ( IsDlgButtonChecked( hWnd, IDC_ENABLESTIL ) == BST_CHECKED ) ? true : false;
+  currentConfig.useSTILfile = ( IsDlgButtonChecked( hWnd, IDC_ENABLESTIL ) == BST_CHECKED ) ? true : false;
 
   //voice configuration
-  g_pPlayerConfig->voiceConfig[0][0] = ( IsDlgButtonChecked( hWnd, IDC_VOICE00 ) == BST_CHECKED ) ? true : false;
-  g_pPlayerConfig->voiceConfig[0][1] = ( IsDlgButtonChecked( hWnd, IDC_VOICE01 ) == BST_CHECKED ) ? true : false;
-  g_pPlayerConfig->voiceConfig[0][2] = ( IsDlgButtonChecked( hWnd, IDC_VOICE02 ) == BST_CHECKED ) ? true : false;
-  g_pPlayerConfig->voiceConfig[1][0] = ( IsDlgButtonChecked( hWnd, IDC_VOICE10 ) == BST_CHECKED ) ? true : false;
-  g_pPlayerConfig->voiceConfig[1][1] = ( IsDlgButtonChecked( hWnd, IDC_VOICE11 ) == BST_CHECKED ) ? true : false;
-  g_pPlayerConfig->voiceConfig[1][2] = ( IsDlgButtonChecked( hWnd, IDC_VOICE12 ) == BST_CHECKED ) ? true : false;
-  g_pPlayerConfig->voiceConfig[2][0] = ( IsDlgButtonChecked( hWnd, IDC_VOICE20 ) == BST_CHECKED ) ? true : false;
-  g_pPlayerConfig->voiceConfig[2][1] = ( IsDlgButtonChecked( hWnd, IDC_VOICE21 ) == BST_CHECKED ) ? true : false;
-  g_pPlayerConfig->voiceConfig[2][2] = ( IsDlgButtonChecked( hWnd, IDC_VOICE22 ) == BST_CHECKED ) ? true : false;
+  currentConfig.voiceConfig[0][0] = ( IsDlgButtonChecked( hWnd, IDC_VOICE00 ) == BST_CHECKED ) ? true : false;
+  currentConfig.voiceConfig[0][1] = ( IsDlgButtonChecked( hWnd, IDC_VOICE01 ) == BST_CHECKED ) ? true : false;
+  currentConfig.voiceConfig[0][2] = ( IsDlgButtonChecked( hWnd, IDC_VOICE02 ) == BST_CHECKED ) ? true : false;
+  currentConfig.voiceConfig[1][0] = ( IsDlgButtonChecked( hWnd, IDC_VOICE10 ) == BST_CHECKED ) ? true : false;
+  currentConfig.voiceConfig[1][1] = ( IsDlgButtonChecked( hWnd, IDC_VOICE11 ) == BST_CHECKED ) ? true : false;
+  currentConfig.voiceConfig[1][2] = ( IsDlgButtonChecked( hWnd, IDC_VOICE12 ) == BST_CHECKED ) ? true : false;
+  currentConfig.voiceConfig[2][0] = ( IsDlgButtonChecked( hWnd, IDC_VOICE20 ) == BST_CHECKED ) ? true : false;
+  currentConfig.voiceConfig[2][1] = ( IsDlgButtonChecked( hWnd, IDC_VOICE21 ) == BST_CHECKED ) ? true : false;
+  currentConfig.voiceConfig[2][2] = ( IsDlgButtonChecked( hWnd, IDC_VOICE22 ) == BST_CHECKED ) ? true : false;
 
   //pseudostereo
-  g_pPlayerConfig->pseudoStereo = ( IsDlgButtonChecked( hWnd, IDC_PSEUDOSTEREO ) == BST_CHECKED ) ? true : false;
+  currentConfig.pseudoStereo = ( IsDlgButtonChecked( hWnd, IDC_PSEUDOSTEREO ) == BST_CHECKED ) ? true : false;
 
   //SID model
   val = SendDlgItemMessage( hWnd, IDC_SID2MODEL, CB_GETCURSEL, 0, 0 );
-  g_pPlayerConfig->sid2Model = ( SidConfig::sid_model_t ) val;
+  currentConfig.sid2Model = ( SidConfig::sid_model_t ) val;
 
   //playlist format
   GetDlgItemTextA( hWnd, IDC_PLAYLIST_FORMAT, buf, MAX_BUFFER_SIZE );
-  g_pPlayerConfig->playlistFormat = buf;
+  currentConfig.playlistFormat = buf;
   //subsong format
   GetDlgItemTextA( hWnd, IDC_SUBSONG_FORMAT, buf, MAX_BUFFER_SIZE );
-  g_pPlayerConfig->subsongFormat = buf;
+  currentConfig.subsongFormat = buf;
 }
 
 
@@ -302,10 +303,10 @@ void SelectHvscFile( HWND hWnd )
     return;
   }
 
-  g_pPlayerConfig->songLengthsFile = pDummy;
+  currentConfig.songLengthsFile = pDummy;
   delete[] pDummy;
 
-  SetDlgItemTextA( hWnd, IDC_SONGLENGTHFILE, g_pPlayerConfig->songLengthsFile.c_str() );
+  SetDlgItemTextA( hWnd, IDC_SONGLENGTHFILE, currentConfig.songLengthsFile.c_str() );
 }
 
 
@@ -346,10 +347,10 @@ void SelectHvscDirectory( HWND hWnd )
       return;
     }
 
-    g_pPlayerConfig->hvscDirectory = pDummy;
+    currentConfig.hvscDirectory = pDummy;
     delete[] pDummy;
 
-    SetDlgItemTextA( hWnd, IDC_HVSCDIR, g_pPlayerConfig->hvscDirectory.c_str() );
+    SetDlgItemTextA( hWnd, IDC_HVSCDIR, currentConfig.hvscDirectory.c_str() );
   }
 }
 
@@ -366,8 +367,8 @@ int CALLBACK ConfigDlgWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPara
         {
           case IDOK:
             UpdateConfig( hWnd );
-            g_pSIDPlayer->SaveConfigToFile( g_pPlayerConfig );
-            g_pSIDPlayer->SetConfig( g_pPlayerConfig );
+            s_Plugin.m_SIDPlayer.SaveConfigToFile( currentConfig );
+            s_Plugin.m_SIDPlayer.SetConfig( currentConfig );
             EndDialog( hWnd, wmId );
             break;
           case IDC_BROWSE_BTN:
@@ -385,21 +386,13 @@ int CALLBACK ConfigDlgWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPara
           EndDialog( hWnd, wmId );
         }
       }
-      break;
-
+      return TRUE;
     case WM_DESTROY:
-      delete g_pPlayerConfig;
-      g_pPlayerConfig = NULL;
-      break;
+      return TRUE;
     case WM_INITDIALOG:
-      {
-        g_pPlayerConfig = reinterpret_cast<PlayerConfig*>( lParam );
-        ConfigDlgInitDialog( hWnd );
-      }
-      break;
-    default:
-      return FALSE;
+      ConfigDlgInitDialog( hWnd );
+      return TRUE;
   }
 
-  return TRUE;
+  return FALSE;
 }

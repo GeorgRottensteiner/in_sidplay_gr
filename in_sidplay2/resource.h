@@ -4,7 +4,10 @@
 //
 #define IDD_CONFIG_DLG                  101
 #define IDD_ABOUTDLG                    102
+#define IDD_ABOUTDLG2                   103
 #define IDD_FILEINFODLG                 104
+#define IDD_ABOUTDLG1                   105
+#define IDD_DLG_SUBSONG                 105
 #define IDC_ABOUTED                     1001
 #define IDC_FREQUENCY                   1002
 #define IDC_C64MODEL                    1003
@@ -60,7 +63,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        109
+#define _APS_NEXT_RESOURCE_VALUE        110
 #define _APS_NEXT_COMMAND_VALUE         40001
 #define _APS_NEXT_CONTROL_VALUE         1065
 #define _APS_NEXT_SYMED_VALUE           101

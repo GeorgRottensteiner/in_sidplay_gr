@@ -5,6 +5,10 @@
 
 
 
+#define WM_WA_MPEG_EOF WM_USER+2
+
+
+
 CThreadSidPlayer::CThreadSidPlayer( In_Module& inWAmod ) : 
   m_tune( 0 ), 
   m_threadHandle( INVALID_HANDLE_VALUE )
@@ -71,7 +75,7 @@ void CThreadSidPlayer::Init()
   m_playerConfig.sidConfig = m_pEngine->config();
   //m_playerConfig.sidConfig.sampleFormat = SID2_LITTLE_SIGNED;	
 
-  if ( !LoadConfigFromFile( &m_playerConfig ) )
+  if ( !LoadConfigFromFile( m_playerConfig ) )
   {
     //if load fails then use this default settings
     //m_playerConfig.sidConfig.precision = 16;
@@ -84,7 +88,7 @@ void CThreadSidPlayer::Init()
   }
   //m_playerConfig.sidConfig.sampleFormat = SID2_LITTLE_SIGNED;	
 
-  SetConfig( &m_playerConfig );
+  SetConfig( m_playerConfig );
 }
 
 
@@ -120,6 +124,13 @@ void CThreadSidPlayer::Play()
     m_playerStatus = SP_RUNNING;
     m_threadHandle = CreateThread( NULL, 0, (LPTHREAD_START_ROUTINE)CThreadSidPlayer::Run, this, 0, NULL );
   }
+}
+
+
+
+PlayerStatus_t CThreadSidPlayer::GetPlayerStatus() 
+{ 
+  return m_playerStatus; 
 }
 
 
@@ -336,24 +347,19 @@ int CThreadSidPlayer::GetPlayTime()
 
 
 
-bool CThreadSidPlayer::LoadConfigFromFile( PlayerConfig *conf )
+bool CThreadSidPlayer::LoadConfigFromFile( PlayerConfig& Config )
 {
   wchar_t   appDataPath[MAX_PATH];
-
-  if ( conf == NULL )
-  {
-    return false;
-  }
 
   //try to load config from common file
   SHGetSpecialFolderPath( NULL, appDataPath, CSIDL_COMMON_APPDATA, 0 );
   wcscat_s( appDataPath, L"\\in_sidplay2.ini" );
-  return LoadConfigFromFile( conf, appDataPath );
+  return LoadConfigFromFile( Config, appDataPath );
 }
 
 
 
-bool CThreadSidPlayer::LoadConfigFromFile( PlayerConfig *conf, wchar_t* fileName )
+bool CThreadSidPlayer::LoadConfigFromFile( PlayerConfig& Config, wchar_t* fileName )
 {
   char        cLine[200 + MAX_PATH];
   int         maxLen = 200 + MAX_PATH;
@@ -402,7 +408,7 @@ bool CThreadSidPlayer::LoadConfigFromFile( PlayerConfig *conf, wchar_t* fileName
     {
       value = value.substr( 1, value.length() - 2 );
     }
-    AssignConfigValue( conf, token, value );
+    AssignConfigValue( Config, token, value );
   }
   fclose( cfgFile );
   return true;
@@ -439,7 +445,7 @@ void CThreadSidPlayer::ReadLine( char* buf, FILE* file, const int maxBuf )
 
 
 
-void CThreadSidPlayer::SaveConfigToFile( PlayerConfig* conf )
+void CThreadSidPlayer::SaveConfigToFile( PlayerConfig& Config )
 {
   wchar_t appDataPath[MAX_PATH];
 
@@ -449,15 +455,15 @@ void CThreadSidPlayer::SaveConfigToFile( PlayerConfig* conf )
   if ( SUCCEEDED( SHGetFolderPath( NULL, CSIDL_COMMON_APPDATA, NULL, 0, appDataPath ) ) )
   {
     wcscat_s( appDataPath, L"\\in_sidplay2.ini" );
-    SaveConfigToFile( conf, appDataPath );
+    SaveConfigToFile( Config, appDataPath );
   }
 }
 
 
 
-void CThreadSidPlayer::SaveConfigToFile( PlayerConfig* plconf, wchar_t* fileName )
+void CThreadSidPlayer::SaveConfigToFile( PlayerConfig& Config, wchar_t* fileName )
 {
-  SidConfig* conf = &plconf->sidConfig;
+  SidConfig* conf = &Config.sidConfig;
   std::ofstream outFile( fileName );
 
   outFile << "PlayFrequency=" << conf->frequency << std::endl;
@@ -468,54 +474,54 @@ void CThreadSidPlayer::SaveConfigToFile( PlayerConfig* plconf, wchar_t* fileName
   outFile << "SidModelForced=" << conf->forceSidModel << std::endl;
   //outFile << "Sid2ModelForced=" << conf->forceSecondSidModel << std::endl;
 
-  outFile << "PlayLimitEnabled=" << plconf->playLimitEnabled << std::endl;
-  outFile << "PlayLimitTime=" << plconf->playLimitSec << std::endl;
-  outFile << "UseSongLengthFile=" << plconf->useSongLengthFile << std::endl;
-  if ( ( !plconf->useSongLengthFile ) 
-  ||   ( plconf->songLengthsFile.empty() ) ) 
+  outFile << "PlayLimitEnabled=" << Config.playLimitEnabled << std::endl;
+  outFile << "PlayLimitTime=" << Config.playLimitSec << std::endl;
+  outFile << "UseSongLengthFile=" << Config.useSongLengthFile << std::endl;
+  if ( ( !Config.useSongLengthFile ) 
+  ||   ( Config.songLengthsFile.empty() ) ) 
   {
     outFile << "SongLengthsFile=" << "" << std::endl;
   }
   else
   {
-    outFile << "SongLengthsFile=" << plconf->songLengthsFile << std::endl;
+    outFile << "SongLengthsFile=" << Config.songLengthsFile << std::endl;
   }
-  outFile << "UseSTILFile=" << plconf->useSTILfile << std::endl;
-  if ( plconf->hvscDirectory.empty() )
+  outFile << "UseSTILFile=" << Config.useSTILfile << std::endl;
+  if ( Config.hvscDirectory.empty() )
   {
-    plconf->useSTILfile = false;
+    Config.useSTILfile = false;
   }
-  if ( !plconf->useSTILfile )
+  if ( !Config.useSTILfile )
   {
     outFile << "HVSCDir=" << "" << std::endl;
   }
   else
   {
-    outFile << "HVSCDir=" << plconf->hvscDirectory << std::endl;
+    outFile << "HVSCDir=" << Config.hvscDirectory << std::endl;
   }
-  outFile << "UseSongLengthFile=" << plconf->useSongLengthFile << std::endl;
+  outFile << "UseSongLengthFile=" << Config.useSongLengthFile << std::endl;
 
   outFile << "VoiceConfig=";
   for ( int sid = 0; sid < 3; ++sid )
   {
     for ( int voice = 0; voice < 3; ++voice )
     {
-      outFile << plconf->voiceConfig[sid][voice];
+      outFile << Config.voiceConfig[sid][voice];
     }
   }
   outFile << std::endl;
-  outFile << "PseudoStereo=" << plconf->pseudoStereo << std::endl;
-  outFile << "Sid2Model=" << plconf->sid2Model << std::endl;
-  outFile << "PlaylistFormat=" << plconf->playlistFormat << std::endl;
-  outFile << "SubsongFormat=" << plconf->subsongFormat << std::endl;
+  outFile << "PseudoStereo=" << Config.pseudoStereo << std::endl;
+  outFile << "Sid2Model=" << Config.sid2Model << std::endl;
+  outFile << "PlaylistFormat=" << Config.playlistFormat << std::endl;
+  outFile << "SubsongFormat=" << Config.subsongFormat << std::endl;
   outFile.close();
 }
 
 
 
-void CThreadSidPlayer::AssignConfigValue( PlayerConfig* plconf, std::string token, std::string value )
+void CThreadSidPlayer::AssignConfigValue( PlayerConfig& Config, const std::string& token, const std::string& value )
 {
-  SidConfig* conf = &plconf->sidConfig;
+  SidConfig* conf = &Config.sidConfig;
   if ( token == "PlayFrequency" ) 
   { 
     conf->frequency = atoi( value.c_str() ); 
@@ -557,7 +563,7 @@ void CThreadSidPlayer::AssignConfigValue( PlayerConfig* plconf, std::string toke
     {
       for ( int voice = 0; voice < 3; ++voice )
       {
-        plconf->voiceConfig[sid][voice] = ( value.at( digitId++ ) == '1' );
+        Config.voiceConfig[sid][voice] = ( value.at( digitId++ ) == '1' );
       }
     }
     return;
@@ -565,13 +571,13 @@ void CThreadSidPlayer::AssignConfigValue( PlayerConfig* plconf, std::string toke
 
   if ( token == "Sid2Model" )
   {
-    plconf->sid2Model = ( SidConfig::sid_model_t )atoi( value.c_str() );
+    Config.sid2Model = ( SidConfig::sid_model_t )atoi( value.c_str() );
     return;
   }
 
   if ( token == "PseudoStereo" )
   {
-    plconf->pseudoStereo = (bool)!!atoi( value.c_str() );
+    Config.pseudoStereo = (bool)!!atoi( value.c_str() );
     return;
   }
 
@@ -590,46 +596,46 @@ void CThreadSidPlayer::AssignConfigValue( PlayerConfig* plconf, std::string toke
 
   if ( token == "PlayLimitEnabled" )
   {
-    plconf->playLimitEnabled = (bool)!!atoi( value.c_str() );
+    Config.playLimitEnabled = (bool)!!atoi( value.c_str() );
     return;
   }
   if ( token == "PlayLimitTime" )
   {
-    plconf->playLimitSec = atoi( value.c_str() );
+    Config.playLimitSec = atoi( value.c_str() );
     return;
   }
 
   if ( token == "UseSongLengthFile" )
   {
-    plconf->useSongLengthFile = (bool)!!atoi( value.c_str() );
+    Config.useSongLengthFile = (bool)!!atoi( value.c_str() );
     return;
   }
   if ( token == "SongLengthsFile" )
   {
-    plconf->songLengthsFile = value;
+    Config.songLengthsFile = value;
     return;
   }
 
   if ( token == "HVSCDir" )
   {
-    plconf->hvscDirectory = value;
+    Config.hvscDirectory = value;
     return;
   }
   if ( token == "UseSTILFile" )
   {
-    plconf->useSTILfile = (bool)!!atoi( value.c_str() );
+    Config.useSTILfile = (bool)!!atoi( value.c_str() );
     return;
   }
 
   if ( token == "PlaylistFormat" )
   {
-    plconf->playlistFormat = value;
+    Config.playlistFormat = value;
     return;
   }
 
   if ( token == "SubsongFormat" )
   {
-    plconf->subsongFormat = value;
+    Config.subsongFormat = value;
     return;
   }
 }
@@ -643,7 +649,7 @@ const PlayerConfig& CThreadSidPlayer::GetCurrentConfig()
 
 
 
-void CThreadSidPlayer::SetConfig( PlayerConfig* newConfig )
+void CThreadSidPlayer::SetConfig( PlayerConfig& Config )
 {
   int numChann;
   bool openRes;
@@ -667,20 +673,20 @@ void CThreadSidPlayer::SetConfig( PlayerConfig* newConfig )
   }
 
   //change assign to memcpy !
-  m_playerConfig.sidConfig.frequency = newConfig->sidConfig.frequency;
-  m_playerConfig.sidConfig.playback = newConfig->sidConfig.playback;
-  m_playerConfig.sidConfig.defaultC64Model = newConfig->sidConfig.defaultC64Model;
-  m_playerConfig.sidConfig.forceC64Model = newConfig->sidConfig.forceC64Model;
-  m_playerConfig.sidConfig.defaultSidModel = newConfig->sidConfig.defaultSidModel;
-  m_playerConfig.sidConfig.forceSidModel = newConfig->sidConfig.forceSidModel;
-  //m_playerConfig.sidConfig.forceSecondSidModel = newConfig->sidConfig.forceSecondSidModel;
-  //m_playerConfig.sidConfig.secondSidModel = newConfig->sidConfig.secondSidModel;
+  m_playerConfig.sidConfig.frequency = Config.sidConfig.frequency;
+  m_playerConfig.sidConfig.playback = Config.sidConfig.playback;
+  m_playerConfig.sidConfig.defaultC64Model = Config.sidConfig.defaultC64Model;
+  m_playerConfig.sidConfig.forceC64Model = Config.sidConfig.forceC64Model;
+  m_playerConfig.sidConfig.defaultSidModel = Config.sidConfig.defaultSidModel;
+  m_playerConfig.sidConfig.forceSidModel = Config.sidConfig.forceSidModel;
+  //m_playerConfig.sidConfig.forceSecondSidModel = Config.sidConfig.forceSecondSidModel;
+  //m_playerConfig.sidConfig.secondSidModel = Config.sidConfig.secondSidModel;
 
 
 
-  m_playerConfig.playLimitEnabled = newConfig->playLimitEnabled;
-  m_playerConfig.playLimitSec = newConfig->playLimitSec;
-  m_playerConfig.useSongLengthFile = newConfig->useSongLengthFile;
+  m_playerConfig.playLimitEnabled = Config.playLimitEnabled;
+  m_playerConfig.playLimitSec = Config.playLimitSec;
+  m_playerConfig.useSongLengthFile = Config.useSongLengthFile;
 
   m_playerConfig.sidConfig.samplingMethod = SidConfig::INTERPOLATE; //RESAMPLE_INTERPOLATE
 
@@ -688,45 +694,45 @@ void CThreadSidPlayer::SetConfig( PlayerConfig* newConfig )
   {
     for ( int voice = 0; voice < 3; ++voice )
     {
-      m_playerConfig.voiceConfig[sid][voice] = newConfig->voiceConfig[sid][voice];
+      m_playerConfig.voiceConfig[sid][voice] = Config.voiceConfig[sid][voice];
     }
   }
-  m_playerConfig.pseudoStereo = newConfig->pseudoStereo;
-  m_playerConfig.sid2Model = newConfig->sid2Model;
+  m_playerConfig.pseudoStereo = Config.pseudoStereo;
+  m_playerConfig.sid2Model = Config.sid2Model;
 
 
 
   //TODO czy trzeba drugi i trzeci adres sida??????
 
   //string memory cannot overlap !!!
-  if ( m_playerConfig.songLengthsFile != newConfig->songLengthsFile )
+  if ( m_playerConfig.songLengthsFile != Config.songLengthsFile )
   {
     m_playerConfig.songLengthsFile = "";
-    if ( !newConfig->songLengthsFile.empty() )
+    if ( !Config.songLengthsFile.empty() )
     {
-      m_playerConfig.songLengthsFile = newConfig->songLengthsFile;
+      m_playerConfig.songLengthsFile = Config.songLengthsFile;
     }
   }
 
-  m_playerConfig.useSTILfile = newConfig->useSTILfile;
-  if ( m_playerConfig.hvscDirectory != newConfig->hvscDirectory )
+  m_playerConfig.useSTILfile = Config.useSTILfile;
+  if ( m_playerConfig.hvscDirectory != Config.hvscDirectory )
   {
     m_playerConfig.hvscDirectory = "";
-    if ( !newConfig->hvscDirectory.empty() )
+    if ( !Config.hvscDirectory.empty() )
     {
-      m_playerConfig.hvscDirectory = newConfig->hvscDirectory;
+      m_playerConfig.hvscDirectory = Config.hvscDirectory;
     }
   }
 
-  if ( newConfig->playlistFormat != m_playerConfig.playlistFormat )
+  if ( Config.playlistFormat != m_playerConfig.playlistFormat )
   {
-    m_playerConfig.playlistFormat = newConfig->playlistFormat;
+    m_playerConfig.playlistFormat = Config.playlistFormat;
   }
 
-  if ( newConfig->subsongFormat != m_playerConfig.subsongFormat )
+  if ( Config.subsongFormat != m_playerConfig.subsongFormat )
   {
     m_playerConfig.subsongFormat = "";
-    m_playerConfig.subsongFormat = newConfig->subsongFormat;
+    m_playerConfig.subsongFormat = Config.subsongFormat;
   }
 
   //m_sidBuilder = ReSIDBuilderCreate("");
@@ -779,9 +785,11 @@ void CThreadSidPlayer::SetConfig( PlayerConfig* newConfig )
   if ( ( m_playerConfig.useSongLengthFile ) && ( !m_playerConfig.songLengthsFile.empty() ) )
   {
     openRes = m_sidDatabase.open( m_playerConfig.songLengthsFile.c_str() );
-    if ( openRes != 0 )
+    if ( !openRes )
     {
-      MessageBoxA( NULL, "Error opening songlength database.\r\nDisable songlength databse or choose other file", "in_sidplay2", MB_OK );
+      std::string     message = "Error opening songlength database.\r\nDisable songlength database or choose other file.\r\nMessage was : ";
+      message += m_sidDatabase.error();
+      MessageBoxA( NULL, message.c_str(), "Error opening songlength database", MB_OK );
     }
   }
   //open STIL file
@@ -1060,8 +1068,8 @@ std::string CThreadSidPlayer::GetSTILData( const char* filePath )
   std::map<std::string, std::string>::iterator i;
   char* stilFileName;
 
-  if ( ( filePath == NULL ) || ( m_playerConfig.hvscDirectory.empty() ) ) return NULL;
-  if ( strlen( filePath ) < m_playerConfig.hvscDirectory.length() ) return NULL;
+  if ( ( filePath == NULL ) || ( m_playerConfig.hvscDirectory.empty() ) ) return std::string();
+  if ( strlen( filePath ) < m_playerConfig.hvscDirectory.length() ) return std::string();
   stilFileName = new char[strlen( filePath ) - m_playerConfig.hvscDirectory.length() + 1];
   strcpy_s( stilFileName, strlen( filePath ) - m_playerConfig.hvscDirectory.length(), &filePath[m_playerConfig.hvscDirectory.length()] );
   //i = m.find("aa\\DEMOS\\A-F\\Afterburner.sid");
@@ -1069,7 +1077,7 @@ std::string CThreadSidPlayer::GetSTILData( const char* filePath )
   delete[] stilFileName;
   if ( i == m.end() )
   {
-    return NULL;
+    return std::string();
   }
   return i->second;
   //if(i == NULL) return;

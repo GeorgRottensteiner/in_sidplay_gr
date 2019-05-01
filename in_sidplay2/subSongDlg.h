@@ -11,6 +11,11 @@ class CSubSongDlg
 	  HWND                m_hWnd;
 	  CThreadSidPlayer*   m_pPlayer;
 
+    static HWND                 s_HwndDlg;
+    static WNDPROC              s_OriginalMainWindowProc;
+
+    static LRESULT CALLBACK MainWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
+
 
   protected:
 
