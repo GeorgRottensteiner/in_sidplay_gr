@@ -8,36 +8,50 @@ class CSubSongDlg
 {
   private:
 
+    int                 m_DraggedSliderPos;
+    int                 m_CurrentSong;
+    int                 m_NumberOfSongs;
+    bool                m_DraggingSlider;
+
 	  HWND                m_hWnd;
 	  CThreadSidPlayer*   m_pPlayer;
 
-    static HWND                 s_HwndDlg;
-    static WNDPROC              s_OriginalMainWindowProc;
+    HWND                m_StaticDisplay;
 
-    static LRESULT CALLBACK MainWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
+    WNDPROC             m_OriginalMainWindowProc;
+
+    LRESULT CALLBACK    MainWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
+
+    static int CALLBACK       StaticSubSongDlgWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
+    static LRESULT CALLBACK   StaticMainWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
+
+    void                AdjustSizeToParent();
+
+    RECT                GetSliderRect();
+
 
 
   protected:
 
-	  void NextSubSong();
-	  void PrevSubSong();
+	  void                NextSubSong();
+	  void                PrevSubSong();
 
 
   public:
 
-    CSubSongDlg( CThreadSidPlayer* player, HWND hWnd );
+    CSubSongDlg( CThreadSidPlayer* player );
 	  ~CSubSongDlg();
-	  int SubSongDlgWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+	  int SubSongDlgWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
 	  void Hide();
 	  void Show();
-	  void RefreshWindowTitle();
+
+
+    void                UpdateScrollBar( int NumberOfSongs, int CurrentSong );
 };
 
 
 
-extern CSubSongDlg* subSongDlg;
-
-int CALLBACK SubSongDlgWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
+extern CSubSongDlg* s_pSubSongDlg;
 
 
 #endif //__SUBSONGDLG_H

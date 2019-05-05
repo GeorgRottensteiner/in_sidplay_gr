@@ -26,8 +26,6 @@ HANDLE                gUpdaterThreadHandle = 0;
 
 
 
-//#include <Debug/debugclient.h>
-
 extern "C" __declspec( dllexport ) In_Module* winampGetInModule2()
 {
   return &s_Plugin.g_InModuleDefinition;

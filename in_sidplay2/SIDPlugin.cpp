@@ -339,8 +339,8 @@ int SIDPlugin::PluginGetLength()
 int SIDPlugin::GetLength()
 {
   // return length as number of sub tunes
-  return ( m_SIDPlayer.GetNumSubtunes() - 1 ) * 1000;
-  //return sidPlayer->GetSongLength()*1000;
+  //return ( m_SIDPlayer.GetNumSubtunes() - 1 ) * 1000;
+  return m_SIDPlayer.GetSongLength() * 1000;
 }
 
 
@@ -362,13 +362,15 @@ int SIDPlugin::PluginGetOutputTime()
 // that wrong.
 int SIDPlugin::GetOutputTime()
 {
+  /*
   if ( m_SIDPlayer.CurrentSubtune() > 0 )
   {
     return ( m_SIDPlayer.CurrentSubtune() - 1 ) * 1000;
-  }
+  }*/
+
   //return inmod.outMod->GetOutputTime();
-  //return sidPlayer->GetPlayTime();
-  return 0;
+  return m_SIDPlayer.GetPlayTime();
+  //return 0;
 }
 
 
@@ -391,8 +393,8 @@ void SIDPlugin::PluginSetOutputTime( int time_in_ms )
 void SIDPlugin::SetOutputTime( int time_in_ms )
 {
   //GR
-  m_SIDPlayer.PlaySubtune( ( time_in_ms / 1000 ) + 1 );
-  //sidPlayer->SeekTo(time_in_ms);
+  //m_SIDPlayer.PlaySubtune( ( time_in_ms / 1000 ) + 1 );
+  //m_SIDPlayer.SeekTo( time_in_ms );
 }
 
 
@@ -492,7 +494,7 @@ void SIDPlugin::GetFileInfo( const char* Filename, char* title, int* length_in_m
   }
 
   if ( ( Filename == NULL )
-    || ( strlen( Filename ) == 0 ) )
+  ||   ( strlen( Filename ) == 0 ) )
   {
     // get current song info
     info = m_SIDPlayer.GetTuneInfo();
@@ -501,9 +503,9 @@ void SIDPlugin::GetFileInfo( const char* Filename, char* title, int* length_in_m
       ReleaseMutex( m_Mutex );
       return;
     }
-    //length = sidPlayer->GetSongLength();
+    length = m_SIDPlayer.GetSongLength();
     // GR - replace length by number of songs
-    length = m_SIDPlayer.GetTuneInfo()->songs();
+    //length = m_SIDPlayer.GetTuneInfo()->songs();
     if ( length == -1 )
     {
       ReleaseMutex( m_Mutex );
@@ -528,6 +530,7 @@ void SIDPlugin::GetFileInfo( const char* Filename, char* title, int* length_in_m
     subsongIndex = tune.getInfo()->startSong();
     info = tune.getInfo();
     tune.selectSong( subsongIndex );
+
     // GR
     //length = m_SIDPlayer.GetSongLength(tune);
     length = m_SIDPlayer.GetTuneInfo()->songs();
@@ -539,7 +542,6 @@ void SIDPlugin::GetFileInfo( const char* Filename, char* title, int* length_in_m
   }
 
   //check if we got correct tune info
-  //if (info.c64dataLen == 0) return;
   if ( info->c64dataLen() == 0 )
   {
     ReleaseMutex( m_Mutex );
@@ -677,11 +679,9 @@ void SIDPlugin::Init()
   m_Mutex = CreateMutex( NULL, FALSE, NULL );
 
   //g_InModuleDefinition.hMainWindow
-  HWND hwndDlg = ::CreateDialog( g_InModuleDefinition.hDllInstance, MAKEINTRESOURCE( IDD_DLG_SUBSONG ), g_InModuleDefinition.hMainWindow, SubSongDlgWndProc );
-
   //dh::Log( "SubsongDlg %x", hwndDlg );
 
-  m_pSubSongDlg = new CSubSongDlg( &m_SIDPlayer, hwndDlg );
+  m_pSubSongDlg = new CSubSongDlg( &m_SIDPlayer );
 
   //hMainWindow
   //DialogBox( g_InModuleDefinition.hDllInstance, MAKEINTRESOURCE( IDD_ABOUTDLG ), hwndParent, &AboutDlgWndProc );

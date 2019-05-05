@@ -3,6 +3,9 @@
 #include "SidInfoImpl.h"
 #include "c64roms.h"
 
+#include "SIDPlugin.h"
+#include "SubSongDlg.h"
+
 
 
 #define WM_WA_MPEG_EOF WM_USER+2
@@ -200,6 +203,8 @@ void CThreadSidPlayer::LoadTune( const char* name )
       m_pEngine->mute( sid, voice, !m_playerConfig.voiceConfig[sid][voice] );
     }
   }
+
+  s_Plugin.m_pSubSongDlg->UpdateScrollBar( tuneInfo->songs(), tuneInfo->currentSong() );
 }
 
 
@@ -328,6 +333,14 @@ void CThreadSidPlayer::PlaySubtune( int SubTune )
   }
   m_pEngine->stop();
   m_pEngine->load( &m_tune );
+
+  const SidTuneInfo*    pTuneInfo = m_tune.getInfo();
+
+  if ( pTuneInfo != NULL )
+  {
+    s_Plugin.m_pSubSongDlg->UpdateScrollBar( pTuneInfo->songs(), pTuneInfo->currentSong() );
+  }
+
   Play();
 }
 
@@ -894,6 +907,7 @@ void CThreadSidPlayer::DoSeek()
   m_pEngine->fastForward( 100 );
   m_seekNeedMs = 0;
 }
+
 
 
 void CThreadSidPlayer::SeekTo( int timeMs )
