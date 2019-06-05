@@ -54,3 +54,14 @@ std::string NumberToString( int Value )
 
   return buffer;
 }
+
+
+
+void RemoveTrailingNulls( std::string& StringToClean )
+{
+  while ( ( !StringToClean.empty() )
+  &&      ( StringToClean[StringToClean.length() - 1] == 0 ) )
+  {
+    StringToClean = StringToClean.substr( 0, StringToClean.length() - 1 );
+  }
+}

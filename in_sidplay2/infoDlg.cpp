@@ -77,6 +77,7 @@ void InfoDlgInitDialog( HWND hWnd, SidTuneInfo* tuneInfo )
       continue;
     }
     infoStr.append( tuneInfo->infoString( i ) );
+    RemoveTrailingNulls( infoStr );
     infoStr.append( "\r\n" );
   }
   for ( unsigned int i = 0; i < tuneInfo->numberOfCommentStrings(); ++i )
@@ -86,8 +87,20 @@ void InfoDlgInitDialog( HWND hWnd, SidTuneInfo* tuneInfo )
       continue;
     }
     infoStr.append( tuneInfo->commentString( i ) );
+    RemoveTrailingNulls( infoStr );
     infoStr.append( "\r\n" );
   }
+
+  int     songLength = s_Plugin.m_SIDPlayer.GetSongLength();
+  if ( songLength > 0 )
+  {
+    char  temp[2048];
+
+    sprintf_s( temp, "Song %d/%d length %d:%02d", s_Plugin.m_SIDPlayer.CurrentSubtune(), tuneInfo->songs(), songLength / 60, songLength % 60 );
+    infoStr += "\r\n";
+    infoStr += temp;
+  }
+
   SetDlgItemTextA( hWnd, IDC_INOFBOX_STC, infoStr.c_str() );
 
 
