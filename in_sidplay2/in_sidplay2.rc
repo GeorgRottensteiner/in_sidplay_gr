@@ -60,12 +60,12 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_UK
 // Dialog
 //
 
-IDD_CONFIG_DLG DIALOGEX 0, 0, 300, 353
+IDD_CONFIG_DLG DIALOGEX 0, 0, 357, 353
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Sidplayer configuration"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    GROUPBOX        "Output settings",IDC_STATIC,6,6,275,66
+    GROUPBOX        "Output settings",IDC_STATIC,6,6,344,66
     LTEXT           "Frequency:",IDC_STATIC,18,24,40,10
     COMBOBOX        IDC_FREQUENCY,60,24,72,36,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     LTEXT           "Channels:",IDC_STATIC,18,42,36,10
@@ -83,7 +83,7 @@ BEGIN
     CONTROL         "Vocie2",IDC_VOICE21,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,228,36,37,10
     CONTROL         "Voice3",IDC_VOICE22,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,228,48,37,10
     CTEXT           "|_ Affect pseudo stereo_|",IDC_STATIC,140,59,85,8
-    GROUPBOX        "Emulation",IDC_STATIC,7,74,277,90
+    GROUPBOX        "Emulation",IDC_STATIC,7,74,235,90
     LTEXT           "C64 model:",IDC_STATIC,18,84,54,8
     COMBOBOX        IDC_C64MODEL,72,84,72,42,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     CONTROL         "Force C64 model",IDC_FORCE_C64MODEL,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,156,84,90,10
@@ -97,7 +97,7 @@ BEGIN
     CONTROL         "Song play time limit [s]:",IDC_PLAYLIMIT_CHK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,167,90,12
     EDITTEXT        IDC_PLAYLIMITTIME,97,167,36,12,ES_AUTOHSCROLL
     LTEXT           "(Used when there is no song length database or when song isn't present in DB)",IDC_STATIC,139,167,142,17
-    GROUPBOX        "Playlist format string",IDC_STATIC,7,189,280,77
+    GROUPBOX        "Playlist format string",IDC_STATIC,7,189,343,77
     EDITTEXT        IDC_PLAYLIST_FORMAT,9,202,84,12,ES_AUTOHSCROLL
     CONTROL         "%f - file name\r\n%t - title from SID file\r\n%a - artist from SID file\r\n%r - release year and publisher\r\n%x - subsong string (look below)",IDC_STATIC,
                     "Static",SS_LEFTNOWORDWRAP | WS_GROUP,95,199,107,40
@@ -114,8 +114,10 @@ BEGIN
     EDITTEXT        IDC_HVSCDIR,103,301,132,12,ES_AUTOHSCROLL | ES_READONLY
     PUSHBUTTON      "Browse",IDC_BROWSE_HVSC,241,297,30,18
     LTEXT           "(e.g. c:\\HVSC\\c64Music). Works independently of songlength !!!!",IDC_STATIC,19,316,216,8
-    DEFPUSHBUTTON   "OK",IDOK,187,332,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,243,332,50,14
+    DEFPUSHBUTTON   "OK",IDOK,240,332,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,300,332,50,14
+    EDITTEXT        IDC_EDIT_LOOP_TIMES,255,86,55,14,ES_AUTOHSCROLL | ES_NUMBER
+    GROUPBOX        "Loop Times",IDC_STATIC,249,74,101,90
 END
 
 IDD_ABOUTDLG DIALOGEX 0, 0, 195, 145
@@ -192,7 +194,7 @@ BEGIN
     IDD_CONFIG_DLG, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 293
+        RIGHTMARGIN, 350
         TOPMARGIN, 7
         BOTTOMMARGIN, 346
     END

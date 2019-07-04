@@ -20,26 +20,26 @@ CThreadSidPlayer::CThreadSidPlayer( In_Module& inWAmod ) :
   m_decodeBuf                       = NULL;
   m_decodeBufLen                    = 0;
   m_playerStatus                    = SP_STOPPED;
-  m_playerConfig.playLimitEnabled   = false;
-  m_playerConfig.playLimitSec       = 120;
-  m_playerConfig.songLengthsFile    = "";
-  m_playerConfig.useSongLengthFile  = false;
-  m_playerConfig.useSTILfile        = false;
+  m_playerConfig.PlayLimitEnabled   = false;
+  m_playerConfig.PlayLimitSec       = 120;
+  m_playerConfig.SongLengthsFile    = "";
+  m_playerConfig.UseSongLengthFile  = false;
+  m_playerConfig.UseSTILfile        = false;
   m_playerConfig.hvscDirectory      = "";
-  m_playerConfig.voiceConfig[0][0]  = true;
-  m_playerConfig.voiceConfig[0][1]  = true;
-  m_playerConfig.voiceConfig[0][2]  = true;
-  m_playerConfig.voiceConfig[1][0]  = true;
-  m_playerConfig.voiceConfig[1][1]  = true;
-  m_playerConfig.voiceConfig[1][2]  = true;
-  m_playerConfig.voiceConfig[2][0]  = true;
-  m_playerConfig.voiceConfig[2][1]  = true;
-  m_playerConfig.voiceConfig[2][2]  = true;
-  m_playerConfig.playlistFormat     = "%t %x %sn / %a / %r %st";
-  m_playerConfig.subsongFormat      = "(Tune %n/%ns)";
+  m_playerConfig.VoiceConfig[0][0]  = true;
+  m_playerConfig.VoiceConfig[0][1]  = true;
+  m_playerConfig.VoiceConfig[0][2]  = true;
+  m_playerConfig.VoiceConfig[1][0]  = true;
+  m_playerConfig.VoiceConfig[1][1]  = true;
+  m_playerConfig.VoiceConfig[1][2]  = true;
+  m_playerConfig.VoiceConfig[2][0]  = true;
+  m_playerConfig.VoiceConfig[2][1]  = true;
+  m_playerConfig.VoiceConfig[2][2]  = true;
+  m_playerConfig.PlaylistFormat     = "%t %x %sn / %a / %r %st";
+  m_playerConfig.SubsongFormat      = "(Tune %n/%ns)";
 
-  m_playerConfig.pseudoStereo       = false;
-  m_playerConfig.sid2Model          = SidConfig::sid_model_t::MOS6581;
+  m_playerConfig.PseudoStereo       = false;
+  m_playerConfig.Sid2Model          = SidConfig::sid_model_t::MOS6581;
   m_currentTuneLength               = -1;
   m_MaxLatency                      = 0;
   m_seekNeedMs                      = 0;
@@ -57,10 +57,10 @@ CThreadSidPlayer::~CThreadSidPlayer()
   ClearSTILData();
   if ( m_pEngine != NULL )
   {
-    if ( m_playerConfig.sidConfig.sidEmulation != NULL )
+    if ( m_playerConfig.SidConfig.sidEmulation != NULL )
     {
-      delete m_playerConfig.sidConfig.sidEmulation;
-      m_playerConfig.sidConfig.sidEmulation = NULL;
+      delete m_playerConfig.SidConfig.sidEmulation;
+      m_playerConfig.SidConfig.sidEmulation = NULL;
     }
     delete m_pEngine;
   }
@@ -75,21 +75,20 @@ void CThreadSidPlayer::Init()
     Stop();
   }
 
-  m_playerConfig.sidConfig = m_pEngine->config();
-  //m_playerConfig.sidConfig.sampleFormat = SID2_LITTLE_SIGNED;	
+  m_playerConfig.SidConfig = m_pEngine->config();
+  //m_playerConfig.SidConfig.sampleFormat = SID2_LITTLE_SIGNED;	
 
   if ( !LoadConfigFromFile( m_playerConfig ) )
   {
     //if load fails then use this default settings
-    //m_playerConfig.sidConfig.precision = 16;
-    SidConfig* defaultConf = new SidConfig();
-    memcpy( ( void* )&( m_playerConfig.sidConfig ), defaultConf, sizeof( SidConfig ) );
+    //m_playerConfig.SidConfig.precision = 16;
+    SidConfig    defaultConfig;
+    memcpy( ( void* )&( m_playerConfig.SidConfig ), &defaultConfig, sizeof( SidConfig ) );
 
-    delete defaultConf;
-    m_playerConfig.sidConfig.frequency  = 44100;
-    m_playerConfig.sidConfig.playback   = SidConfig::MONO;// sid2_mono;
+    m_playerConfig.SidConfig.frequency  = 44100;
+    m_playerConfig.SidConfig.playback   = SidConfig::MONO;// sid2_mono;
   }
-  //m_playerConfig.sidConfig.sampleFormat = SID2_LITTLE_SIGNED;	
+  //m_playerConfig.SidConfig.sampleFormat = SID2_LITTLE_SIGNED;	
 
   SetConfig( m_playerConfig );
 }
@@ -115,13 +114,13 @@ void CThreadSidPlayer::Play()
   //if stopped then create new thread to play
   if ( m_playerStatus == SP_STOPPED )
   {
-    numChann      = ( m_playerConfig.sidConfig.playback == SidConfig::STEREO ) ? 2 : 1;
-    m_MaxLatency  = m_inmod->outMod->Open( m_playerConfig.sidConfig.frequency, numChann, PLAYBACK_BIT_PRECISION, -1, -1 );
+    numChann      = ( m_playerConfig.SidConfig.playback == SidConfig::STEREO ) ? 2 : 1;
+    m_MaxLatency  = m_inmod->outMod->Open( m_playerConfig.SidConfig.frequency, numChann, PLAYBACK_BIT_PRECISION, -1, -1 );
 
-    m_inmod->SetInfo( ( m_playerConfig.sidConfig.frequency * PLAYBACK_BIT_PRECISION * numChann ) / 1000, m_playerConfig.sidConfig.frequency / 1000, numChann, 1 );
+    m_inmod->SetInfo( ( m_playerConfig.SidConfig.frequency * PLAYBACK_BIT_PRECISION * numChann ) / 1000, m_playerConfig.SidConfig.frequency / 1000, numChann, 1 );
     //visualization init
-    m_inmod->SAVSAInit( m_MaxLatency, m_playerConfig.sidConfig.frequency );
-    m_inmod->VSASetInfo( m_playerConfig.sidConfig.frequency, numChann );
+    m_inmod->SAVSAInit( m_MaxLatency, m_playerConfig.SidConfig.frequency );
+    m_inmod->VSASetInfo( m_playerConfig.SidConfig.frequency, numChann );
     //default volume
     m_inmod->outMod->SetVolume( -666 );
     m_playerStatus = SP_RUNNING;
@@ -189,10 +188,17 @@ void CThreadSidPlayer::LoadTune( const char* name )
   m_tune.selectSong( m_tune.getInfo()->startSong() );
 
   m_currentTuneLength = m_sidDatabase.length( m_tune );
-  if ( ( m_playerConfig.playLimitEnabled ) && ( m_currentTuneLength <= 0 ) )
+  if ( ( m_playerConfig.PlayLimitEnabled ) 
+  &&   ( m_currentTuneLength <= 0 ) )
   {
-    m_currentTuneLength = m_playerConfig.playLimitSec;
+    m_currentTuneLength = m_playerConfig.PlayLimitSec;
   }
+
+  if ( m_playerConfig.NumLoopTimes > 0 )
+  {
+    m_currentTuneLength *= m_playerConfig.NumLoopTimes;
+  }
+
   m_pEngine->load( &m_tune );
 
   //mute must be applied after SID's have been created
@@ -200,7 +206,7 @@ void CThreadSidPlayer::LoadTune( const char* name )
   {
     for ( int voice = 0; voice < 3; ++voice )
     {
-      m_pEngine->mute( sid, voice, !m_playerConfig.voiceConfig[sid][voice] );
+      m_pEngine->mute( sid, voice, !m_playerConfig.VoiceConfig[sid][voice] );
     }
   }
 
@@ -222,9 +228,9 @@ DWORD CThreadSidPlayer::Run( void* thisparam )
 
   playerObj->m_decodedSampleCount = 0;
   playerObj->m_playTimems = 0;
-  bps = PLAYBACK_BIT_PRECISION;//playerObj->m_playerConfig.sidConfig.precision;
-  numChn = ( playerObj->m_playerConfig.sidConfig.playback == SidConfig::STEREO ) ? 2 : 1;
-  freq = playerObj->m_playerConfig.sidConfig.frequency;
+  bps = PLAYBACK_BIT_PRECISION;//playerObj->m_playerConfig.SidConfig.precision;
+  numChn = ( playerObj->m_playerConfig.SidConfig.playback == SidConfig::STEREO ) ? 2 : 1;
+  freq = playerObj->m_playerConfig.SidConfig.frequency;
   desiredLen = 576 * ( PLAYBACK_BIT_PRECISION >> 3 ) * numChn * ( playerObj->m_inmod->dsp_isactive() ? 2 : 1 );
 
 
@@ -242,7 +248,7 @@ DWORD CThreadSidPlayer::Run( void* thisparam )
       playerObj->m_inmod->VSAAddPCMData( playerObj->m_decodeBuf, numChn, bps, (int)playerObj->m_playTimems );
 
       playerObj->m_decodedSampleCount += decodedLen / numChn / ( bps >> 3 );
-      playerObj->m_playTimems = ( playerObj->m_decodedSampleCount * 1000 ) / playerObj->m_playerConfig.sidConfig.frequency;
+      playerObj->m_playTimems = ( playerObj->m_decodedSampleCount * 1000 ) / playerObj->m_playerConfig.SidConfig.frequency;
       //use DSP plugin on data
       if ( playerObj->m_inmod->dsp_isactive() )
       {
@@ -280,10 +286,10 @@ DWORD CThreadSidPlayer::Run( void* thisparam )
       }
       //Sleep(10);
     }
-    else if ( playerObj->m_playerConfig.playLimitEnabled )
+    else if ( playerObj->m_playerConfig.PlayLimitEnabled )
     {
       //if we dont know song length but time limit is enabled then check it
-      if ( ( playerObj->m_playerConfig.playLimitSec * 1000 ) < timeElapsed )
+      if ( ( playerObj->m_playerConfig.PlayLimitSec * 1000 ) < timeElapsed )
       {
         playerObj->m_playerStatus = SP_STOPPED;
         PostMessage( playerObj->m_inmod->hMainWindow, WM_WA_MPEG_EOF, 0, 0 );
@@ -326,10 +332,10 @@ void CThreadSidPlayer::PlaySubtune( int SubTune )
   Stop();
   m_tune.selectSong( SubTune );
   m_currentTuneLength = m_sidDatabase.length( m_tune );
-  if ( ( m_playerConfig.playLimitEnabled ) 
+  if ( ( m_playerConfig.PlayLimitEnabled ) 
   &&   ( m_currentTuneLength <= 0 ) )
   {
-    m_currentTuneLength = m_playerConfig.playLimitSec;
+    m_currentTuneLength = m_playerConfig.PlayLimitSec;
   }
   m_pEngine->stop();
   m_pEngine->load( &m_tune );
@@ -476,7 +482,7 @@ void CThreadSidPlayer::SaveConfigToFile( PlayerConfig& Config )
 
 void CThreadSidPlayer::SaveConfigToFile( PlayerConfig& Config, wchar_t* fileName )
 {
-  SidConfig* conf = &Config.sidConfig;
+  SidConfig* conf = &Config.SidConfig;
   std::ofstream outFile( fileName );
 
   outFile << "PlayFrequency=" << conf->frequency << std::endl;
@@ -487,24 +493,24 @@ void CThreadSidPlayer::SaveConfigToFile( PlayerConfig& Config, wchar_t* fileName
   outFile << "SidModelForced=" << conf->forceSidModel << std::endl;
   //outFile << "Sid2ModelForced=" << conf->forceSecondSidModel << std::endl;
 
-  outFile << "PlayLimitEnabled=" << Config.playLimitEnabled << std::endl;
-  outFile << "PlayLimitTime=" << Config.playLimitSec << std::endl;
-  outFile << "UseSongLengthFile=" << Config.useSongLengthFile << std::endl;
-  if ( ( !Config.useSongLengthFile ) 
-  ||   ( Config.songLengthsFile.empty() ) ) 
+  outFile << "PlayLimitEnabled=" << Config.PlayLimitEnabled << std::endl;
+  outFile << "PlayLimitTime=" << Config.PlayLimitSec << std::endl;
+  outFile << "UseSongLengthFile=" << Config.UseSongLengthFile << std::endl;
+  if ( ( !Config.UseSongLengthFile ) 
+  ||   ( Config.SongLengthsFile.empty() ) ) 
   {
     outFile << "SongLengthsFile=" << "" << std::endl;
   }
   else
   {
-    outFile << "SongLengthsFile=" << Config.songLengthsFile << std::endl;
+    outFile << "SongLengthsFile=" << Config.SongLengthsFile << std::endl;
   }
-  outFile << "UseSTILFile=" << Config.useSTILfile << std::endl;
+  outFile << "UseSTILFile=" << Config.UseSTILfile << std::endl;
   if ( Config.hvscDirectory.empty() )
   {
-    Config.useSTILfile = false;
+    Config.UseSTILfile = false;
   }
-  if ( !Config.useSTILfile )
+  if ( !Config.UseSTILfile )
   {
     outFile << "HVSCDir=" << "" << std::endl;
   }
@@ -512,21 +518,22 @@ void CThreadSidPlayer::SaveConfigToFile( PlayerConfig& Config, wchar_t* fileName
   {
     outFile << "HVSCDir=" << Config.hvscDirectory << std::endl;
   }
-  outFile << "UseSongLengthFile=" << Config.useSongLengthFile << std::endl;
+  outFile << "UseSongLengthFile=" << Config.UseSongLengthFile << std::endl;
 
   outFile << "VoiceConfig=";
   for ( int sid = 0; sid < 3; ++sid )
   {
     for ( int voice = 0; voice < 3; ++voice )
     {
-      outFile << Config.voiceConfig[sid][voice];
+      outFile << Config.VoiceConfig[sid][voice];
     }
   }
   outFile << std::endl;
-  outFile << "PseudoStereo=" << Config.pseudoStereo << std::endl;
-  outFile << "Sid2Model=" << Config.sid2Model << std::endl;
-  outFile << "PlaylistFormat=" << Config.playlistFormat << std::endl;
-  outFile << "SubsongFormat=" << Config.subsongFormat << std::endl;
+  outFile << "PseudoStereo=" << Config.PseudoStereo << std::endl;
+  outFile << "Sid2Model=" << Config.Sid2Model << std::endl;
+  outFile << "PlaylistFormat=" << Config.PlaylistFormat << std::endl;
+  outFile << "SubsongFormat=" << Config.SubsongFormat << std::endl;
+  outFile << "NumLoopTimes=" << Config.NumLoopTimes << std::endl;
   outFile.close();
 }
 
@@ -534,7 +541,7 @@ void CThreadSidPlayer::SaveConfigToFile( PlayerConfig& Config, wchar_t* fileName
 
 void CThreadSidPlayer::AssignConfigValue( PlayerConfig& Config, const std::string& token, const std::string& value )
 {
-  SidConfig* conf = &Config.sidConfig;
+  SidConfig* conf = &Config.SidConfig;
   if ( token == "PlayFrequency" ) 
   { 
     conf->frequency = atoi( value.c_str() ); 
@@ -576,7 +583,7 @@ void CThreadSidPlayer::AssignConfigValue( PlayerConfig& Config, const std::strin
     {
       for ( int voice = 0; voice < 3; ++voice )
       {
-        Config.voiceConfig[sid][voice] = ( value.at( digitId++ ) == '1' );
+        Config.VoiceConfig[sid][voice] = ( value.at( digitId++ ) == '1' );
       }
     }
     return;
@@ -584,13 +591,13 @@ void CThreadSidPlayer::AssignConfigValue( PlayerConfig& Config, const std::strin
 
   if ( token == "Sid2Model" )
   {
-    Config.sid2Model = ( SidConfig::sid_model_t )atoi( value.c_str() );
+    Config.Sid2Model = ( SidConfig::sid_model_t )atoi( value.c_str() );
     return;
   }
 
   if ( token == "PseudoStereo" )
   {
-    Config.pseudoStereo = (bool)!!atoi( value.c_str() );
+    Config.PseudoStereo = (bool)!!atoi( value.c_str() );
     return;
   }
 
@@ -609,23 +616,23 @@ void CThreadSidPlayer::AssignConfigValue( PlayerConfig& Config, const std::strin
 
   if ( token == "PlayLimitEnabled" )
   {
-    Config.playLimitEnabled = (bool)!!atoi( value.c_str() );
+    Config.PlayLimitEnabled = (bool)!!atoi( value.c_str() );
     return;
   }
   if ( token == "PlayLimitTime" )
   {
-    Config.playLimitSec = atoi( value.c_str() );
+    Config.PlayLimitSec = atoi( value.c_str() );
     return;
   }
 
   if ( token == "UseSongLengthFile" )
   {
-    Config.useSongLengthFile = (bool)!!atoi( value.c_str() );
+    Config.UseSongLengthFile = (bool)!!atoi( value.c_str() );
     return;
   }
   if ( token == "SongLengthsFile" )
   {
-    Config.songLengthsFile = value;
+    Config.SongLengthsFile = value;
     return;
   }
 
@@ -636,19 +643,25 @@ void CThreadSidPlayer::AssignConfigValue( PlayerConfig& Config, const std::strin
   }
   if ( token == "UseSTILFile" )
   {
-    Config.useSTILfile = (bool)!!atoi( value.c_str() );
+    Config.UseSTILfile = (bool)!!atoi( value.c_str() );
     return;
   }
 
   if ( token == "PlaylistFormat" )
   {
-    Config.playlistFormat = value;
+    Config.PlaylistFormat = value;
     return;
   }
 
   if ( token == "SubsongFormat" )
   {
-    Config.subsongFormat = value;
+    Config.SubsongFormat = value;
+    return;
+  }
+
+  if ( token == "NumLoopTimes" )
+  {
+    Config.NumLoopTimes = atoi( value.c_str() );
     return;
   }
 }
@@ -673,61 +686,61 @@ void CThreadSidPlayer::SetConfig( PlayerConfig& Config )
   }
   m_pEngine->stop();
 
-  sidbuilder* currentBuilder = m_playerConfig.sidConfig.sidEmulation;
-  if ( m_playerConfig.sidConfig.sidEmulation != NULL )
+  sidbuilder* currentBuilder = m_playerConfig.SidConfig.sidEmulation;
+  if ( m_playerConfig.SidConfig.sidEmulation != NULL )
   {
-    //delete m_playerConfig.sidConfig.sidEmulation;
+    //delete m_playerConfig.SidConfig.sidEmulation;
   }
-  m_playerConfig.sidConfig.sidEmulation = 0;
-  m_pEngine->config( m_playerConfig.sidConfig );
+  m_playerConfig.SidConfig.sidEmulation = 0;
+  m_pEngine->config( m_playerConfig.SidConfig );
   if ( currentBuilder != NULL )
   {
     delete currentBuilder;
   }
 
   //change assign to memcpy !
-  m_playerConfig.sidConfig.frequency = Config.sidConfig.frequency;
-  m_playerConfig.sidConfig.playback = Config.sidConfig.playback;
-  m_playerConfig.sidConfig.defaultC64Model = Config.sidConfig.defaultC64Model;
-  m_playerConfig.sidConfig.forceC64Model = Config.sidConfig.forceC64Model;
-  m_playerConfig.sidConfig.defaultSidModel = Config.sidConfig.defaultSidModel;
-  m_playerConfig.sidConfig.forceSidModel = Config.sidConfig.forceSidModel;
-  //m_playerConfig.sidConfig.forceSecondSidModel = Config.sidConfig.forceSecondSidModel;
-  //m_playerConfig.sidConfig.secondSidModel = Config.sidConfig.secondSidModel;
+  m_playerConfig.SidConfig.frequency = Config.SidConfig.frequency;
+  m_playerConfig.SidConfig.playback = Config.SidConfig.playback;
+  m_playerConfig.SidConfig.defaultC64Model = Config.SidConfig.defaultC64Model;
+  m_playerConfig.SidConfig.forceC64Model = Config.SidConfig.forceC64Model;
+  m_playerConfig.SidConfig.defaultSidModel = Config.SidConfig.defaultSidModel;
+  m_playerConfig.SidConfig.forceSidModel = Config.SidConfig.forceSidModel;
+  //m_playerConfig.SidConfig.forceSecondSidModel = Config.SidConfig.forceSecondSidModel;
+  //m_playerConfig.SidConfig.secondSidModel = Config.SidConfig.secondSidModel;
 
 
 
-  m_playerConfig.playLimitEnabled = Config.playLimitEnabled;
-  m_playerConfig.playLimitSec = Config.playLimitSec;
-  m_playerConfig.useSongLengthFile = Config.useSongLengthFile;
+  m_playerConfig.PlayLimitEnabled = Config.PlayLimitEnabled;
+  m_playerConfig.PlayLimitSec = Config.PlayLimitSec;
+  m_playerConfig.UseSongLengthFile = Config.UseSongLengthFile;
 
-  m_playerConfig.sidConfig.samplingMethod = SidConfig::INTERPOLATE; //RESAMPLE_INTERPOLATE
+  m_playerConfig.SidConfig.samplingMethod = SidConfig::INTERPOLATE; //RESAMPLE_INTERPOLATE
 
   for ( int sid = 0; sid < 3; ++sid )
   {
     for ( int voice = 0; voice < 3; ++voice )
     {
-      m_playerConfig.voiceConfig[sid][voice] = Config.voiceConfig[sid][voice];
+      m_playerConfig.VoiceConfig[sid][voice] = Config.VoiceConfig[sid][voice];
     }
   }
-  m_playerConfig.pseudoStereo = Config.pseudoStereo;
-  m_playerConfig.sid2Model = Config.sid2Model;
+  m_playerConfig.PseudoStereo = Config.PseudoStereo;
+  m_playerConfig.Sid2Model = Config.Sid2Model;
 
 
 
   //TODO czy trzeba drugi i trzeci adres sida??????
 
   //string memory cannot overlap !!!
-  if ( m_playerConfig.songLengthsFile != Config.songLengthsFile )
+  if ( m_playerConfig.SongLengthsFile != Config.SongLengthsFile )
   {
-    m_playerConfig.songLengthsFile = "";
-    if ( !Config.songLengthsFile.empty() )
+    m_playerConfig.SongLengthsFile = "";
+    if ( !Config.SongLengthsFile.empty() )
     {
-      m_playerConfig.songLengthsFile = Config.songLengthsFile;
+      m_playerConfig.SongLengthsFile = Config.SongLengthsFile;
     }
   }
 
-  m_playerConfig.useSTILfile = Config.useSTILfile;
+  m_playerConfig.UseSTILfile = Config.UseSTILfile;
   if ( m_playerConfig.hvscDirectory != Config.hvscDirectory )
   {
     m_playerConfig.hvscDirectory = "";
@@ -737,28 +750,24 @@ void CThreadSidPlayer::SetConfig( PlayerConfig& Config )
     }
   }
 
-  if ( Config.playlistFormat != m_playerConfig.playlistFormat )
+  if ( Config.PlaylistFormat != m_playerConfig.PlaylistFormat )
   {
-    m_playerConfig.playlistFormat = Config.playlistFormat;
+    m_playerConfig.PlaylistFormat = Config.PlaylistFormat;
   }
 
-  if ( Config.subsongFormat != m_playerConfig.subsongFormat )
+  if ( Config.SubsongFormat != m_playerConfig.SubsongFormat )
   {
-    m_playerConfig.subsongFormat = "";
-    m_playerConfig.subsongFormat = Config.subsongFormat;
+    m_playerConfig.SubsongFormat = "";
+    m_playerConfig.SubsongFormat = Config.SubsongFormat;
   }
 
-  //m_sidBuilder = ReSIDBuilderCreate("");
-    //SidLazyIPtr<IReSIDBuilder> rs(m_sidBuilder);
+  m_playerConfig.NumLoopTimes = Config.NumLoopTimes;
 
   ReSIDfpBuilder* rs = new ReSIDfpBuilder( "ReSIDfp" );
 
   if ( rs )
   {
-
-    //const SidInfoImpl* si = reinterpret_cast<const SidInfoImpl*>(&m_pEngine->info());
-
-    m_playerConfig.sidConfig.sidEmulation = rs;
+    m_playerConfig.SidConfig.sidEmulation = rs;
     rs->create( ( m_pEngine->info() ).maxsids() );
 
 
@@ -769,18 +778,18 @@ void CThreadSidPlayer::SetConfig( PlayerConfig& Config )
   }
 
   //TO CHANGE !!!!!!!
-  if ( m_playerConfig.pseudoStereo )
+  if ( m_playerConfig.PseudoStereo )
   {
-    m_playerConfig.sidConfig.secondSidAddress = 0xD400;
-    //m_playerConfig.sidConfig.secondSidModel = m_playerConfig.sid2Model;
+    m_playerConfig.SidConfig.secondSidAddress = 0xD400;
+    //m_playerConfig.SidConfig.secondSidModel = m_playerConfig.sid2Model;
   }
   else
   {
-    m_playerConfig.sidConfig.secondSidAddress = 0;
-    //m_playerConfig.sidConfig.secondSidModel = -1;
+    m_playerConfig.SidConfig.secondSidAddress = 0;
+    //m_playerConfig.SidConfig.secondSidModel = -1;
   }
-  //m_playerConfig.sidConfig.
-  m_pEngine->config( m_playerConfig.sidConfig );
+  //m_playerConfig.SidConfig.
+  m_pEngine->config( m_playerConfig.SidConfig );
 
 
   //kernal,basic,chargen
@@ -791,13 +800,13 @@ void CThreadSidPlayer::SetConfig( PlayerConfig& Config )
   {
     delete[] m_decodeBuf;
   }
-  numChann = ( m_playerConfig.sidConfig.playback == SidConfig::STEREO ) ? 2 : 1;
+  numChann = ( m_playerConfig.SidConfig.playback == SidConfig::STEREO ) ? 2 : 1;
   m_decodeBufLen = 2 * 576 * ( PLAYBACK_BIT_PRECISION >> 3 ) * numChann;
   m_decodeBuf = new char[m_decodeBufLen];
   //open song length database
-  if ( ( m_playerConfig.useSongLengthFile ) && ( !m_playerConfig.songLengthsFile.empty() ) )
+  if ( ( m_playerConfig.UseSongLengthFile ) && ( !m_playerConfig.SongLengthsFile.empty() ) )
   {
-    openRes = m_sidDatabase.open( m_playerConfig.songLengthsFile.c_str() );
+    openRes = m_sidDatabase.open( m_playerConfig.SongLengthsFile.c_str() );
     if ( !openRes )
     {
       std::string     message = "Error opening songlength database.\r\nDisable songlength database or choose other file.\r\nMessage was : ";
@@ -806,7 +815,7 @@ void CThreadSidPlayer::SetConfig( PlayerConfig& Config )
     }
   }
   //open STIL file
-  if ( ( m_playerConfig.useSTILfile ) 
+  if ( ( m_playerConfig.UseSTILfile ) 
   &&   ( !m_playerConfig.hvscDirectory.empty() ) )
   {
     ClearSTILData();
@@ -828,10 +837,14 @@ int CThreadSidPlayer::GetSongLength( SidTune& tune )
   }
 
   length = m_sidDatabase.length( tune );
-  if ( ( m_playerConfig.playLimitEnabled ) 
+  if ( ( m_playerConfig.PlayLimitEnabled ) 
   &&   ( length <= 0 ) )
   {
-    length = m_playerConfig.playLimitSec;
+    length = m_playerConfig.PlayLimitSec;
+  }
+  if ( m_playerConfig.NumLoopTimes > 0 )
+  {
+    length *= m_playerConfig.NumLoopTimes;
   }
 
   if ( length < 0 )
@@ -854,9 +867,9 @@ void CThreadSidPlayer::DoSeek()
 {
   int bits;
   int skip_bytes;
-  int bps = PLAYBACK_BIT_PRECISION;// m_playerConfig.sidConfig.precision;
-  int numChn = ( m_playerConfig.sidConfig.playback == SidConfig::STEREO ) ? 2 : 1;
-  int freq = m_playerConfig.sidConfig.frequency;
+  int bps = PLAYBACK_BIT_PRECISION;// m_playerConfig.SidConfig.precision;
+  int numChn = ( m_playerConfig.SidConfig.playback == SidConfig::STEREO ) ? 2 : 1;
+  int freq = m_playerConfig.SidConfig.frequency;
   int decodedLen = 0;
   int timesek = m_seekNeedMs / 1000;
   if ( timesek == 0 ) return;
@@ -883,7 +896,7 @@ void CThreadSidPlayer::DoSeek()
     }
   }
 
-  bits = PLAYBACK_BIT_PRECISION;//m_playerConfig.sidConfig.precision;
+  bits = PLAYBACK_BIT_PRECISION;//m_playerConfig.SidConfig.precision;
   m_pEngine->fastForward( 3200 );
   skip_bytes = ( timesek * freq * numChn * ( bits >> 3 ) ) >> 5;
   //m_decodedSampleCount += skip_bytes / numChn / (bps>>3); //not needed
@@ -903,7 +916,7 @@ void CThreadSidPlayer::DoSeek()
   m_pEngine->time();
   m_playTimems = ( m_pEngine->time() * 1000 );// / timer->timebase();
   m_decodedSampleCount = ( m_playTimems * freq ) / 1000;
-  //m_playTimems =(m_decodedSampleCount * 1000) / m_playerConfig.sidConfig.frequency;
+  //m_playTimems =(m_decodedSampleCount * 1000) / m_playerConfig.SidConfig.frequency;
   m_pEngine->fastForward( 100 );
   m_seekNeedMs = 0;
 }

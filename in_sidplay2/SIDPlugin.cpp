@@ -580,13 +580,13 @@ void SIDPlugin::GetFileInfo( const char* Filename, char* title, int* length_in_m
 
 
   // std::string titleTemplate("%f / %a / %x %sn");
-  std::string titleTemplate( m_SIDPlayer.GetCurrentConfig().playlistFormat );
-  std::string subsongTemplate( m_SIDPlayer.GetCurrentConfig().subsongFormat );
+  std::string titleTemplate( m_SIDPlayer.GetCurrentConfig().PlaylistFormat );
+  std::string subsongTemplate( m_SIDPlayer.GetCurrentConfig().SubsongFormat );
 
 
   // fill STIL data if necessary
   StilBlock       sb;
-  if ( m_SIDPlayer.GetCurrentConfig().useSTILfile == true )
+  if ( m_SIDPlayer.GetCurrentConfig().UseSTILfile == true )
   {
     sb = m_SIDPlayer.GetSTILData2( strFilename.c_str(), subsongIndex - 1 );
   }

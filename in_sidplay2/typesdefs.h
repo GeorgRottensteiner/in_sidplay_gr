@@ -15,18 +15,26 @@ enum PlayerStatus_t
 
 struct PlayerConfig
 {
-	SidConfig               sidConfig;
-	bool                    playLimitEnabled;
-	int                     playLimitSec;
-  std::string             songLengthsFile;
+	SidConfig               SidConfig;
+	bool                    PlayLimitEnabled;
+	int                     PlayLimitSec;
+  std::string             SongLengthsFile;
   std::string             hvscDirectory;
-	bool                    useSongLengthFile;
-	bool                    useSTILfile;
+	bool                    UseSongLengthFile;
+	bool                    UseSTILfile;
 
 	// Voice configuration which voice is enabled/disabled on which SID, first index is SID number second voice numerber
-	bool                    voiceConfig[3][3];
-	bool                    pseudoStereo;
-	SidConfig::sid_model_t  sid2Model;
-  std::string             playlistFormat;
-  std::string             subsongFormat;
+	bool                    VoiceConfig[3][3];
+	bool                    PseudoStereo;
+	SidConfig::sid_model_t  Sid2Model;
+  std::string             PlaylistFormat;
+  std::string             SubsongFormat;
+  int                     NumLoopTimes;
+
+
+  PlayerConfig() :
+    NumLoopTimes( 0 ),
+    PlayLimitSec( 0 )
+  {
+  }
 };
