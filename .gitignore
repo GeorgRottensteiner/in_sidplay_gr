@@ -58,6 +58,6 @@ in_sidplay2/in_sidplay2.VC.db
 in_sidplay2/in_sidplay2.VC.VC.opendb
 in_sidplay2/in_sidplay2.aps
 *.user
-/.vs/in_sidplay2/v14/*.suo
+/.vs
 /*.opendb
 /*.db
