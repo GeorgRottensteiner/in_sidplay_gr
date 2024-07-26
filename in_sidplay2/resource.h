@@ -60,6 +60,7 @@
 #define IDC_STATIC_DISPLAY              1065
 #define IDC_EDIT1                       1066
 #define IDC_EDIT_LOOP_TIMES             1066
+#define IDC_STATIC                      -1
 
 // Next default values for new objects
 // 

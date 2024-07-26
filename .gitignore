@@ -61,3 +61,5 @@ in_sidplay2/in_sidplay2.aps
 /.vs
 /*.opendb
 /*.db
+/in_sidplay2/Release
+/in_sidplay2/Release/in_sidplay2.dll
